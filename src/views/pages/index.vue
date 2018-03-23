@@ -1,55 +1,16 @@
 <template>
   <div class="app">
-    <!-- 导航条部分开始 -->
-    <nav>
-      <div class="grid-container nav-container">
-        <div class="nav-content col-lg-11 col-md-12 col-sm-12 col-xs-12">
-          <div class="left nav-left">
-            <div class="logo">
-              <img class="Img img-auto-fit" src="../../static/img/small-logo.png" alt="SchoolRush">
-              <div>SchoolRush</div>
-            </div>
-            <div class="media-hide-container">
-              <div class="nav-title">
-                <ul>
-                  <li>首页</li>
-                  <li>发现问题</li>
-                </ul>
-              </div>
-              <div class="search-container">
-                <!-- <input type="text" class="Input input-search search" placeholder="搜索你感兴趣的问题..."> -->
-                <Input class="input-search" placeholder="搜索你感兴趣的问题..."></Input>
-                <Button type="primary" shape="circle" icon="ios-search"></Button>
-              </div>
-            </div>
-          </div>
-          <div class="right nav-right">
-            <div class="nav-title right-icon">
-                <ul>
-                  <li><i class="ivu-icon ivu-icon-checkmark"></i></li>
-                  <li><i class="ivu-icon ivu-icon-compass"></i></li>
-                </ul>
-              </div>
-            <Dropdown class="dropdown" trigger="click">
-              <a class="dropdown-avatar" href="javascript:void(0)">
-                  <img class="Img img-auto-fit" src="../../static/img/avatar.jpg">
-              </a>
-              <DropdownMenu slot="list">
-                  <DropdownItem>我的主页</DropdownItem>
-                  <DropdownItem>设置</DropdownItem>
-                  <DropdownItem>退出</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <!-- 导航条部分结束 -->
     <!-- 导航条下面内容与侧边栏部分开始 -->
     <div class="container grid-container">
       <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
         <!-- 内容部分开始 -->
-        <div class="row content-container col-lg-9 col-md-9" v-for="n in 4" :key="n">
+        <div class="row content-container col-lg-9 col-md-9">
+          <div class="card-container">
+            <p>题集</p>
+            <p>筛选</p>
+          </div>
+        </div>
+        <div class="row content-container col-lg-9 col-md-9" v-for="n in 6" :key="n">
           <div class="card-container">
             <div class="card-left-container flex left">
               <div class="flex-container flex">
@@ -74,7 +35,7 @@
                 <span>1536人已通过</span>
                 <span>通过率：78%</span>
               </p>
-              <p class="q-difficulty">
+              <p class="q-difficulty">  
                 <span>难度：</span>
                 <Icon type="ios-star" v-for="n in 4" :key="n"></Icon>
               </p>
@@ -88,12 +49,15 @@
         </div>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
-        <div class="row sidebar-container col-lg-3 col-md-3">
-          <div class="sidebar-con-container">
-            侧边栏内容部分
+        <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <div class="sidebar-item sidebar-userinfo-container">
+            侧边栏用户数据
+          </div>
+          <div class="sidebar-item sidebar-fastto-container">
+            侧边栏快捷入口
           </div>
           <div class="sidebar-info-container">
-            侧边栏信息部分
+            侧边栏网站信息
           </div>
         </div>
         <!-- 右侧边栏结束 -->
@@ -104,29 +68,23 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+    }
+  },
+  methods: {
+    setQuestion() {
+      console.log("跳转到出题页面")
+    }
+  }
   
 }
 </script>
 <style lang="sass">
-  @import "../../static/sass/grid.sass"
-  @import "../../static/sass/common.sass"
 
   $bright-blue: #0084ff
-  $nav-height: 5rem
   body
     font-size: 1.6rem
-  nav
-    width: 100%
-    height: $nav-height
-    background: #fff
-    box-shadow: 0 .1rem .2rem 0 #ccc
-  .nav-container
-    margin: 0 auto
-    height: 100%
-  .nav-content
-    box-shadow: 0 0 .3rem 0 #ccc
-    height: 100%
-    padding: 0
   .container
     margin: 0 auto
     margin-top: 1rem
@@ -144,19 +102,25 @@ export default {
     padding-left: .5rem
     position: absolute
     right: 0
-  .sidebar-con-container
-    height: 40rem
-    border-radius: .3rem
-    box-shadow: 0 0 .3rem 0 #ccc
+    .sidebar-item
+      border-radius: .3rem
+      box-shadow: 0 0 .3rem 0 #ccc
+      background: #fff
+  .sidebar-userinfo-container
+    height: 25rem
+  .sidebar-fastto-container
+    margin-top: 1rem
+    height: 20rem
   .sidebar-info-container
     height: 15rem
     border-radius: .3rem
     background: #ddd
-    margin-top: 1.5rem
+    margin-top: 1rem
   .card-container
     pdding-bottom: 1rem
     border-radius: .3rem
     box-shadow: 0 0 .3rem 0 #ccc
+    background: #fff
     overflow: hidden
   .card-left-container
     justify-content: center
@@ -209,70 +173,11 @@ export default {
         padding: .3rem .5rem
       .author-name:after
         content: '：'
-
-  .nav-left
-    height: 100%
-    div
-      vertical-align: top
-      display: inline-block
-  .nav-right
-    height: 100%
-    .nav-title
-      display: inline-block
-      margin-right: 1rem
-    .dropdown
-      float: right
-      height: 100%
-      margin-left: 0
-      div.ivu-dropdown-rel
-        height: 100%
-      a.dropdown-avatar
-        height: 100%
-        img
-          margin-top: .7rem
-          height: 75%
-          border-radius: .3rem
-  .logo
-    height: 100%
-    div
-      margin-left: .3rem
-      color: $bright-blue
-      font-size: 3rem
-      margin-top: 0
-      display: inline-block
-      line-height: 5rem
   .Img
     vertical-align: top
   .img-auto-fit
     margin-top: .2rem
     height: 90%
-  .nav-title
-    margin-top: 1.5rem
-    margin-left: 2rem
-    height: 80%
-    ul
-      li
-        font-size: 1.5rem
-        float: left
-        margin: 0 1.5rem
-  .search-container
-    margin-top: 1rem
-    margin-left: 2rem
-    width: 30rem
-    height: 80%
-  .input-search
-    background: #f6f6f6
-    font-size: 1.4rem
-    margin: 0 .5rem
-    width: 25rem
-    background: none
-    input
-      padding: .4rem 1.3rem .3rem 1.3rem
-      font-size: 1.4rem
-      background: #f6f6f6
-      border-radius: 4rem
-  .input-search:focus
-    outline: none
   .Input
     width: 100%
   @media (max-width: 992px)
@@ -283,9 +188,13 @@ export default {
       padding: 0
     .nav-right
       padding-right: .5rem
-  @media (max-width: 870px)
+  @media (max-width: 960px)
     .nav-left
-      .media-hide-container
+      .search-container
+        display: none
+  @media (max-width: 670px)
+    .nav-left
+      .nav-title
         display: none
   @media (max-width: 500px)
     .nav-right
