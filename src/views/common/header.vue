@@ -5,7 +5,7 @@
       <div class="grid-container nav-container">
         <div class="nav-content col-lg-11 col-md-12 col-sm-12 col-xs-12">
           <div class="left nav-left">
-            <div class="logo">
+            <div class="logo" @click="toIndex">
               <img class="Img img-auto-fit" src="../../static/img/small-logo.png" alt="SchoolRush">
               <div>SchoolRush</div>
             </div>
@@ -36,9 +36,9 @@
                   <img class="Img img-auto-fit" src="../../static/img/avatar.jpg">
               </a>
               <DropdownMenu slot="list">
-                  <DropdownItem>我的主页</DropdownItem>
-                  <DropdownItem>设置</DropdownItem>
-                  <DropdownItem>退出</DropdownItem>
+                  <DropdownItem><router-link to="/home">我的主页</router-link></DropdownItem>
+                  <DropdownItem><router-link to="/settings">我的主页</router-link></DropdownItem>
+                  <DropdownItem><router-link to="/login">我的主页</router-link></DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -56,7 +56,10 @@ export default {
   },
   methods: {
     setQuestion() {
-      console.log("跳转到出题页面")
+      this.$router.push("/setup")
+    },
+    toIndex() {
+      this.$router.push("/index")
     }
   }
   
@@ -82,7 +85,6 @@ export default {
     margin: 0 auto
     height: 100%
   .nav-content
-    box-shadow: 0 0 .3rem 0 #ccc
     height: 100%
     padding: 0
   .container
@@ -127,6 +129,7 @@ export default {
           border-radius: .3rem
   .logo
     height: 100%
+    cursor: default
     div
       margin-left: .3rem
       color: $bright-blue

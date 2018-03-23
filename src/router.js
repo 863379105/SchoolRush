@@ -52,9 +52,23 @@ const routers = [
             {
                 path: '/campus',
                 meta: {
-                    title: '这是首页'
+                    title: '高校'
                 },
                 component: (resolve) => require(['./views/pages/campus.vue'], resolve)
+            },
+            {
+                path: '/search',
+                meta: {
+                    title: '搜索结果'
+                },
+                component: (resolve) => require(['./views/pages/search.vue'], resolve)
+            },
+            {
+                path: '/settings',
+                meta: {
+                    title: '设置'
+                },
+                component: (resolve) => require(['./views/pages/settings.vue'], resolve)
             },
         ]
     },

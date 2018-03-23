@@ -83,8 +83,6 @@ export default {
 <style lang="sass">
 
   $bright-blue: #0084ff
-  body
-    font-size: 1.6rem
   .container
     margin: 0 auto
     margin-top: 1rem
