@@ -16,8 +16,8 @@
               <div class="flex-container flex">
                 <div class="label-container flex">
                   <Tag class="Tag" color="red">标签一</Tag>
-                  <Tag class="Tag" color="red">标签一</Tag>
-                  <Tag class="Tag" color="red">标签一</Tag>
+                  <Tag class="Tag" color="blue">标签一</Tag>
+                  <Tag class="Tag" color="yellow">标签一</Tag>
                 </div>
                 <div class="breadcrumb-container flex">
                   <Breadcrumb separator=">">
@@ -35,7 +35,7 @@
                 <span>1536人已通过</span>
                 <span>通过率：78%</span>
               </p>
-              <p class="q-difficulty">  
+              <p class="q-difficulty">
                 <span>难度：</span>
                 <Icon type="ios-star" v-for="n in 4" :key="n"></Icon>
               </p>
@@ -51,13 +51,89 @@
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
           <div class="sidebar-item sidebar-userinfo-container">
-            侧边栏用户数据
+            <Row type="flex" justify="center" align="middle" class="code-row-bg">
+              <Col span="24">
+                <p class="userinfo-username">iimT</p>
+              </Col>
+              <Col span="24">
+                <p class="userinfo-locate-school">
+                  <Tag type="border" color="green">浙江</Tag>
+                  <Tag type="border" color="blue">绍兴文理学院</Tag>
+                </p>
+              </Col>
+              <p class="userinfo-qinfo">
+                <Col span="12">
+                  <Col class="userinfo-data-num" span="24">
+                    568
+                  </Col>
+                  <Col span="24">
+                    解决问题
+                  </Col>
+                </Col>
+                <Col span="12">
+                  <Col class="userinfo-data-num" span="24">
+                    68.5%
+                  </Col>
+                  <Col span="24">
+                    通过率
+                  </Col>
+                </Col>
+              </p>
+              <p class="userinfo-school">
+                <Col span="24">
+                  <img class="school-badge" src="../../static/img/shufe.jpg" alt="shufe">
+                  <Col span="24">
+                    <Col span="24">
+                      上海财经大学
+                    </Col>
+                    <Col span="24">
+                      计算机专业 <Tag type="border" color="green">No.5</Tag>
+                    </Col>
+                  </Col>
+                </Col>
+              </p>
+              <p class="userinfo-user-school">
+                <Col span="24">
+                  <Col span="8">
+                    <Col class="userinfo-data-num" span="24">
+                      6%
+                    </Col>
+                    <Col span="24">
+                      贡献
+                    </Col>
+                  </Col>
+                  <Col span="8">
+                    <Col class="userinfo-data-num" span="24">
+                      99+
+                    </Col>
+                    <Col span="24">
+                      校园排行
+                    </Col>
+                  </Col>
+                  <Col span="8">
+                    <Col class="userinfo-data-num" span="24">
+                      8
+                    </Col>
+                    <Col span="24">
+                      待解决
+                    </Col>
+                  </Col>
+                </Col>
+              </p>
+              <Col class="answerPie-container" span="24">
+                <!-- 擅长领域的饼图 -->
+                <div id="answerPie" :style="{width: '230px', height: '215px'}"></div>
+              </Col>
+            </Row>
           </div>
           <div class="sidebar-item sidebar-fastto-container">
             侧边栏快捷入口
           </div>
           <div class="sidebar-info-container">
-            侧边栏网站信息
+            <p>侵权举报网上有害信息举报专区</p>
+            <p>违法和不良信息举报：010-82716601</p>
+            <p>儿童色情信息举报专区</p>
+            <p>联系我们 © 2018 SchoolRush</p>
           </div>
         </div>
         <!-- 右侧边栏结束 -->
@@ -67,18 +143,90 @@
   </div>
 </template>
 <script>
+let echarts = require("echarts/lib/echarts");
+// 引入柱状图组件
+require("echarts/lib/chart/pie");
+// 引入提示框和title组件
+require("echarts/lib/component/tooltip");
+require("echarts/lib/component/title");
+
 export default {
   data() {
     return {
-    }
+      tagColors: ["blue", "red", "yellow", "green"]
+    };
   },
   methods: {
     setQuestion() {
-      console.log("跳转到出题页面")
+      console.log("跳转到出题页面");
+    },
+    drawAnswerPie() {
+      // 绘制个人擅长图表
+      let myChart = echarts.init(document.getElementById("answerPie"));
+      myChart.setOption({
+        series: {
+          type: "pie",
+          center: ["50%", "50%"],
+          radius: ["50%","70%"],
+          avoidLabelOverlap: false,
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          label: {
+            normal: {
+              show: false,
+              position: "center",
+            formatter: "{b} : {d}%"
+            },
+            emphasis: {
+              show: true,
+              textStyle: {
+                fontSize: "16",
+                textShadowOffsetY: "0",
+                textShadowOffsetX: "0",
+                textShadowBlur: "5",
+                textShadowColor: "#ccc"
+              }
+            }
+          },
+          data: [
+            { name: "计算机科学与技术", value: 1000, show: true },
+            { name: "网络工程", value: 900 },
+            { name: "自动化", value: 851 },
+            { name: "金融", value: 851 },
+            { name: "软件工程", value: 851 }
+          ],
+          itemStyle: {
+            //阴影
+            normal: {
+              shadowBlur: 10,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+              color: function (o){
+                  let color = ["#2db7f5","#19be6b","#f90", "#2d8cf0","#ed3f14"]
+                  return color[o.dataIndex]
+              }
+            }
+          }
+        },
+        title: {
+          text: "擅长领域",
+          x: "center",
+          textStyle: {
+            fontSize: 14,
+            fontWeight: 'normal',
+            color: "#000",
+            fontFamily: "'Microsoft YaHei','serif' , 'monospace', 'Arial', 'Courier New'",
+          }
+        }
+      });
     }
+  },
+  mounted() {
+    this.drawAnswerPie();
   }
-  
-}
+};
 </script>
 <style lang="sass">
 
@@ -105,15 +253,26 @@ export default {
       box-shadow: 0 0 .3rem 0 #ccc
       background: #fff
   .sidebar-userinfo-container
-    height: 25rem
+    p
+      text-align: center
+    .userinfo-data-num
+      font-size: 2.3rem
+      font-weight: bold
+    .userinfo-username
+      padding: .5rem 0
+      padding-top: 2rem
+      font-size: 2rem
+    .userinfo-locate-school,.userinfo-qinfo,.userinfo-school,.userinfo-user-school
+      padding: .5rem 0
   .sidebar-fastto-container
     margin-top: 1rem
     height: 20rem
   .sidebar-info-container
     height: 15rem
     border-radius: .3rem
-    background: #ddd
     margin-top: 1rem
+    color: #8590a6
+    font-size: 1.4rem
   .card-container
     pdding-bottom: 1rem
     border-radius: .3rem
@@ -178,6 +337,12 @@ export default {
     height: 90%
   .Input
     width: 100%
+  .school-badge
+    width: 5rem
+    border-radius: 50%
+  .answerPie-container
+    #answerPie
+      margin: 0 auto
   @media (max-width: 992px)
     .sidebar-container
       display: none

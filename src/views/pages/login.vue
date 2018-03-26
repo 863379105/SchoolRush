@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
+  <div class="login-container">
     <div class="panel">
       <div class="logo flex-horizental-center">
         <img src="../../static/img/logo.png">
       </div>
-      <div class="title">在解决问题中提升你的境界</div>
+      <div class="login-title">在解决问题中提升你的境界</div>
       <div v-if="isLoginPanel" class="login-form">
         <div class="input-form Input-wrapper Input-account">
           <input v-model="loginInfo.username.value" :placeholder="loginInfo.username.placeholder" :class="{warn:loginInfo.username.va}" class="Input" type="text" value="123">
@@ -25,6 +25,9 @@
         </div>
         <div class="input-form Input-wrapper Input-password">
           <input v-model="registerInfo.password.value" :placeholder="registerInfo.password.placeholder" :class="{warn:registerInfo.password.va}" class="Input" type="password">
+        </div>
+        <div class="input-form Input-wrapper Input-password">
+          <input v-model="registerInfo.validpass.value" :placeholder="registerInfo.validpass.placeholder" :class="{warn:registerInfo.validpass.va}" class="Input" type="password">
         </div>
         <div class="Button-wrapper">
           <button class="Button login-btn" @click="register">注册</button>
@@ -69,6 +72,11 @@ export default {
           va: false,
           placeholder: '密码'
         },
+        validpass: {
+          value: '',
+          va: false,
+          placeholder: '确认密码'
+        }
       },
       isLoginPanel: false
     }
@@ -79,7 +87,9 @@ export default {
     },
     login() {
       let validRes = this.valid(this.loginInfo)
-      console.log(this.loginInfo)
+      if(validRes) {
+        this.$router.replace("/index")
+      }
     },
     register() {
       let validRes = this.valid(this.registerInfo)
@@ -87,6 +97,7 @@ export default {
       console.log(this.registerInfo)
     },
     valid(obj) {
+      console.log(obj)
       let flag = true
       for (let i in obj) {
         if(obj[i].value == "") {
@@ -96,6 +107,19 @@ export default {
           if(placeholder.indexOf("请输入") == -1)
             this.$set(obj[i], 'placeholder', '请输入' + obj[i].placeholder)
         }
+      }
+      if(!obj.hasOwnProperty("validpass")) return flag
+      if(obj.password.value.trim() != "" && obj.password.value.trim() != obj.validpass.value.trim()) {
+        //密码不为空 而且两次输入密码不同
+        flag = false
+        //置空两个密码输入框
+        this.$set(obj.password, "value", "")
+        this.$set(obj.validpass, "value", "")
+        //提示框的颜色变成红色
+        this.$set(obj.password, 'va', true)
+        this.$set(obj.validpass, 'va', true)
+
+        this.$set(obj.validpass, "placeholder", "两次输入的密码不一致")
       }
       return flag
     }
@@ -109,7 +133,7 @@ export default {
   $white: #fff
   $base-color: #0084ff
 
-  .container
+  .login-container
     position: absolute
     top: 0
     bottom: 0
@@ -130,14 +154,12 @@ export default {
     border-radius: 5px
     box-shadow: 0px 0px .1rem 0px #ddd
     overflow: hidden
-  .logo
-    margin-top: 3rem
   .flex-horizental-center
     /* flex布局 */
     display: flex
     display: -webkit-flex
     justify-content: center
-  .title
+  .login-title
     margin-top: 1rem
     text-align: center
     font-size: 2.2rem

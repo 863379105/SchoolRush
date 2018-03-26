@@ -43,13 +43,6 @@ const routers = [
                 component: (resolve) => require(['./views/pages/rank.vue'], resolve)
             },
             {
-                path: '/setup',
-                meta: {
-                    title: '出题'
-                },
-                component: (resolve) => require(['./views/pages/setupQuestions.vue'], resolve)
-            },
-            {
                 path: '/campus',
                 meta: {
                     title: '高校'

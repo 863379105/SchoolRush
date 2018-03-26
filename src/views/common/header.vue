@@ -12,10 +12,18 @@
             <div class="media-hide-container">
               <div class="nav-title">
                 <ul>
-                  <li ><router-link to="/index">首页</router-link></li>
-                  <li ><router-link to="/rank">排行榜</router-link></li>
-                  <li ><router-link to="/group">群组</router-link></li>
-                  <li ><router-link to="/campus">高校</router-link></li>
+                  <li>
+                    <router-link to="/index">首页</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/rank">排行榜</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/group">群组</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/campus">高校</router-link>
+                  </li>
                 </ul>
               </div>
               <div class="search-container">
@@ -26,19 +34,31 @@
           </div>
           <div class="right nav-right">
             <div class="nav-title right-icon">
-                <ul class="flex">
-                  <li><Button type="ghost" @click="setQuestion">出题</Button></li>
-                  <li><Icon size="18px" type="chatbubbles"></Icon></li>
-                </ul>
-              </div>
+              <ul class="flex">
+                <li>
+                  <Button type="ghost" @click="setQuestion">出题</Button>
+                </li>
+                <Modal v-model="setupModel" title="" :closable="false" @on-ok="setupSubmit">
+                  <v-setup></v-setup>
+                  <div class="Modal-footer" slot="footer">
+                  </div>
+                </Modal>
+                <li>
+                  <Icon size="18px" type="chatbubbles"></Icon>
+                </li>
+              </ul>
+            </div>
             <Dropdown class="dropdown" trigger="click">
               <a class="dropdown-avatar" href="javascript:void(0)">
-                  <img class="Img img-auto-fit" src="../../static/img/avatar.jpg">
+                <img class="Img img-auto-fit" src="../../static/img/avatar.jpg">
               </a>
               <DropdownMenu slot="list">
-                  <DropdownItem><router-link to="/home">我的主页</router-link></DropdownItem>
-                  <DropdownItem><router-link to="/settings">我的主页</router-link></DropdownItem>
-                  <DropdownItem><router-link to="/login">我的主页</router-link></DropdownItem>
+                <DropdownItem>
+                  <router-link class="dropdown-link" to="/home">我的主页</router-link>
+                </DropdownItem>
+                <DropdownItem>
+                  <router-link class="dropdown-link" to="/login">退出</router-link>
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -49,21 +69,31 @@
   </div>
 </template>
 <script>
+import vSetup from "./setup";
 export default {
   data() {
     return {
-    }
+      setupModel: false
+    };
   },
   methods: {
     setQuestion() {
-      this.$router.push("/setup")
+      //弹出出题框
+      this.setupModel = true;
+    },
+    setupSubmit() {
+      this.$Notice.success({
+        title: "发布成功"
+      });
     },
     toIndex() {
-      this.$router.push("/index")
+      this.$router.push("/index");
     }
+  },
+  components: {
+    vSetup
   }
-  
-}
+};
 </script>
 <style lang="sass">
   @import "../../static/sass/grid.sass"
@@ -172,6 +202,18 @@ export default {
     outline: none
   .Input
     width: 100%
+  .Modal-footer
+    height: 0
+  .ivu-modal
+    .ivu-modal-content
+      .ivu-modal-footer
+        height: 0
+        padding: 0
+  .ivu-modal-body
+    padding: 1rem 1.6rem
+    padding-bottom: 0
+  .dropdown-link
+    color: #495060
   @media (max-width: 992px)
     .nav-right
       padding-right: .5rem
