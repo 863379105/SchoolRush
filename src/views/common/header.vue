@@ -57,6 +57,9 @@
                   <router-link class="dropdown-link" to="/home">我的主页</router-link>
                 </DropdownItem>
                 <DropdownItem>
+                  <router-link class="dropdown-link" to="/settings">设置</router-link>
+                </DropdownItem>
+                <DropdownItem>
                   <router-link class="dropdown-link" to="/login">退出</router-link>
                 </DropdownItem>
               </DropdownMenu>

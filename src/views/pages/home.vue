@@ -34,6 +34,33 @@
                 </ul>
               </div>
           </Col>
+          <Col class="timeline-container card" span="24">
+            <Col span="24" class="timeline-title">最新动态</Col>
+            <Col span="24" class="timeline-content">
+              <Timeline pending>
+                <TimelineItem>
+                    <p class="user-action">12.03 分享了问题</p>
+                    <p class="action-title">Apple I 问世</p>
+                </TimelineItem>
+                <TimelineItem>
+                    <p class="user-action">12.03 解决了问题</p>
+                    <p class="action-title">发布 Macintosh</p>
+                </TimelineItem>
+                <TimelineItem>
+                    <p class="user-action">12.03 解决了问题</p>
+                    <p class="action-title">发布 iPhone</p>
+                </TimelineItem>
+                <TimelineItem>
+                    <p class="user-action">12.03 分享了问题</p>
+                    <p class="action-title">发布 iPad</p>
+                </TimelineItem>
+                <TimelineItem>
+                    <p class="user-action">12.03 解决了问题</p>
+                    <p class="action-title">史蒂夫·乔布斯去世</p>
+                </TimelineItem>
+              </Timeline>
+            </Col>
+          </Col>
         </Row>
       </div>
     </div>
@@ -136,9 +163,6 @@ export default {
 };
 </script>
 <style lang="sass">
-  .card
-    border-radius: .3rem
-    box-shadow: 0 0 0.3rem 0 #ccc
   .user-card
     padding: 2rem 0
     background-color: #fff
@@ -190,7 +214,31 @@ export default {
       background: #0084FF
   .userinfo-panel
     border-right: .2rem dotted #ccc
+  .timeline-container
+    background: #fff
+    margin-bottom: 3rem
+  .timeline-title
+    border-bottom: .1rem solid #e9e9e9
+    padding: 1.5rem 2rem
+    padding-bottom: .5rem
+  .timeline-content
+    padding: 2rem
+  .user-action
+    font-size: 1.4rem
+    color: 999
+    margin-left: -.5rem
+    margin-top: -.1rem
+  .action-title
+    font-size: 1.7rem
+    font-weight: bold
+    padding-left: 2rem
+    margin-top: 2rem
   @media (max-width: 768px)
     .calendarHeatMap-container
       display: none
+    .userinfo-panel
+      border: none
+      border-bottom: .2rem dotted #ccc
+      padding-bottom: 2rem
+      margin-bottom: 2rem
 </style>

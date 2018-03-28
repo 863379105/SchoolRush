@@ -239,7 +239,6 @@ export default {
 };
 </script>
 <style lang="sass">
-
   $bright-blue: #0084ff
   .container
     margin: 0 auto
