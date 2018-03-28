@@ -2,18 +2,13 @@
   <div>
     <!-- 提问表单开始 -->
     <Form ref="Question" :model="Question" :rules="ruleValidate" :label-width="80">
-      <!-- <FormItem label="专业分类" prop="preMajor">
-        <Col span="12" style="padding-right:10px">
-          <Select v-model="Question.preMajor" filterable on-change="changeMajorCate(value)">
-            <Option v-for="item in preMajor" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        </Col>
-        <Col span="12">
+      <FormItem label="专业分类" prop="preMajor">
+        <Col span="24">
           <Select v-model="Question.major" filterable>
             <Option v-for="item in major['哲学']" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </Col>
-      </FormItem> -->
+      </FormItem>
       <FormItem label="问题" prop="q">
         <Input v-model="Question.q" type="textarea" :autosize="{minRows: 2,maxRows: 5}" 
         placeholder="问题标题，自行添加问号，不超过100字"></Input>
@@ -44,7 +39,7 @@ export default {
     return {
       Question: {
         type: 2, //选择1 判断2 填空3
-        preMajor: "",
+        q: "",
         major: "",
         correct: "",
         toAnswer: ""
@@ -58,13 +53,6 @@ export default {
             required: true,
             message: "问题不能为空",
             trigger: "blur"
-          }
-        ],
-        preMajor: [
-          {
-            required: true,
-            message: "专业类不能为空",
-            trigger: "change"
           }
         ],
         major: [
@@ -93,12 +81,13 @@ export default {
     };
   },
    methods: {
-     changeMajorCate(value) {
-       console.log(value)
-       console.log(index)
-     },
-     handleSubmit() {
-       console.log(this.Question)
+     handleSubmit(name) {
+       this.$refs[name].validate((valid) => {
+            if (!valid) {
+              this.$Message.error('题目信息不全!');
+              return;
+            }
+        })
      },
      handleReset() {
        for(var i in this.Question) {
@@ -109,9 +98,10 @@ export default {
    mounted() {
      this.QuestionBackup = {
         type: 2, //选择1 判断2 填空3
-        preMajor: "",
+        q: "",
         major: "",
-        correct: ""
+        correct: "",
+        toAnswer: ""
       }
    },
 };

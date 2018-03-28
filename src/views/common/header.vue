@@ -119,7 +119,6 @@ export default {
     padding: 0
   .container
     margin: 0 auto
-    margin-top: $nav-height + 1rem
   .nav-left
     height: 100%
     div

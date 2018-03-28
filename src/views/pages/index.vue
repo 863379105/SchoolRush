@@ -61,8 +61,12 @@
                   <Tag type="border" color="blue">绍兴文理学院</Tag>
                 </p>
               </Col>
+              <Col class="answerPie-container" span="24">
+                <!-- 擅长领域的饼图 -->
+                <div id="answerPie" :style="{width: '230px', height: '200px'}"></div>
+              </Col>
               <p class="userinfo-qinfo">
-                <Col span="12">
+                <Col span="8">
                   <Col class="userinfo-data-num" span="24">
                     568
                   </Col>
@@ -70,7 +74,7 @@
                     解决问题
                   </Col>
                 </Col>
-                <Col span="12">
+                <Col span="8">
                   <Col class="userinfo-data-num" span="24">
                     68.5%
                   </Col>
@@ -78,13 +82,21 @@
                     通过率
                   </Col>
                 </Col>
+                <Col span="8">
+                    <Col class="userinfo-data-num" span="24">
+                      8
+                    </Col>
+                    <Col span="24">
+                      待解决
+                    </Col>
+                  </Col>
               </p>
               <p class="userinfo-school">
                 <Col span="24">
                   <img class="school-badge" src="../../static/img/shufe.jpg" alt="shufe">
                   <Col span="24">
                     <Col span="24">
-                      上海财经大学
+                      <p class="campus-name">上海财经大学</p>
                     </Col>
                     <Col span="24">
                       计算机专业 <Tag type="border" color="green">No.5</Tag>
@@ -112,18 +124,14 @@
                   </Col>
                   <Col span="8">
                     <Col class="userinfo-data-num" span="24">
-                      8
+                      5.6K
                     </Col>
                     <Col span="24">
-                      待解决
+                      成员
                     </Col>
                   </Col>
                 </Col>
               </p>
-              <Col class="answerPie-container" span="24">
-                <!-- 擅长领域的饼图 -->
-                <div id="answerPie" :style="{width: '230px', height: '215px'}"></div>
-              </Col>
             </Row>
           </div>
           <div class="sidebar-item sidebar-fastto-container">
@@ -166,8 +174,8 @@ export default {
       myChart.setOption({
         series: {
           type: "pie",
-          center: ["50%", "50%"],
-          radius: ["50%","70%"],
+          center: ["50%", "53%"],
+          radius: ["45%","68%"],
           avoidLabelOverlap: false,
           labelLine: {
             normal: {
@@ -178,12 +186,14 @@ export default {
             normal: {
               show: false,
               position: "center",
-            formatter: "{b} : {d}%"
+              formatter: "{b} : {d}%"
             },
             emphasis: {
               show: true,
               textStyle: {
-                fontSize: "16",
+                fontSize: "17",
+                textBorderColor: "#fff",
+                textBorderWidth: "3",
                 textShadowOffsetY: "0",
                 textShadowOffsetX: "0",
                 textShadowBlur: "5",
@@ -192,7 +202,7 @@ export default {
             }
           },
           data: [
-            { name: "计算机科学与技术", value: 1000, show: true },
+            { name: "计算机科学与技术", value: 1000, selected: true },
             { name: "网络工程", value: 900 },
             { name: "自动化", value: 851 },
             { name: "金融", value: 851 },
@@ -233,7 +243,6 @@ export default {
   $bright-blue: #0084ff
   .container
     margin: 0 auto
-    margin-top: 1rem
   .content-container
     float: left
     padding: 0
@@ -262,8 +271,12 @@ export default {
       padding: .5rem 0
       padding-top: 2rem
       font-size: 2rem
+      font-weight: bold
     .userinfo-locate-school,.userinfo-qinfo,.userinfo-school,.userinfo-user-school
       padding: .5rem 0
+    .userinfo-school
+      padding-top: 1rem
+      border-top: .1rem #ccc solid
   .sidebar-fastto-container
     margin-top: 1rem
     height: 20rem
@@ -340,7 +353,11 @@ export default {
   .school-badge
     width: 5rem
     border-radius: 50%
+  .campus-name
+    font-size: 1.8rem
+    font-weight: bold
   .answerPie-container
+    padding-top: .5rem
     #answerPie
       margin: 0 auto
   @media (max-width: 992px)

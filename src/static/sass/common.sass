@@ -3,6 +3,7 @@ html
     /* 1rem = 10px */
     font-size: 62.5%
     background: #f6f6f6
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
 body
     overflow-y: scroll
 
@@ -27,6 +28,8 @@ body
 $nav-height: 5rem
 .app
     padding-top: $nav-height
+    .container
+        margin-top: 1rem
 .float-left
     float: left
 .flex
@@ -42,7 +45,9 @@ $nav-height: 5rem
     outline: none
 .Button:hover
     background-color: #0077fe
-
+.circle-img
+    border-radius: 50%
+    height: 100%
 ul
     li
         list-style: none

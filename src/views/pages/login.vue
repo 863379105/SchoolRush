@@ -4,7 +4,7 @@
       <div class="logo flex-horizental-center">
         <img src="../../static/img/logo.png">
       </div>
-      <div class="login-title">在解决问题中提升你的境界</div>
+      <div class="login-title">设计问题来分享你擅长的知识</div>
       <div v-if="isLoginPanel" class="login-form">
         <div class="input-form Input-wrapper Input-account">
           <input v-model="loginInfo.username.value" :placeholder="loginInfo.username.placeholder" :class="{warn:loginInfo.username.va}" class="Input" type="text" value="123">

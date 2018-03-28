@@ -2,18 +2,13 @@
   <div>
     <!-- 提问表单开始 -->
     <Form ref="Question" :model="Question" :rules="ruleValidate" :label-width="80">
-      <!-- <FormItem label="专业分类" prop="preMajor" resetFields>
-        <Col span="12" style="padding-right:10px">
-          <Select v-model="Question.preMajor" filterable on-change="changeMajorCate">
-            <Option v-for="item in preMajor" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        </Col>
-        <Col span="12">
+      <FormItem label="专业分类" prop="preMajor" resetFields>
+        <Col span="24">
           <Select v-model="Question.major" filterable>
             <Option v-for="item in major['哲学']" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </Col>
-      </FormItem> -->
+      </FormItem>
       <FormItem label="问题" prop="q">
         <Input class="q-title" v-model="Question.q" type="textarea" :autosize="true" 
         placeholder="问题标题，不超过100字" width="50px"></Input>
@@ -36,7 +31,6 @@
   </div>
 </template>
 <script>
-import preMajor from "../../static/data/preMajor.js"; //所有专业
 import major from "../../static/data/Major.js" //所有专业
 export default {
   data() {
@@ -44,12 +38,10 @@ export default {
       Question: {
         type: 3, //选择1 判断2 填空3
         q: "",
-        preMajor: "",
         major: "",
         correct: "",
         toAnswer: ""
       },
-      preMajor: preMajor.data,
       major: major.data,
       QuestionBackup: {},
       ruleValidate: {
@@ -58,13 +50,6 @@ export default {
             required: true,
             message: "问题不能为空",
             trigger: "blur"
-          }
-        ],
-        preMajor: [
-          {
-            required: true,
-            message: "专业类不能为空",
-            trigger: "change"
           }
         ],
         major: [
@@ -93,14 +78,16 @@ export default {
     };
   },
    methods: {
-     changeMajorCate(value) {
-       console.log(value)
-     },
      addUnderLine() {
        this.$set(this.Question, "q", this.Question.q + "____")
      },
-     handleSubmit() {
-       console.log(this.Question)
+     handleSubmit(name) {
+       this.$refs[name].validate((valid) => {
+            if (!valid) {
+              this.$Message.error('题目信息不全!');
+              return;
+            }
+        })
      },
      handleReset() {
        for(var i in this.Question) {
@@ -112,7 +99,6 @@ export default {
      this.QuestionBackup = {
         type: 3, //选择1 判断2 填空3
         q: "",
-        preMajor: "",
         major: "",
         correct: "",
         toAnswer: ""
