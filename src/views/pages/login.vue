@@ -13,7 +13,7 @@
           <input v-model="loginInfo.password.value" :placeholder="loginInfo.password.placeholder" :class="{warn:loginInfo.password.va}" class="Input" type="password">
         </div>
         <div class="Button-wrapper">
-          <button class="Button login-btn" @click="login">登陆</button>
+          <button type="submit" class="Button login-btn" @click="login">登陆</button>
         </div>
       </div>
       <div v-else class="login-form">

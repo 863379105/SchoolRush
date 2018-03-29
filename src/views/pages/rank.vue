@@ -1,14 +1,132 @@
 <template>
-    <div class="app">
-        <div class="container grid-container">
-            <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                排行榜
-            </div>
+  <div class="app">
+    <div class="dewrap container grid-container">
+      <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
+        <div class="rank-container">
+          <Row :gutter="10">
+            <Col class="rank-row" v-for="j in 4" :lg="8" :md="8" :sm="12" :xs="24">
+              <Col class="rank-item-container card">
+                <div class="rank-item-title">
+                  工学
+                </div>
+                <Col span="24">
+                  <Col class="top-three" span="24">
+                    <Col class="top-second" span="8">
+                      <div class="tops-wrap">
+                        <p class="second">
+                          <img src="../../static/img/shufe.jpg" alt="">
+                        </p>
+                        <p>4210题</p>
+                        <p>上海财经大学</p>
+                      </div>
+                    </Col>
+                    <Col class="top-first" span="8">
+                      <div class="tops-wrap">
+                        <p class="first">
+                          <img src="../../static/img/shufe.jpg" alt="">
+                        </p>
+                        <p>4562题</p>
+                        <p>上海财经大学</p>
+                      </div>
+                    </Col>
+                    <Col class="top-third" span="8">
+                      <div class="tops-wrap">
+                        <p class="third">
+                          <img src="../../static/img/avatar.jpg" alt="">
+                        </p>
+                        <p>3956题</p>
+                        <p>上海财经大学</p>
+                      </div>
+                    </Col>
+                  </Col>
+                  <Col span="24">
+                    <ul class="rank-others">
+                      <li v-for="i in 6">
+                        <p>
+                          <span class="rank-num">{{3+i}}</span>
+                          <span class="campus-name">学校名</span>
+                          <span class="q-num">45121</span>
+                        </p>
+                      </li>
+                    </ul>
+                  </Col>
+                </Col>
+              </Col>
+            </Col>
+          </Row>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
+<style lang="sass">
+.rank-container
+  .top-first
+    background: url("../../static/img/rank-1-r.png") no-repeat
+    background-size: 36%
+    background-position: 89% 7%
+  .top-second
+    background: url("../../static/img/rank-2-r.png") no-repeat
+    background-size: 28%
+    background-position: 75% 25%
+  .top-third
+    background: url("../../static/img/rank-3-r.png") no-repeat
+    background-size: 28%
+    background-position: 75% 25%
+  .rank-item-container
+    overflow: hidden
+    background: #fff
+    padding-bottom: 1rem
+  .rank-item-title
+    padding: 1rem 2rem
+    border-bottom: .1rem solid #e9e9e9
+  .tops-wrap
+    padding-top: 3rem
+    p
+      text-align: center
+      img
+        width: 6rem
+        border-radius: 50%
+        border: .2rem solid #fff
+        box-shadow: 0 .3rem .5rem 0 #63B8FF
+    $first-height: 6rem
+    $other-height: 4rem
+    p.first
+      img
+        width: 8rem
+    p.second, p.third
+      padding-top: $first-height - $other-height
+  ul.rank-others
+    margin-top: 1.5rem
+    li
+      padding: 1rem 0
+      p
+        span
+          clear: both
+        .rank-num
+          width: 2rem
+          height: 2rem
+          padding: .7rem 1.1rem
+          padding-bottom: .6rem
+          background: #E9E9E9
+          border-radius: 50%
+          clear: both
+          overflow: hidden
+          font-size: 1.7rem
+          font-weight: bold
+        .campus-name
+          font-size: 1.5rem
+          margin-left: 1.5rem
+        .q-num
+          float: right
+        .q-num:after
+          content: "题"
+  .rank-row
+    margin-top: 1rem
+.app
+  .dewrap
+    margin-top: 0
+</style>

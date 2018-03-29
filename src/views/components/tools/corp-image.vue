@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         toggleShow() {
-            this.show = !this.show;
+            this.show = !this.show
         },
         cropSuccess(imgDataUrl, field){
             this.imgDataUrl = imgDataUrl
@@ -47,12 +47,11 @@ export default {
             this.show = false
         }
     }
-
 }
 </script>
 <style lang="sass">
 #corp-image
-    margin-left: 1.3rem
+    margin-left: 1.6rem
     font-size: 1.3rem
     padding-bottom: 1rem
 </style>

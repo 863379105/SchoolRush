@@ -10,7 +10,7 @@
                   <corp-image @imgData="imgDataChanged"></corp-image>
               </Col>
               <FormItem label="用户名" prop="name">
-                <Input size="large" v-model="userInfo.name" placeholder="Enter your name"></Input>
+                <Input size="large" v-model="userInfo.name" placeholder="请输入用户名"></Input>
               </FormItem>
               <FormItem label="性别" prop="gender">
                 <RadioGroup size="large" v-model="userInfo.gender">
@@ -34,13 +34,13 @@
                 </Select>
               </FormItem>
               <FormItem label="一句话介绍" prop="describe">
-                <Input v-model="userInfo.describe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
+                <Input v-model="userInfo.describe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="一句话介绍自己吧"></Input>
               </FormItem>
               <FormItem label="邮箱" prop="email">
-                <Input size="large" v-model="userInfo.email" placeholder="Enter your e-mail"></Input>
+                <Input size="large" v-model="userInfo.email" placeholder="输入你的邮箱"></Input>
               </FormItem>
               <FormItem label="电话" prop="tel">
-                <Input size="large" v-model="userInfo.tel" placeholder="Enter your e-mail"></Input>
+                <Input size="large" v-model="userInfo.tel" placeholder="输入你的电话"></Input>
               </FormItem>
               <!-- 提交按钮 -->
               <FormItem>
@@ -76,7 +76,7 @@ export default {
         name: [
           {
             required: true,
-            message: "The name cannot be empty",
+            message: "用户名不能为空",
             trigger: "blur"
           }
         ],
@@ -99,20 +99,16 @@ export default {
           { required: true, message: "请选择学校", trigger: "change" }
         ],
         gender: [
-          { required: true, message: "Please select gender", trigger: "change" }
+          { 
+            required: true,
+            message: "请选择性别",
+            trigger: "change"
+          }
         ],
         major: [
           {
             required: true,
-            message: "Choose at least one hobby",
-            trigger: "change"
-          }
-        ],
-        avatar: [
-          {
-            required: true,
-            type: "string",
-            message: "Please select time",
+            message: "专业不能为空",
             trigger: "change"
           }
         ],
