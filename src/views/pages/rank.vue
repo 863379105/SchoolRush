@@ -7,7 +7,12 @@
             <Col class="rank-row" v-for="j in 4" :lg="8" :md="8" :sm="12" :xs="24">
               <Col class="rank-item-container card">
                 <div class="rank-item-title">
-                  工学
+                  <span>工学</span>
+                  <RadioGroup class="rank-type" v-model="rankType" type="button"  size="small">
+                    <Radio label="日榜">日榜</Radio>
+                    <Radio label="月榜">月榜</Radio>
+                    <Radio label="周榜">周榜</Radio>
+                  </RadioGroup>
                 </div>
                 <Col span="24">
                   <Col class="top-three" span="24">
@@ -61,7 +66,13 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      rankType: "日榜"
+    }
+  }
+}
 </script>
 <style lang="sass">
 .rank-container
@@ -98,6 +109,9 @@ export default {};
   .rank-item-title
     padding: 1rem 2rem
     border-bottom: .1rem solid #e9e9e9
+    .rank-type
+      float: right
+      margin-right: -1.5rem
   .tops-wrap
     padding-top: 3rem
     p.top-q-num
