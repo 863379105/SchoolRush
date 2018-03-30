@@ -63,6 +63,13 @@ const routers = [
                 },
                 component: (resolve) => require(['./views/pages/settings.vue'], resolve)
             },
+            {
+                path: '/majorRank',
+                meta: {
+                    title: '专业排行'
+                },
+                component: (resolve) => require(['./views/pages/majorRank.vue'], resolve)
+            },
         ]
     },
     {

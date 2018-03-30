@@ -48,7 +48,6 @@
                           <span class="q-num">45121</span>
                         </p>
                       </li>
-                      <li class="rank-more"><Button type="ghost" ><router-link to="/majorRank">查看更多 ></router-link></Button></li>
                     </ul>
                   </Col>
                 </Col>
