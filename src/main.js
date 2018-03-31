@@ -1,15 +1,19 @@
 import Vue from 'vue';
 import iView from 'iview';
 import VueRouter from 'vue-router';
+import axios from 'axios'
 import Routers from './router';
 import Util from './libs/util';
 import App from './app.vue';
+import API from "./API/main"
 import 'iview/dist/styles/iview.css';
 
 
 Vue.use(VueRouter)
 Vue.use(iView)
 
+Vue.prototype.$axios = axios
+Vue.prototype.$API = API
 
 
 // 路由配置

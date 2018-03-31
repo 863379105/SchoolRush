@@ -18,7 +18,7 @@
       </div>
       <div v-else class="login-form">
         <div class="input-form Input-wrapper Input-email">
-          <input v-model="registerInfo.email.values" :placeholder="registerInfo.email.placeholder" :class="{warn:registerInfo.email.va}" class="Input" type="email">
+          <input v-model="registerInfo.email.value" :placeholder="registerInfo.email.placeholder" :class="{warn:registerInfo.email.va}" class="Input" type="email">
         </div>
         <div class="input-form Input-wrapper Input-account">
           <input v-model="registerInfo.username.value" :placeholder="registerInfo.username.placeholder" :class="{warn:registerInfo.username.va}" class="Input" type="text">
@@ -78,6 +78,7 @@ export default {
           placeholder: '确认密码'
         }
       },
+      registerInfoBackup: {},
       isLoginPanel: false
     }
   },
@@ -93,22 +94,57 @@ export default {
     },
     register() {
       let validRes = this.valid(this.registerInfo)
-      console.log(validRes)
-      console.log(this.registerInfo)
+      let that = this
+
+      if(!validRes) return
+
+      let url = this.$API.getService("User", "Add")
+
+      let data = {
+        email: this.registerInfo.email.value,
+        name: this.registerInfo.username.value,
+        pass: this.registerInfo.password.value,
+      }
+
+      console.log(data)
+
+      this.$API.post(url, data)
+      .then((res) => {
+        if(res.data.data.hasOwnProperty("res")) { //用户名重复
+          console.log("repeat")
+          that.$set(that.registerInfo.username, "value", "")
+          //提示框的颜色变成红色
+          that.$set(that.registerInfo.username, 'va', true)
+
+          that.$set(that.registerInfo.username, "placeholder", "该用户名已被使用")
+          return
+        }
+        //注册成功 跳转到首页
+        
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
-    valid(obj) {
+    valid(obj) {  //表单验证
       console.log(obj)
       let flag = true
+      //遍历属性查找是否有空值
       for (let i in obj) {
         if(obj[i].value == "") {
           flag = false
           this.$set(obj[i], 'va', true)
           let placeholder = obj[i].placeholder
-          if(placeholder.indexOf("请输入") == -1)
-            this.$set(obj[i], 'placeholder', '请输入' + obj[i].placeholder)
+          if(placeholder.indexOf("不能为空") == -1) {
+            if (placeholder.indexOf("两次") != -1) continue //跳过确认密码
+            this.$set(obj[i], 'placeholder', obj[i].placeholder + "不能为空")
+          }
         }
       }
+      //如果是登陆页面 没有确认密码 并且都不空 直接返回
       if(!obj.hasOwnProperty("validpass")) return flag
+
+      //不是登陆页面 验证密码和确认密码相同
       if(obj.password.value.trim() != "" && obj.password.value.trim() != obj.validpass.value.trim()) {
         //密码不为空 而且两次输入密码不同
         flag = false
@@ -120,6 +156,28 @@ export default {
         this.$set(obj.validpass, 'va', true)
 
         this.$set(obj.validpass, "placeholder", "两次输入的密码不一致")
+      }
+
+      //验证邮箱
+      let email_pattern = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/i
+      if(!email_pattern.test(obj.email.value)) {
+        flag = false
+        this.$set(obj.email, "value", "")
+        //提示框的颜色变成红色
+        this.$set(obj.email, 'va', true)
+
+        this.$set(obj.email, "placeholder", "邮箱格式不正确")
+      }
+
+      //验证用户名
+      var name_pattern = /^[a-zA-Z0-9_-]{4,16}$/
+      if(!name_pattern.test(obj.username.value)) {
+        flag = false
+        this.$set(obj.username, "value", "")
+        //提示框的颜色变成红色
+        this.$set(obj.username, 'va', true)
+
+        this.$set(obj.username, "placeholder", "4-16位 字母 数字 下划线 减号")
       }
       return flag
     }
