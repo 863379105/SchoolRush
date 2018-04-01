@@ -7,10 +7,19 @@
       <div class="login-title">设计问题来分享你擅长的知识</div>
       <div v-if="isLoginPanel" class="login-form">
         <div class="input-form Input-wrapper Input-account">
-          <input v-model="loginInfo.username.value" :placeholder="loginInfo.username.placeholder" :class="{warn:loginInfo.username.va}" class="Input" type="text" value="123">
+          <input v-model="loginInfo.username.value" 
+            :placeholder="loginInfo.username.placeholder" 
+            :class="{warn:loginInfo.username.va}"
+            class="Input" 
+            type="text" 
+            value="123">
         </div>
         <div class="input-form Input-wrapper Input-password">
-          <input v-model="loginInfo.password.value" :placeholder="loginInfo.password.placeholder" :class="{warn:loginInfo.password.va}" class="Input" type="password">
+          <input v-model="loginInfo.password.value" 
+          :placeholder="loginInfo.password.placeholder" 
+          :class="{warn:loginInfo.password.va}" 
+          class="Input" 
+          type="password">
         </div>
         <div class="Button-wrapper">
           <button type="submit" class="Button login-btn" @click="login">登陆</button>
@@ -48,7 +57,7 @@ export default {
         username: {
           value: '',
           va: false,
-          placeholder: '邮箱'
+          placeholder: '邮箱或用户名'
         },
         password: {
           value: '',
@@ -89,7 +98,37 @@ export default {
     login() {
       let validRes = this.valid(this.loginInfo)
       if(validRes) {
-        this.$router.replace("/index")
+        let url = this.$API.getService("User", "login")
+        let that = this
+        let data = {
+          name: this.loginInfo.username.value,
+          pass: this.loginInfo.password.value
+        }
+        this.$API.post(url, data)
+        .then((res) => {
+          if(res.data.data.hasOwnProperty("res") && res.data.data.res == false) {
+            that.$Notice.error({
+                title: '登陆失败',
+                desc: res.data.data.msg
+            });
+            return
+          }
+          //保存用户id 与token信息
+          localStorage.setItem("uid", res.data.data.uid)
+          localStorage.setItem("token", res.data.data.token)
+          that.$Notice.success({
+              title: '登陆成功',
+              desc: "正在跳转..."
+          });
+          //跳转到首页
+          this.$router.push("/index")
+        })
+        .catch((err) => {
+          this.$Notice.error({
+              title: '登陆失败',
+              desc: "请检查网络，或与网站管理员联系提交BUG"
+          });
+        })
       }
     },
     register() {
@@ -98,7 +137,7 @@ export default {
 
       if(!validRes) return
 
-      let url = this.$API.getService("User", "Add")
+      let url = this.$API.getService("User", "add")
 
       let data = {
         email: this.registerInfo.email.value,
@@ -110,16 +149,19 @@ export default {
 
       this.$API.post(url, data)
       .then((res) => {
-        if(res.data.data.hasOwnProperty("res")) { //用户名重复
-          console.log("repeat")
-          that.$set(that.registerInfo.username, "value", "")
-          //提示框的颜色变成红色
-          that.$set(that.registerInfo.username, 'va', true)
-
-          that.$set(that.registerInfo.username, "placeholder", "该用户名已被使用")
+        if(res.data.data.hasOwnProperty("res")) { //有重复
+          let repeatProp = that.registerInfo.username
+          let repeatPropName = "用户名"
+          if(res.data.data.error == "邮箱重复" ) {
+            repeatProp = that.registerInfo.email
+            repeatPropName = "邮箱"
+          }
+          that.$set(repeatProp, "value", "")
+          that.$set(repeatProp, 'va', true)
+          that.$set(repeatProp, "placeholder", "该"+ repeatPropName +"已被使用")
           return
         }
-        //注册成功 跳转到首页
+        //TODO: 注册成功 跳转到首页
         
       })
       .catch((err) => {
@@ -169,7 +211,7 @@ export default {
         this.$set(obj.email, "placeholder", "邮箱格式不正确")
       }
 
-      //验证用户名
+      //验证用户名 4-16位 字母 数字 下划线 减号
       var name_pattern = /^[a-zA-Z0-9_-]{4,16}$/
       if(!name_pattern.test(obj.username.value)) {
         flag = false
@@ -178,6 +220,16 @@ export default {
         this.$set(obj.username, 'va', true)
 
         this.$set(obj.username, "placeholder", "4-16位 字母 数字 下划线 减号")
+      }
+
+      //验证密码长度
+      if(obj.password.value.length > 18 || obj.password.value.length < 8) {
+        flag = false
+        this.$set(obj.password, "value", "")
+        //提示框的颜色变成红色
+        this.$set(obj.password, 'va', true)
+
+        this.$set(obj.password, "placeholder", "密码长度8-18")
       }
       return flag
     }
