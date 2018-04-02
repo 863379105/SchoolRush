@@ -145,8 +145,6 @@ export default {
         pass: this.registerInfo.password.value,
       }
 
-      console.log(data)
-
       this.$API.post(url, data)
       .then((res) => {
         if(res.data.data.hasOwnProperty("res")) { //有重复
@@ -161,11 +159,21 @@ export default {
           that.$set(repeatProp, "placeholder", "该"+ repeatPropName +"已被使用")
           return
         }
-        //TODO: 注册成功 跳转到首页
-        
+        //保存用户id 与token信息
+        localStorage.setItem("uid", res.data.data.id)
+        localStorage.setItem("token", res.data.data.token)
+        that.$Notice.success({
+            title: '注册成功',
+            desc: "正在跳转..."
+        });
+        //跳转到首页
+        this.$router.push("/index")
       })
       .catch((err) => {
-        console.log(err)
+        this.$Notice.error({
+            title: '登陆失败',
+            desc: "请检查网络，或与网站管理员联系提交BUG"
+        });
       })
     },
     valid(obj) {  //表单验证

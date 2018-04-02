@@ -161,13 +161,12 @@ require("echarts/lib/component/title");
 export default {
   data() {
     return {
-      tagColors: ["blue", "red", "yellow", "green"]
+      tagColors: ["blue", "red", "yellow", "green"],
+
     };
   },
   methods: {
-    setQuestion() {
-      console.log("跳转到出题页面");
-    },
+
     drawAnswerPie() {
       // 绘制个人擅长图表
       let myChart = echarts.init(document.getElementById("answerPie"));
@@ -231,10 +230,43 @@ export default {
           }
         }
       });
+    },
+    getUserInfo() {
+      let uid = localStorage.getItem("uid")
+      let token = localStorage.getItem("token")
+      let url = this.$API.getService("User", "getById")
+      let that = this
+
+      this.$API.post(url, {id:uid})
+      .then((res) => {
+        let Uinfo = res.data.data
+        localStorage.setItem("userinfo", JSON.stringify(Uinfo))
+        for(let i in Uinfo){
+          if(!Uinfo[i]) {
+            that.jumpToSettings()
+            break
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    jumpToSettings() { //跳转到设置页面
+      this.$Notice.info({
+          title: '个人信息不全',
+          desc: "请先补全信息，便于筛选你的题目..."
+      });
+
+      this.$router.push("./settings")
+      //TODO: 提示用户个人信息不全
     }
   },
   mounted() {
-    this.drawAnswerPie();
+    this.drawAnswerPie()
+    //获取用户信息
+    this.getUserInfo()
+    
   }
 };
 </script>

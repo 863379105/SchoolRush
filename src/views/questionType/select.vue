@@ -47,7 +47,6 @@
 import major from "../../static/data/Major.js" //所有专业
 export default {
   data() {
-    console.log(major.data)
     return {
       value: "566",
       Question: {

@@ -19,7 +19,16 @@ var API = {
         add: "Add",
         updateById: "updateById",
         getAll: "getAll",
-        login: "login"
+        login: "login",
+        getById: "getById",
+    },
+    Campus: {
+        root: "Campus",
+        getAll: "getAll",
+    },
+    Major: {
+        root: "Major",
+        getAll: "getAll",
     }
 }
 
