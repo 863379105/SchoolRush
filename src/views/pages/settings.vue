@@ -149,10 +149,26 @@ export default {
             avatar: this.userInfo.avatar
           }
           console.log(data)
+          this.updateUserInfo(data)
         } else {
           this.$Message.error("填写有误!");
         }
       });
+    },
+    updateUserInfo(data) {
+      let url = this.$API.getService("User", "updateById")
+      let that = this
+
+      this.$API.post(url, data)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        this.$Notice.error({
+          title: "更新失败",
+          desc: "请检查网络，或联系管理员提交BUG"
+        })
+      })
     },
     handleReset(name) {
       this.$refs[name].resetFields();
@@ -254,8 +270,8 @@ export default {
     img.avatar
       height: 8rem
       margin-top: -1rem
-      border-radius: 50%
-      box-shadow: 0 0 .5rem 0 #444
+      border-radius: .5rem
+      box-shadow: 0 0 .2rem 0 #999
 .ivu-form-item
   margin-bottom: 1.7rem
 .ivu-form-item-error-tip

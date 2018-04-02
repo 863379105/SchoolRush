@@ -50,7 +50,7 @@
             </div>
             <Dropdown class="dropdown" trigger="click">
               <a class="dropdown-avatar" href="javascript:void(0)">
-                <img class="Img img-auto-fit" src="../../static/img/avatar.jpg">
+                <img class="Img img-auto-fit" :src="userInfo.avatar">
               </a>
               <DropdownMenu slot="list">
                 <DropdownItem>
@@ -76,7 +76,8 @@ import vSetup from "./setup";
 export default {
   data() {
     return {
-      setupModel: false
+      setupModel: false,
+      userInfo: {}
     };
   },
   methods: {
@@ -90,11 +91,19 @@ export default {
       });
     },
     toIndex() {
-      this.$router.push("/index");
+      this.$router.push("/index")
+    },
+    getUserInfo() {
+      let Uinfo = JSON.parse(localStorage.getItem("userinfo"))
+      console.log(Uinfo)
+      this.userInfo = Uinfo
     }
   },
   components: {
     vSetup
+  },
+  mounted() {
+    this.getUserInfo()
   }
 };
 </script>
