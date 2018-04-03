@@ -28,7 +28,9 @@
               </div>
             </div>
             <div class="card-right-container right">
-              <p class="title">关于XXXXX的掌握情况</p>
+              <p class="title">
+                  <router-link to="/question">关于XXXXX的掌握情况</router-link>
+              </p>
               <p class="q-set-info">
                 <span>10道题</span>
                 <span>23586人挑战过</span>
@@ -91,48 +93,53 @@
                     </Col>
                   </Col>
               </p>
-              <p class="userinfo-school">
-                <Col span="24">
-                  <img class="school-badge" src="../../static/img/shufe.jpg" alt="shufe">
-                  <Col span="24">
-                    <Col span="24">
-                      <p class="campus-name">上海财经大学</p>
-                    </Col>
-                    <Col span="24">
-                      计算机专业 <Tag type="border" color="green">No.5</Tag>
-                    </Col>
-                  </Col>
-                </Col>
-              </p>
-              <p class="userinfo-user-school">
-                <Col span="24">
-                  <Col span="8">
-                    <Col class="userinfo-data-num" span="24">
-                      6%
-                    </Col>
-                    <Col span="24">
-                      贡献
-                    </Col>
-                  </Col>
-                  <Col span="8">
-                    <Col class="userinfo-data-num" span="24">
-                      99+
-                    </Col>
-                    <Col span="24">
-                      校园排行
-                    </Col>
-                  </Col>
-                  <Col span="8">
-                    <Col class="userinfo-data-num" span="24">
-                      5.6K
-                    </Col>
-                    <Col span="24">
-                      成员
-                    </Col>
-                  </Col>
-                </Col>
-              </p>
+              
             </Row>
+          </div>
+          <div class="sidebar-item school sidebar-userinfo-container">
+            <Row>
+              <p class="userinfo-school">
+                  <Col span="24">
+                    <img class="school-badge" src="../../static/img/shufe.jpg" alt="shufe">
+                    <Col span="24">
+                      <Col span="24">
+                        <p class="campus-name">上海财经大学</p>
+                      </Col>
+                      <Col span="24">
+                        计算机专业 <Tag type="border" color="green">No.5</Tag>
+                      </Col>
+                    </Col>
+                  </Col>
+                </p>
+                <p class="userinfo-user-school">
+                  <Col span="24">
+                    <Col span="8">
+                      <Col class="userinfo-data-num" span="24">
+                        6%
+                      </Col>
+                      <Col span="24">
+                        贡献
+                      </Col>
+                    </Col>
+                    <Col span="8">
+                      <Col class="userinfo-data-num" span="24">
+                        99+
+                      </Col>
+                      <Col span="24">
+                        校园排行
+                      </Col>
+                    </Col>
+                    <Col span="8">
+                      <Col class="userinfo-data-num" span="24">
+                        5.6K
+                      </Col>
+                      <Col span="24">
+                        成员
+                      </Col>
+                    </Col>
+                  </Col>
+                </p>
+              </Row>
           </div>
           <div class="sidebar-item sidebar-fastto-container">
             侧边栏快捷入口
@@ -233,7 +240,6 @@ export default {
     },
     getUserInfo() {
       let uid = localStorage.getItem("uid")
-      let token = localStorage.getItem("token")
       let url = this.$API.getService("User", "getById")
       let that = this
 
@@ -259,7 +265,6 @@ export default {
       });
 
       this.$router.push("./settings")
-      //TODO: 提示用户个人信息不全
     }
   },
   mounted() {
@@ -292,6 +297,9 @@ export default {
       border-radius: .3rem
       box-shadow: 0 0 .3rem 0 #ccc
       background: #fff
+  .school
+    margin-top: 1rem
+    padding: 1.5rem 0
   .sidebar-userinfo-container
     p
       text-align: center
@@ -307,7 +315,6 @@ export default {
       padding: .5rem 0
     .userinfo-school
       padding-top: 1rem
-      border-top: .1rem #ccc solid
   .sidebar-fastto-container
     margin-top: 1rem
     height: 20rem
@@ -360,6 +367,8 @@ export default {
       padding-top: .5rem
     .title
       font-size: 2.5rem
+      a
+        color: #555
     .q-set-info
       span
         margin-right: .5rem

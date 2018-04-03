@@ -56,7 +56,7 @@ export default {
         A: "",
         B: "",
         C: "",
-        D: [],
+        D: "",
         correct: "",
         toAnswer: ""
       },

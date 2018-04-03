@@ -70,6 +70,13 @@ const routers = [
                 },
                 component: (resolve) => require(['./views/pages/majorRank.vue'], resolve)
             },
+            {
+                path: '/question',
+                meta: {
+                    title: '问题页面'
+                },
+                component: (resolve) => require(['./views/pages/question.vue'], resolve)
+            },
         ]
     },
     {

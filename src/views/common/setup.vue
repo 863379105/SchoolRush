@@ -14,9 +14,9 @@
   </div>
 </template>
 <script>
-import vSelect from "../questionType/select"
-import vJudge from "../questionType/judge"
-import vBlank from "../questionType/blank"
+import vSelect from "../questions/select"
+import vJudge from "../questions/judge"
+import vBlank from "../questions/blank"
 export default {
   data() {
     return {
