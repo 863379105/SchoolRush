@@ -247,7 +247,7 @@ export default {
       .then((res) => {
         let Uinfo = res.data.data
         localStorage.setItem("userinfo", JSON.stringify(Uinfo))
-        for(let i in Uinfo){
+        for(let i in Uinfo) {
           if(!Uinfo[i]) {
             that.jumpToSettings()
             break

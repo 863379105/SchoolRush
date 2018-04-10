@@ -146,7 +146,9 @@ export default {
             campusID: this.userInfo.campusID,
             majorID: this.userInfo.majorID,
             vice: vice,
-            avatar: this.userInfo.avatar
+            avatar: this.userInfo.avatar,
+            gender: this.userInfo.gender,
+            describe: this.userInfo.describe
           }
           console.log(data)
           this.updateUserInfo(data)
@@ -161,7 +163,9 @@ export default {
 
       this.$API.post(url, data)
       .then((res) => {
-        console.log(res)
+        this.$Notice.success({
+          title: "修改成功"
+        })
       })
       .catch((err) => {
         this.$Notice.error({
