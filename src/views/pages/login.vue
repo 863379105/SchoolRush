@@ -19,7 +19,8 @@
           :placeholder="loginInfo.password.placeholder" 
           :class="{warn:loginInfo.password.va}" 
           class="Input" 
-          type="password">
+          type="password"
+          @keyup.enter="login">
         </div>
         <div class="Button-wrapper">
           <button type="submit" class="Button login-btn" @click="login">登陆</button>
@@ -36,7 +37,7 @@
           <input v-model="registerInfo.password.value" :placeholder="registerInfo.password.placeholder" :class="{warn:registerInfo.password.va}" class="Input" type="password">
         </div>
         <div class="input-form Input-wrapper Input-password">
-          <input v-model="registerInfo.validpass.value" :placeholder="registerInfo.validpass.placeholder" :class="{warn:registerInfo.validpass.va}" class="Input" type="password">
+          <input v-model="registerInfo.validpass.value" :placeholder="registerInfo.validpass.placeholder" :class="{warn:registerInfo.validpass.va}" class="Input"  @keyup.enter="register" type="password">
         </div>
         <div class="Button-wrapper">
           <button class="Button login-btn" @click="register">注册</button>

@@ -279,67 +279,13 @@ export default {
   $bright-blue: #0084ff
   .container
     margin: 0 auto
-  .content-container
-    float: left
-    padding: 0
-    margin: 0
-    padding-right: .5rem
-    margin-bottom: 1rem
-  .sidebar-container
-    float: right
-    margin-left: 0
-    padding: 0
-    margin: 0
-    padding-left: .5rem
-    position: absolute
-    right: 0
-    .sidebar-item
-      border-radius: .3rem
-      box-shadow: 0 0 .3rem 0 #ccc
-      background: #fff
-  .school
-    margin-top: 1rem
-    padding: 1.5rem 0
   .sidebar-userinfo-container
-    p
-      text-align: center
-    .userinfo-data-num
-      font-size: 2.3rem
-      font-weight: bold
     .userinfo-username
       padding: .5rem 0
       padding-top: 2rem
       font-size: 2rem
       font-weight: bold
-    .userinfo-locate-school,.userinfo-qinfo,.userinfo-school,.userinfo-user-school
-      padding: .5rem 0
-    .userinfo-school
-      padding-top: 1rem
-  .sidebar-fastto-container
-    margin-top: 1rem
-    height: 20rem
-  .sidebar-info-container
-    height: 15rem
-    border-radius: .3rem
-    margin-top: 1rem
-    color: #8590a6
-    font-size: 1.4rem
-  .card-container
-    pdding-bottom: 1rem
-    border-radius: .3rem
-    box-shadow: 0 0 .3rem 0 #ccc
-    background: #fff
-    overflow: hidden
   .card-left-container
-    justify-content: center
-    flex-direction: column
-    position: absolute
-    left: 0
-    top: 0
-    bottom: 0
-    width: 25%
-    border-right: .1rem solid #e9e9e9
-    box-sizing: border-box
     .flex-container
       flex-direction: column
       .label-container
@@ -360,42 +306,6 @@ export default {
           font-size: 1.6rem
         .ivu-breadcrumb-item-separator
           color: #888
-  .card-right-container
-    width: 75%
-    padding: 1rem 1.5rem
-    p
-      padding-top: .5rem
-    .title
-      font-size: 2.5rem
-      a
-        color: #555
-    .q-set-info
-      span
-        margin-right: .5rem
-    .q-difficulty
-    .q-author-say
-      .author-name
-        padding-left: .5rem
-      .author-say
-        font-size: 1.3rem
-        background: #ececec
-        border-radius: .3rem
-        padding: .3rem .5rem
-      .author-name:after
-        content: '：'
-  .Img
-    vertical-align: top
-  .img-auto-fit
-    margin-top: .2rem
-    height: 90%
-  .Input
-    width: 100%
-  .school-badge
-    width: 5rem
-    border-radius: 50%
-  .campus-name
-    font-size: 1.8rem
-    font-weight: bold
   .answerPie-container
     padding-top: .5rem
     #answerPie
