@@ -236,7 +236,7 @@ export default {
       .catch((err) => {
         console.log(err)
         this.$Notice.error({
-          title: "高校数据获取失败",
+          title: "专业数据获取失败",
           desc: "请检查网络，或联系管理员提交BUG"
         })
       })

@@ -170,6 +170,8 @@ input.search:-ms-input-placeholder
   margin: 0
   padding-right: .5rem
   margin-bottom: 1rem
+  .index-filter
+    padding: 1rem
 .card-left-container
   justify-content: center
   flex-direction: column
@@ -210,11 +212,26 @@ input.search:-ms-input-placeholder
   .nav-left
     .search-container
       display: none
-@media (max-width: 670px)
+@media (max-width: 767px)
   .nav-left
     .nav-title
       display: none
+  .content-container
+    float: left
+    padding: 0
+    margin: 0
+    padding-right: .5rem
+    margin-bottom: 1rem
+    .index-filter
+      padding: 1rem
+      .ivu-select-selection
+        margin: 1rem 0
 @media (max-width: 500px)
   .nav-right
     .right-icon
       display: none
+  
+
+
+/* 引用样式 自定义样式  放到最后面覆盖common.sass */
+@import "./campus"
