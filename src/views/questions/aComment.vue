@@ -63,7 +63,6 @@ export default {
     height: 4rem
     left: 0
     right: 0
-    // background: #ccc
     background: linear-gradient(to top, rgba(255,255,255,1) 30%, rgba(255,255,255,0))
     z-index: 10
   .hide
@@ -77,8 +76,6 @@ export default {
   .methods
     .collapse
       float: right
-</style>
-<style>
 </style>
 
 
