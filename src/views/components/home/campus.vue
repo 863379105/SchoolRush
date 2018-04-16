@@ -67,26 +67,26 @@ export default {
 }
 </script>
 <style lang="sass">
-  #com-app
-    p
-      text-align: center
-  .campus-badge
-    border-radius: 50%
-    height: 10rem
-    box-shadow: 0 0 1rem 0 #ccc
-  .campus-name
-    font-size: 2.3rem
-    font-weight: bold
-    line-height: 5rem
-  ul.campus-chart-item
-    margin-top: .2rem
-    li
-      font-size: 1.4rem
-      line-height: 2.4rem
-      padding-right: 1rem
-      text-align: right
-  .campus-chart
-    height: 20rem
-  .campus-chart-item
-    padding-top: 4.5rem
+#com-app
+  p
+    text-align: center
+.campus-badge
+  border-radius: 50%
+  height: 10rem
+  box-shadow: 0 0 1rem 0 #ccc
+.campus-name
+  font-size: 2.3rem
+  font-weight: bold
+  line-height: 5rem
+ul.campus-chart-item
+  margin-top: .2rem
+  li
+    font-size: 1.4rem
+    line-height: 2.4rem
+    padding-right: 1rem
+    text-align: right
+.campus-chart
+  height: 20rem
+.campus-chart-item
+  padding-top: 4.5rem
 </style>

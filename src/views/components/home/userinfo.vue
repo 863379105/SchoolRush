@@ -10,6 +10,14 @@
         <Tag type="border" color="blue">绍兴文理学院</Tag>
       </p>
     </Col>
+    <Col class="user-info-followed" span="12">
+      <p class="num">67</p>
+      <p class="title">关注了</p>
+    </Col>
+    <Col class="user-info-follower" span="12">
+      <p class="num">34</p>
+      <p class="title">关注者</p>
+    </Col>
     <Col class="answerPie-container" span="12">
       <!-- 擅长领域的饼图 -->
       <div id="answerPie" :style="{width: '230px', height: '200px', margin: '0 auto'}"></div>
@@ -189,32 +197,41 @@ export default {
 }
 </script>
 <style lang="sass">
-  #com-app
-    p
-      text-align: center
-  .school-badge
-    border-radius: 50%
-  .userinfo-avatar
-    height: 10rem
-    img
-      box-shadow: 0 0 1rem 0 #ccc
-  .answerPie-container
-    margin-top: 1rem
-  .userinfo-username
-    font-size: 2.3rem
-    font-weight: bold
-    line-height: 5rem
-  .userinfo-qinfo
-    display: block
-  .userhome-data-num
-    font-size: 2.3rem
-    font-weight: bold
-    margin-top: 2rem
-  .userhome-data-text
-    font-size: 1.4rem
-  #answerPie
-    float: right
-  #Pie
-    float: left
+#com-app
+  p
+    text-align: center
+  .user-info-followed,.user-info-follower
+    padding: 1rem 0
+    p.title
+      font-size: 1.6rem
+      border-bottom: .1rem solid #e6e6e6
+      padding-bottom: .5rem
+    p.num
+      font-size: 2.3rem
+      font-weight: bold
+.school-badge
+  border-radius: 50%
+.userinfo-avatar
+  height: 10rem
+  img
+    box-shadow: 0 0 1rem 0 #ccc
+.answerPie-container
+  margin-top: 1rem
+.userinfo-username
+  font-size: 2.3rem
+  font-weight: bold
+  line-height: 5rem
+.userinfo-qinfo
+  display: block
+.userhome-data-num
+  font-size: 2.3rem
+  font-weight: bold
+  margin-top: 2rem
+.userhome-data-text
+  font-size: 1.4rem
+#answerPie
+  float: right
+#Pie
+  float: left
 </style>
 

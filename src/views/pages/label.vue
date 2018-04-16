@@ -1,31 +1,14 @@
 <template>
-  <div class="app index">
+  <div class="app">
     <!-- 导航条下面内容与侧边栏部分开始 -->
     <div class="container grid-container">
       <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
         <!-- 内容部分开始 -->
-        <!-- 筛选模块 弃用 <div class="row content-container col-lg-9 col-md-9">
+        <div class="row content-container col-lg-9 col-md-9">
           <div class="card-container index-filter">
-            <Row :gutter="16">
-              <Col :lg="7" :md="7" :sm="7" :xs="15">
-                <RadioGroup v-model="filterType" type="button" style="width:100%">
-                  <Radio label="选择"></Radio>
-                  <Radio label="判断"></Radio>
-                  <Radio label="填空"></Radio>
-                </RadioGroup>
-              </Col>
-              <Col :lg="10" :md="10" :sm="11" :xs="15">
-                <Select v-model="filterMajor" filterable>
-                  <Option v-for="item in majorData" :value="item.value" :key="item.label">{{ item.label }}</Option>
-                </Select>
-              </Col>
-              <Col :lg="7" :md="7" :sm="6" :xs="15">
-                <span>难度</span>
-                <Rate allow-half v-model="filterLevel"></Rate>
-              </Col>
-            </Row>
-          </div
-        </div>  -->
+            <p>标签： 计算机</p>
+          </div>
+        </div>
         <question-card :tags="Tags"></question-card>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
@@ -33,9 +16,6 @@
           <div class="sidebar-item sidebar-userinfo-container">
             <Row type="flex" justify="center" align="middle" class="code-row-bg">
               <Col span="24">
-              <p class="userinfo-avatar">
-                <Avatar shape="square" size="large" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
-              </p>
               <p class="userinfo-username">iimT</p>
               </Col>
               <Col span="24">
@@ -43,14 +23,6 @@
                 <Tag type="button" color="green">浙江</Tag>
                 <Tag type="button" color="blue">绍兴文理学院</Tag>
               </p>
-              </Col>
-              <Col class="user-info-followed" span="12">
-                <p class="num">67</p>
-                <p class="title">关注了</p>
-              </Col>
-              <Col class="user-info-follower" span="12">
-                <p class="num">34</p>
-                <p class="title">关注者</p>
               </Col>
               <Col class="answerPie-container" span="24">
               <!-- 擅长领域的饼图 -->
@@ -298,30 +270,13 @@
 </script>
 
 <style lang="sass">
-.index
-  .sidebar-container
-    .sidebar-userinfo-container
-      .user-info-followed,.user-info-follower
-        padding: 1rem 0
-        border-bottom: .1rem solid #eee
-        p.title
-          font-size: 1.6rem
-        p.num
-          font-size: 2.3rem
-          font-weight: bold
-      .userinfo-avatar
-        .ivu-avatar-large
-          width: 70px
-          height: 70px
-          margin-top: 2rem
-
 $bright-blue: #0084ff
 .container
   margin: 0 auto
 .sidebar-userinfo-container
   .userinfo-username
     padding: .5rem 0
-    padding-top: 1rem
+    padding-top: 2rem
     font-size: 2rem
     font-weight: bold
 .card-left-container
@@ -338,7 +293,7 @@ $bright-blue: #0084ff
         padding: 0 1rem
         font-size: 1.4rem
     .breadcrumb-container
-      padding-top: 1rem
+      padding-top: 3rem
       font-size: 1.6rem
       justify-content: center
       *

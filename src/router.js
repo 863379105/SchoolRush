@@ -77,6 +77,13 @@ const routers = [
                 },
                 component: (resolve) => require(['./views/pages/question.vue'], resolve)
             },
+            {
+                path: '/label',
+                meta: {
+                    title: '标签'
+                },
+                component: (resolve) => require(['./views/pages/label.vue'], resolve)
+            },
         ]
     },
     {
