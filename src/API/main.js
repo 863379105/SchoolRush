@@ -29,6 +29,11 @@ var API = {
     Major: {
         root: "Major",
         getAll: "getAll",
+    },
+    Question: {
+        root: "Question",
+        GetPageInformation: "GetPageInformation",
+        getTypeById: "getTypeById",
     }
 }
 
@@ -51,8 +56,16 @@ function post(url, params) {
     return axios.post(url, params)
 }
 
+//--------------其他方法
+
+function getUserInfo(uid) {
+    let url = getService("User", "getById")
+    return post(url, { id: uid})
+}
+
 export default {
-    getService: getService,
-    get: get, 
-    post: post
+    getService,
+    get, 
+    post,
+    getUserInfo,
 }

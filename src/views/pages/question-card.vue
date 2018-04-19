@@ -5,35 +5,36 @@
         <div class="card-left-container flex left">
           <div class="flex-container flex">
             <div class="label-container flex">
-              <Tag class="Tag" v-for="item in tags" :color="getColor()">
+              <!-- 不用理会下面的报错 -->
+              <Tag class="Tag" v-for="item in questionInfo.labelsInfo" :color="getColor(item.id)"> 
                 <router-link to="/label">{{ item.name }}</router-link>
               </Tag>
             </div>
             <div class="breadcrumb-container flex">
               <Breadcrumb separator="-">
-                <BreadcrumbItem to="/index">计算机</BreadcrumbItem>
-                <BreadcrumbItem to="/index">网络</BreadcrumbItem>
+                <BreadcrumbItem to="/index">{{ questionInfo.majorParentName }}</BreadcrumbItem>
+                <BreadcrumbItem to="/index">{{ questionInfo.majorName }}</BreadcrumbItem>
               </Breadcrumb>
             </div>
           </div>
         </div>
         <div class="card-right-container right">
           <p class="title">
-            <router-link to="/question">关于XXXXX的掌握情况</router-link>
+            <router-link :to="'/question/'+questionInfo.id">{{ questionInfo.q }}</router-link>
           </p>
           <p class="q-set-info">
-            <span>23586人挑战过</span>
-            <span>1536人已通过</span>
-            <span>通过率：78%</span>
+            <span>{{ questionInfo.challenges }}人挑战过</span>
+            <span>{{ questionInfo.passed }}人已通过</span>
+            <span>通过率：{{ questionInfo.passedrate }}</span>
           </p>
           <p class="q-difficulty">
             <span>难度：</span>
-            <Icon type="ios-star" v-for="n in 4" :key="n"></Icon>
+            <Rate disabled allow-half v-model="questionInfo.levels"></Rate>
           </p>
           <p class="q-author-say">
-            <router-link to="/home"><Avatar shape="square" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
-            <span class="author-name">iimT</span></router-link>
-            <span class="author-say">最近自己学了一些关于XXXXX方面的内容，出几道题大家来答答，能一次通过说明你掌握很不错了哟~</span>
+            <router-link to="/home"><Avatar shape="square" :src="questionInfo.useravatar" />
+            <span class="author-name">{{ questionInfo.username }}</span></router-link>
+            <span class="author-say">{{ questionInfo.toAnswer }}</span>
           </p>
         </div>
       </div>
@@ -42,12 +43,17 @@
 </template>
 <script>
 export default {
+  data() {
+    console.log(this.questionInfo)
+
+    return {}
+  },
   props:["tags", "question-info"],
   methods: {
-    getColor() {
-      const colors = ["#FF6666","#ed3f14", "#2d8cf0", "#19be6b", "#ff9900", "#5cadff", "#80848f"]
-      let color = colors[parseInt(Math.random() * (colors.length - 1))]
-      console.log(color)
+    getColor(id) {
+      const colors = ["#FF6666","#ed3f14", "#2d8cf0", "#19be6b", "#ff9900"]
+      //let color = colors[parseInt(Math.random() * (colors.length - 1))]
+      let color = colors[id % (colors.length)]
       return color
     },
   }
@@ -60,4 +66,10 @@ export default {
       a
         color: #fff
 </style>
+<style>
+.a {
+  background: #5cadff;
+}
+</style>
+
 

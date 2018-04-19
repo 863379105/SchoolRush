@@ -71,7 +71,7 @@ const routers = [
                 component: (resolve) => require(['./views/pages/majorRank.vue'], resolve)
             },
             {
-                path: '/question',
+                path: '/question/:id',
                 meta: {
                     title: '问题页面'
                 },

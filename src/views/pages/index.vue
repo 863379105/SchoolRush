@@ -26,7 +26,7 @@
             </Row>
           </div
         </div>  -->
-        <question-card :tags="Tags"></question-card>
+        <question-card v-for="q in questions" :question-info="q"></question-card>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -34,14 +34,14 @@
             <Row type="flex" justify="center" align="middle" class="code-row-bg">
               <Col span="24">
               <p class="userinfo-avatar">
-                <Avatar shape="square" size="large" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
+                <Avatar shape="square" size="large" :src="userInfo.avatar" />
               </p>
-              <p class="userinfo-username">iimT</p>
+              <p class="userinfo-username">{{ userInfo.name}}</p>
               </Col>
               <Col span="24">
               <p class="userinfo-locate-school">
-                <Tag type="button" color="green">浙江</Tag>
-                <Tag type="button" color="blue">绍兴文理学院</Tag>
+                <Tag color="green">浙江</Tag>
+                <Tag color="blue">{{ userInfo.campusName}}</Tag>
               </p>
               </Col>
               <Col class="user-info-followed" span="12">
@@ -89,7 +89,7 @@
                 <p class="campus-name">上海财经大学</p>
                 </Col>
                 <Col span="24"> 计算机专业
-                <Tag type="border" color="green">No.5</Tag>
+                <Tag color="green">No.5</Tag>
                 </Col>
                 </Col>
                 </Col>
@@ -153,7 +153,8 @@
         filterMajor: "",
         filterLevel: 0,
         majorData: [],
-        Tags: [{name: "asd"}, {name: "ert"},{name: "计算机科学与技术"}, {name: "黑客军团"}, {name: "黑客军团"},{name: "黑客军团"}]
+        userInfo: {},
+        questions: {},
       }
     },
     methods: {
@@ -246,6 +247,7 @@
           })
           .then((res) => {
             let Uinfo = res.data.data
+            that.userInfo = Uinfo
             localStorage.setItem("userinfo", JSON.stringify(Uinfo))
             for (let i in Uinfo) {
               if (!Uinfo[i]) {
@@ -284,12 +286,24 @@
           })
         })
       },
+      getQuestionPage() {
+        const that = this
+        const url  = this.$API.getService("Question", "GetPageInformation")
+
+        this.$API.post(url, {
+          page: 1,
+          num: 20
+        }).then((res) => {
+          console.log(res.data.data)
+          that.questions = res.data.data
+        })
+      }
     },
     mounted() {
       this.drawAnswerPie()
       //获取用户信息
       this.getUserInfo()
-      
+      this.getQuestionPage()
     },
     components: {
       questionCard,

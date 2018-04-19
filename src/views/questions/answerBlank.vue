@@ -123,13 +123,13 @@ export default {
       padding: 1rem 2rem
       border-radius: .5rem
 
-input.answer::-webkit-input-placeholder
-    color: #ddd
-input.answer:-moz-placeholder
-    color: #ddd
-input.answer::-moz-placeholder
-    color: #ddd
-input.answer:-ms-input-placeholder
-    color: #ddd
+  input.answer::-webkit-input-placeholder
+      color: #efefef
+  input.answer:-moz-placeholder
+      color: #efefef
+  input.answer::-moz-placeholder
+      color: #efefef
+  input.answer:-ms-input-placeholder
+      color: #efefef
 </style>
 

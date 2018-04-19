@@ -84,8 +84,12 @@ export default {
     },
     back() {
       this.$router.push("./index")
+    },
+    getQuestion() {
+      
     }
-  }
+  },
+  props: ["qid"],
 }
 </script>
 <style lang="sass">

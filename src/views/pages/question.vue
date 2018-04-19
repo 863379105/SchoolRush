@@ -6,12 +6,12 @@
         <!-- 内容部分开始 -->
         <div class="row content-container col-lg-9 col-md-9">
           <div class="card-container">
-            <a-select v-if="qType==1"></a-select>
-            <a-judge v-else-if="qType==2"></a-judge>
-            <a-blank v-else></a-blank>
+            <a-select :qid="$route.params.id" v-if="qType==1"></a-select>
+            <a-judge :qid="$route.params.id" v-else-if="qType==2"></a-judge>
+            <a-blank :qid="$route.params.id" v-else></a-blank>
           </div>
           <div class="card-container">
-            <comment></comment>
+            <comment :qid="$route.params.id"></comment>
           </div>
         </div>
         <!-- 内容部分结束 -->
@@ -98,17 +98,33 @@ import comment from "../questions/comments"
 
 export default {
   data() {
+    //this.$route.params.id 就是浏览器中传过来的参数
     return {
-      qType: 3
+      qType: 0
     };
   },
   methods: {
-    getUserInfo() {
+    getPublishUserInfo() {
+      
     },
+    getLatestPassed() {
+
+    },
+    getQuestionType() {
+      let id = this.$route.params.id
+      const that = this
+      const url = this.$API.getService("Question", "getTypeById")
+
+      this.$API.get(url,{params: {id: id}})
+      .then((res) => {
+        console.log("题型" + res.data.data.type)
+        that.qType = parseInt(res.data.data.type)
+      })
+    }
   },
   mounted() {
-    //获取用户信息
-    this.getUserInfo();
+    //获取题目类型
+    this.getQuestionType()
   },
   components: {
     aSelect: answerSelect,

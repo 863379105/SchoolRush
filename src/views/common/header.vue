@@ -18,9 +18,9 @@
                   <li>
                     <router-link to="/rank">排行榜</router-link>
                   </li>
-                  <li>
+                  <!-- 暂时弃用群组模块 <li>
                     <router-link to="/group">群组</router-link>
-                  </li>
+                  </li> -->
                   <li>
                     <router-link to="/campus">高校</router-link>
                   </li>
@@ -94,9 +94,14 @@ export default {
       this.$router.push("/index")
     },
     getUserInfo() {
-      let Uinfo = JSON.parse(localStorage.getItem("userinfo"))
-      console.log(Uinfo)
-      this.userInfo = Uinfo
+      let uid = localStorage.getItem("uid")
+      const that = this
+
+      this.$API.getUserInfo(uid).then((res) => {
+        let Uinfo = res.data.data
+        localStorage.setItem("userinfo", JSON.stringify(Uinfo))
+        that.userInfo = Uinfo
+      })
     }
   },
   components: {
