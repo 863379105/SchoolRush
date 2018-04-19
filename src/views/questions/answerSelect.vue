@@ -41,7 +41,7 @@ export default {
   methods: {
     checked(val) {
       //被选中时
-      if(this.isRight) return
+      if(this.isRight || this.btnDisable) return
       this.resetBtn()
       this.resetItem()
       if(val == this.selected) {
@@ -92,6 +92,8 @@ export default {
       this.btnType      = "info",
       this.btnText      = "提交",
       this.btnDisable   = false
+      //将选项的红色标记去掉
+      this.wrongs[this.selected] = false
     },
     resetItem() {
       this.$set(this.wrongs, this.selected, "")
@@ -120,9 +122,25 @@ export default {
       }
       if(!now && this.isFalse) {
         this.btnType = "error"
-        this.btnText = "回答错误，请重新选择"
       }
     },
+    isFalse(now, old) {
+      //选择错误之后要等待5才能继续
+      if(!old && now) {
+        this.btnText = "回答错误，请重新选择(5)"
+        let num = 5
+        this.btnDisable = true
+        let timer = setInterval(() => {
+          if(num == 0) {
+            this.resetBtn()
+            clearInterval(timer)
+            return
+          }
+          this.btnText = "回答错误，请重新选择" + "(" + num + ")"
+          num--
+        }, 1000)
+      }
+    }
   }
 }
 </script>

@@ -2,15 +2,18 @@
   <div id="select">
     <p class="title">填空题<span>直接输入你的答案，检测到答案正确后，输入框会变为绿色</span></p>
       <p class="question">
-        {{"空格之前"}}
-        <input type="text" v-model="answer" :disabled="isRight" class="answer" :class="{'answer-right': isRight}" placeholder="请输入你的答案">
-        {{"空格之后"}}
+        {{ question.q.pre }}
+        <input type="text" v-model="answer" :disabled="isRight || btnDisable" class="answer" :class="{'answer-right': isRight && !loading}" placeholder="请输入你的答案">
+        {{ question.q.suf }}
       </p>
     <p class="btn-wrap">
-      <Button v-if="isRight" class="btn" size="large" shape="circle" type="success" @click="back">回答正确，返回首页</Button>
+     <Button :disabled="btnDisable" class="btn" size="large" shape="circle" :type="btnType" @click="submit">
+        <Spin size="large" v-if="loading"></Spin>
+        <span v-if="!loading">{{ btnText }}</span>
+      </Button>
     </p>
     <p class="toAnswer">
-      <span>{{ "出题人: 这是一道简单题，送分题" }}</span>
+      <span>出题人: {{ question.toAnswer }}</span>
     </p>
   </div>
 </template>
@@ -22,55 +25,100 @@ export default {
       isSubmit: false,
       isRight: false,
       isFalse: false,
-      question: {
-        id: 1,
-        pre: "问题前半部分",
-        suf: "问题后半部分",
-        correct: "3", //正确答案
-        toAnswer: "这是一道简单的送分题"
-      },
+      loading: false,
+      btnType: "info",
+      btnText: "提交",
+      btnDisable: false,
     }
   },
   methods: {
-    fillin(val) {
-      if(this.isRight) return
-      this.resetBtn()
-      this.resetItem()
-      if(val == this.selected){
-        this.selected = ""
+    submit() {
+      if(this.isRight) {
+        this.back()
         return
       }
-      this.selected = val
-    },
-    submit() {
-      this.isSubmit = true
-      if(this.selected == this.question.correct)
+      if(this.answer == "") {
+        this.btnText = "请填写答案后提交(3)"
+        let num = 2
+        this.btnDisable = true
+        let timer = setInterval(() => {
+          if(num == 0) {
+            this.resetBtn()
+            clearInterval(timer)
+            return
+          }
+          this.btnText = "请填写答案后提交" + "(" + num + ")"
+          num--
+        }, 1000)
+        return
+      }
+      let data = {
+        uid: this.question.user.id,
+        qid: this.question.id,
+      }
+      if(this.answer == this.question.correct) {
+        //用户答题正确
+        data.result = true
         this.isRight = true
-      else{
-        this.wrongs[this.selected] = true
+      } else {
+        //用户答题错误
+        data.result = false
         this.isFalse = true
       }
-      console.log(this.selected)
+      console.log(data)
+      this.$emit("onAnswer", data)
     },
     resetBtn() {
-      this.isSubmit = false
-      this.isRight = false
-      this.isFalse = false
-    },
-    resetItem() {
-      this.hasWrong = false
+      this.isSubmit     = false
+      this.isRight      = false
+      this.isFalse      = false
+      this.btnType      = "info",
+      this.btnText      = "提交",
+      this.btnDisable   = false
     },
     back() {
       this.$router.push("./index")
     }
   },
+  props: ["question", "handeling"],
   watch: {
-    answer(newVal, oldVal) {
-      console.log(newVal)
-      if(newVal == this.question.correct)
-        this.isRight = true
+    handeling(now, old) {
+      if(old == false && now == true) {
+        console.log("加载。。。")
+        //由false变为true
+        this.loading = true
+        return
+      }
+      this.loading = false
+    },
+    loading(now, old) {
+      if(!now && this.isRight) {
+        this.btnType = "success"
+        this.btnText = "回答正确，返回首页"
+      }
+      if(!now && this.isFalse) {
+        this.btnType = "error"
+      }
+    },
+    isFalse(now, old) {
+      //选择错误之后要等待5才能继续
+      if(now) {
+        this.btnText = "回答错误，请重新作答(5)"
+        let num = 5
+        this.btnDisable = true
+        let timer = setInterval(() => {
+          if(num == 0) {
+            this.resetBtn()
+            this.answer = ""
+            clearInterval(timer)
+            return
+          }
+          this.btnText = "回答错误，请重新作答" + "(" + num + ")"
+          num--
+        }, 1000)
+      }
     }
-  }
+  },
 }
 </script>
 <style lang="sass">
@@ -112,6 +160,8 @@ export default {
     button.btn
       padding: 1rem 3rem
       font-size: 2rem
+      height: 5.1rem
+      overflow: hidden
   .toAnswer
     margin-top: 1rem
     padding: 1.5rem 0

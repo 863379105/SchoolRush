@@ -114,6 +114,8 @@ export default {
     button.btn
       padding: 1rem 3rem
       font-size: 2rem
+      height: 5.1rem
+      overflow: hidden
   .toAnswer
     margin-top: 1rem
     padding: 1.5rem 0

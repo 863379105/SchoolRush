@@ -7,8 +7,8 @@
         <div class="row content-container col-lg-9 col-md-9">
           <div class="card-container">
             <a-select :question="question" @onAnswer="handelAnswer" :handeling="handeling" @ v-if="question.type==1"></a-select>
-            <a-judge :question="question" v-else-if="question.type==2"></a-judge>
-            <a-blank :question="question" v-else-if="question.type==3"></a-blank>
+            <a-judge :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-else-if="question.type==2"></a-judge>
+            <a-blank :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-else-if="question.type==3"></a-blank>
           </div>
           <div class="card-container">
             <comment :qid="$route.params.id" v-if="found"></comment>

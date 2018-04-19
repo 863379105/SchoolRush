@@ -44,8 +44,6 @@
 <script>
 export default {
   data() {
-    console.log(this.questionInfo)
-
     return {}
   },
   props:["tags", "question-info"],
