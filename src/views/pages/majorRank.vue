@@ -4,7 +4,7 @@
       <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
         <div class="rank-container">
           <Row :gutter="10">
-            <Col class="rank-row" v-for="j in 4" :lg="8" :md="8" :sm="12" :xs="24">
+            <Col class="rank-row" v-for="j in 4" :lg="8" :md="8" :sm="12" :xs="24" :key="j">
               <Col class="rank-item-container card">
                 <div class="rank-item-title">
                   工学

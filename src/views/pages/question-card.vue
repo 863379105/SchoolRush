@@ -6,7 +6,7 @@
           <div class="flex-container flex">
             <div class="label-container flex">
               <!-- 不用理会下面的报错 -->
-              <Tag class="Tag" v-for="item in questionInfo.labelsInfo" :color="getColor(item.id)"> 
+              <Tag class="Tag" v-for="item in questionInfo.labelsInfo" :color="getColor(item.id)" :key="item.id"> 
                 <router-link to="/label">{{ item.name }}</router-link>
               </Tag>
             </div>

@@ -26,7 +26,7 @@
             </Row>
           </div
         </div>  -->
-        <question-card v-for="item in questions" :question-info="item"></question-card>
+        <question-card v-for="item in questions" :question-info="item" :key="item.id"></question-card>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
