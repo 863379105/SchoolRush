@@ -6,12 +6,13 @@
         <!-- 内容部分开始 -->
         <div class="row content-container col-lg-9 col-md-9">
           <div class="card-container">
-            <a-select :qid="$route.params.id" v-if="qType==1"></a-select>
-            <a-judge :qid="$route.params.id" v-else-if="qType==2"></a-judge>
-            <a-blank :qid="$route.params.id" v-else></a-blank>
+            <a-select :question="question" @onAnswer="handelAnswer" :handeling="handeling" @ v-if="question.type==1"></a-select>
+            <a-judge :question="question" v-else-if="question.type==2"></a-judge>
+            <a-blank :question="question" v-else-if="question.type==3"></a-blank>
           </div>
           <div class="card-container">
-            <comment :qid="$route.params.id"></comment>
+            <comment :qid="$route.params.id" v-if="found"></comment>
+            <p v-else>没有找到题目</p>
           </div>
         </div>
         <!-- 内容部分结束 -->
@@ -21,8 +22,10 @@
             <Row type="flex" justify="center" align="middle" class="code-row-bg">
               <Col span="24"><p class="title">出题人</p></Col>
               <Col span="24">
-                <p><img class="avatar square-img" src="../../static/img/avatar.jpg"></p>
-                <p class="userinfo-username">iimT</p>
+                <p class="userinfo-avatar">
+                  <Avatar shape="square" size="large" :src="question.user.avatar" />
+                </p>
+                <p class="userinfo-username">{{ question.user.name }}</p>
               </Col>
               <Col span="24">
                 <p class="share-q">分享了 <span>655</span> 个问题</p>
@@ -100,31 +103,54 @@ export default {
   data() {
     //this.$route.params.id 就是浏览器中传过来的参数
     return {
-      qType: 0
+      question: {},
+      found: true,
+      handeling: false
     };
   },
   methods: {
-    getPublishUserInfo() {
-      
-    },
     getLatestPassed() {
 
     },
-    getQuestionType() {
+    handelAnswer(data){
+      //当子组件传过来用户提交题目时
+      let action = "PassedQuestion"
+      if(!data.result) {
+        //用户回答错误
+        action = "SolveQuestion"
+      }
+      delete data["result"] //删除一个键 轻量化传入后台的数据
+
+      const that = this
+      const url = this.$API.getService("Usertoq", action)
+
+      this.handeling = true
+      this.$API.post(url, data).then((res) => {
+        setTimeout(() => {
+          that.handeling = false
+        },1500)
+      })
+      console.log(data)
+    },
+    getQuestion() {
       let id = this.$route.params.id
       const that = this
-      const url = this.$API.getService("Question", "getTypeById")
+      const url = this.$API.getService("Question", "getById")
 
-      this.$API.get(url,{params: {id: id}})
+      this.$API.post(url,{id: id})
       .then((res) => {
-        console.log("题型" + res.data.data.type)
-        that.qType = parseInt(res.data.data.type)
+        console.log(res.data.data)
+        if(res.data.data.res == false) {
+          that.found = false
+          return
+        }
+        that.question = res.data.data
       })
     }
   },
   mounted() {
     //获取题目类型
-    this.getQuestionType()
+    this.getQuestion()
   },
   components: {
     aSelect: answerSelect,
@@ -145,6 +171,11 @@ export default {
         p.num
           font-size: 2.3rem
           font-weight: bold
+      .userinfo-avatar
+        .ivu-avatar-large
+          width: 7rem
+          height: 7rem
+          margin-top: 2rem
 $bright-blue: #0084ff
 .container
   margin: 0 auto

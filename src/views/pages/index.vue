@@ -325,8 +325,8 @@
           font-weight: bold
       .userinfo-avatar
         .ivu-avatar-large
-          width: 70px
-          height: 70px
+          width: 7rem
+          height: 7rem
           margin-top: 2rem
 
 $bright-blue: #0084ff

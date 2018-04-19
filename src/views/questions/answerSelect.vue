@@ -1,16 +1,17 @@
 <template>
   <div id="select">
-    <p class="title">问题内容？</p>
+    <p class="title">{{ question.q }}</p>
     <ul>
-      <li class="A" :class="{wrong: wrongs.A,checked:selected=='A'}" @click="checked('A')">{{ question.options[0].content }}</li>
-      <li class="B" :class="{wrong: wrongs.B,checked:selected=='B'}" @click="checked('B')">{{ question.options[1].content }}</li>
-      <li class="C" :class="{wrong: wrongs.C,checked:selected=='C'}" @click="checked('C')">{{ question.options[2].content }}</li>
-      <li class="D" :class="{wrong: wrongs.D,checked:selected=='D'}" @click="checked('D')">{{ question.options[3].content }}</li>
+      <li class="A" :class="{wrong: wrongs.A,checked:selected=='A'}" @click="checked('A')">{{ question.options.A }}</li>
+      <li class="B" :class="{wrong: wrongs.B,checked:selected=='B'}" @click="checked('B')">{{ question.options.B }}</li>
+      <li class="C" :class="{wrong: wrongs.C,checked:selected=='C'}" @click="checked('C')">{{ question.options.C }}</li>
+      <li class="D" :class="{wrong: wrongs.D,checked:selected=='D'}" @click="checked('D')">{{ question.options.D }}</li>
     </ul>
     <p class="btn-wrap">
-      <Button v-if="!isSubmit" class="btn" size="large" shape="circle" type="info" @click="submit">提交</Button>
-      <Button v-if="isRight" class="btn" size="large" shape="circle" type="success" @click="back">回答正确，返回首页</Button>
-      <Button v-if="isFalse" class="btn" size="large" shape="circle" type="error">回答错误，请重新选择</Button>
+      <Button :disabled="btnDisable" class="btn" size="large" shape="circle" :type="btnType" @click="submit">
+        <Spin size="large" v-if="loading"></Spin>
+        <span v-if="!loading">{{ btnText }}</span>
+      </Button>
     </p>
     <p class="toAnswer">
       <span>出题人:{{ question.toAnswer }}</span>
@@ -31,29 +32,15 @@ export default {
         C: false,
         D: false
       },
-      question: {
-        content: "这是问题的内容",
-        options: [
-          {
-            content: "选项3",
-          },
-          {
-            content: "选项4",
-          },
-          {
-            content: "选项2",
-          },
-          {
-            content: "选项1",
-          },
-        ],
-        correct: "C",
-        toAnswer: "这是一道送分题，超级简单"
-      }
+      loading: false,
+      btnType: "info",
+      btnText: "提交",
+      btnDisable: false
     }
   },
   methods: {
     checked(val) {
+      //被选中时
       if(this.isRight) return
       this.resetBtn()
       this.resetItem()
@@ -64,32 +51,79 @@ export default {
       this.selected = val
     },
     submit() {
+      if(this.isRight) this.back()
+      if(this.selected == "") {
+        this.btnDisable = true
+        let num = 2
+        this.btnText = "请选择选项(3)"
+        let timer = setInterval(() => {
+          if(num == 0) {
+            this.resetBtn()
+            clearInterval(timer)
+            return
+          }
+          this.btnText = "请选择选项"
+          this.btnText = this.btnText + "(" + num + ")"
+          num--
+        }, 1000)
+        return
+      }
       this.isSubmit = true
-      console.log("提交答案")
-      if(this.selected == this.question.correct)
+      let data = {
+        uid: this.question.user.id,
+        qid: this.question.id,
+      }
+      if(this.selected == this.question.correct) {
+        //用户答题正确
+        data.result = true
         this.isRight = true
-      else{
-        this.wrongs[this.selected] = true
+      } else {
+        //用户答题错误
+        data.result = false
         this.isFalse = true
       }
-      console.log(this.selected)
+      console.log(data)
+      this.$emit("onAnswer", data)
     },
     resetBtn() {
-      this.isSubmit = false
-      this.isRight = false
-      this.isFalse = false
+      this.isSubmit     = false
+      this.isRight      = false
+      this.isFalse      = false
+      this.btnType      = "info",
+      this.btnText      = "提交",
+      this.btnDisable   = false
     },
     resetItem() {
       this.$set(this.wrongs, this.selected, "")
     },
     back() {
-      this.$router.push("./index")
+      this.$router.push("/index")
     },
-    getQuestion() {
-      
-    }
   },
-  props: ["qid"],
+  props: ["question", "handeling"],
+  watch: {
+    handeling(now, old) {
+      if(old == false && now == true) {
+        console.log("加载。。。")
+        //由false变为true
+        this.loading = true
+        return
+      }
+      this.loading = false
+      if(this.isFalse)
+        this.wrongs[this.selected] = true
+    },
+    loading(now, old) {
+      if(!now && this.isRight) {
+        this.btnType = "success"
+        this.btnText = "回答正确，返回首页"
+      }
+      if(!now && this.isFalse) {
+        this.btnType = "error"
+        this.btnText = "回答错误，请重新选择"
+      }
+    },
+  }
 }
 </script>
 <style lang="sass">
@@ -145,6 +179,8 @@ export default {
     button.btn
       padding: 1rem 3rem
       font-size: 2rem
+      height: 5.1rem
+      overflow: hidden
   .toAnswer
     margin-top: 1rem
     padding: 1.5rem 0

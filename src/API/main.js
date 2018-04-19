@@ -34,6 +34,13 @@ var API = {
         root: "Question",
         GetPageInformation: "GetPageInformation",
         getTypeById: "getTypeById",
+        getById: "getById",
+    },
+    Usertoq: {
+        root: "Usertoq",
+        Add: "Add",
+        PassedQuestion: "PassedQuestion",
+        SolveQuestion: "SolveQuestion",
     }
 }
 

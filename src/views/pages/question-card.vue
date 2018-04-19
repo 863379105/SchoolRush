@@ -32,7 +32,7 @@
             <Rate disabled allow-half v-model="questionInfo.levels"></Rate>
           </p>
           <p class="q-author-say">
-            <router-link to="/home"><Avatar shape="square" :src="questionInfo.useravatar" />
+            <router-link to="/home"><Avatar size="small" shape="square" :src="questionInfo.useravatar" />
             <span class="author-name">{{ questionInfo.username }}</span></router-link>
             <span class="author-say">{{ questionInfo.toAnswer }}</span>
           </p>
