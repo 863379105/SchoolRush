@@ -106,7 +106,6 @@ export default {
   watch: {
     handeling(now, old) {
       if(old == false && now == true) {
-        console.log("加载。。。")
         //由false变为true
         this.loading = true
         return

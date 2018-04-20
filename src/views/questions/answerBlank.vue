@@ -33,6 +33,7 @@ export default {
   },
   methods: {
     submit() {
+      this.answer = this.answer.trim()
       if(this.isRight) {
         this.back()
         return

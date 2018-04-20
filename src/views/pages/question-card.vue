@@ -20,7 +20,7 @@
         </div>
         <div class="card-right-container right">
           <p class="title">
-            <router-link :to="'/question/'+questionInfo.id">{{ questionInfo.q }}</router-link>
+            <router-link :to="'/question/'+questionInfo.id">{{ formatQ(questionInfo.q) }}</router-link>
           </p>
           <p class="q-set-info">
             <span>{{ questionInfo.challenges }}人挑战过</span>
@@ -44,6 +44,7 @@
 <script>
 export default {
   data() {
+    this.questionInfo.levels = parseFloat(this.questionInfo.levels)
     return {}
   },
   props:["tags", "question-info"],
@@ -54,6 +55,13 @@ export default {
       let color = colors[id % (colors.length)]
       return color
     },
+    formatQ(text) {
+      //将字数超出限制的去掉
+      let maxLen = 30
+      if(text.length < maxLen)
+        return text
+      return text.substr(0,maxLen) + "..."
+    }
   }
 }
 </script>

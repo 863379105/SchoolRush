@@ -1,14 +1,15 @@
 <template>
   <div id="select">
-    <p class="title">{{ question.content }}</p>
+    <p class="title">{{ question.q }}</p>
     <ul>
       <li class="T" :class="{wrong: wrongs.T,checked:selected=='T'}" @click="checked('T')">正确</li>
       <li class="F" :class="{wrong: wrongs.F,checked:selected=='F'}" @click="checked('F')">错误</li>
     </ul>
     <p class="btn-wrap">
-      <Button v-if="!isSubmit" class="btn" size="large" shape="circle" type="info" @click="submit">提交</Button>
-      <Button v-if="isRight" class="btn" size="large" shape="circle" type="success" @click="back">回答正确，返回首页</Button>
-      <Button v-if="isFalse" class="btn" size="large" shape="circle" type="error">回答错误，请重新选择</Button>
+      <Button :disabled="btnDisable" class="btn" size="large" shape="circle" :type="btnType" @click="submit">
+        <Spin size="large" v-if="loading"></Spin>
+        <span v-if="!loading">{{ btnText }}</span>
+      </Button>
     </p>
     <p class="toAnswer">
       <span>出题人: {{ question.toAnswer }}</span>
@@ -27,18 +28,15 @@ export default {
         T: false,
         F: false,
       },
-      question: {
-        id: 1,
-        content: "这是问题的内容？",
-        correct: "T", //正确答案
-        toAnswer: "这是一道简单的送分题"
-      },
-      //TODO: 选择错误之后 需要等待5秒钟时候才能重新选择
+      loading: false,
+      btnType: "info",
+      btnText: "提交",
+      btnDisable: false
     }
   },
   methods: {
     checked(val) {
-      if(this.isRight) return
+      if(this.isRight || this.btnDisable) return
       this.resetBtn()
       this.resetItem()
       if(val == this.selected){
@@ -48,25 +46,94 @@ export default {
       this.selected = val
     },
     submit() {
+      if(this.isRight) this.back()
+      if(this.selected == "") {
+        this.btnDisable = true
+        let num = 2
+        this.btnText = "请选择选项(3)"
+        let timer = setInterval(() => {
+          if(num == 0) {
+            this.resetBtn()
+            clearInterval(timer)
+            return
+          }
+          this.btnText = "请选择选项"
+          this.btnText = this.btnText + "(" + num + ")"
+          num--
+        }, 1000)
+        return
+      }
       this.isSubmit = true
-      if(this.selected == this.question.correct)
+      let data = {
+        uid: this.question.user.id,
+        qid: this.question.id,
+      }
+      if(this.selected == this.question.correct) {
+        //用户答题正确
+        data.result = true
         this.isRight = true
-      else{
-        this.wrongs[this.selected] = true
+      } else {
+        //用户答题错误
+        data.result = false
         this.isFalse = true
       }
-      console.log(this.selected)
+      console.log(data)
+      this.$emit("onAnswer", data)
     },
     resetBtn() {
-      this.isSubmit = false
-      this.isRight = false
-      this.isFalse = false
+      this.isSubmit     = false
+      this.isRight      = false
+      this.isFalse      = false
+      this.btnType      = "info",
+      this.btnText      = "提交",
+      this.btnDisable   = false
+      //将选项的红色标记去掉
+      this.wrongs[this.selected] = false
     },
     resetItem() {
       this.$set(this.wrongs, this.selected, "")
     },
     back() {
-      this.$router.push("./index")
+      this.$router.push("/index")
+    }
+  },
+  props: ["question", "handeling"],
+    watch: {
+    handeling(now, old) {
+      if(old == false && now == true) {
+        //由false变为true
+        this.loading = true
+        return
+      }
+      this.loading = false
+      if(this.isFalse)
+        this.wrongs[this.selected] = true
+    },
+    loading(now, old) {
+      if(!now && this.isRight) {
+        this.btnType = "success"
+        this.btnText = "回答正确，返回首页"
+      }
+      if(!now && this.isFalse) {
+        this.btnType = "error"
+      }
+    },
+    isFalse(now, old) {
+      //选择错误之后要等待5才能继续
+      if(!old && now) {
+        this.btnText = "回答错误，请重新选择(5)"
+        let num = 5
+        this.btnDisable = true
+        let timer = setInterval(() => {
+          if(num == 0) {
+            this.resetBtn()
+            clearInterval(timer)
+            return
+          }
+          this.btnText = "回答错误，请重新选择" + "(" + num + ")"
+          num--
+        }, 1000)
+      }
     }
   }
 }
