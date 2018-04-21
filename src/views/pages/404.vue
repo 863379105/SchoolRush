@@ -5,7 +5,7 @@
         
         <div id="nofound-panel">
           <div id="error-text">
-            <h1>可恶，问题不见了?!</h1>
+            <h1>问题不见了?!</h1>
           </div>
           <div id="rollback-btn">
           <router-link to="/index">
@@ -69,7 +69,7 @@ export default {
   h1{
     position: relative;
     top: 50%;
-    left: 40%;
+    left: 60%;
     transform: translateY(-50%);
   }
   #rollback-btn{
