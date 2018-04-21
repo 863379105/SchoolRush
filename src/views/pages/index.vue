@@ -45,12 +45,12 @@
               </p>
               </Col>
               <Col class="user-info-followed" span="12">
-                <p class="num">67</p>
-                <p class="title">关注了</p>
+              <p class="num">67</p>
+              <p class="title">关注了</p>
               </Col>
               <Col class="user-info-follower" span="12">
-                <p class="num">34</p>
-                <p class="title">关注者</p>
+              <p class="num">34</p>
+              <p class="title">关注者</p>
               </Col>
               <Col class="answerPie-container" span="24">
               <!-- 擅长领域的饼图 -->
@@ -76,7 +76,7 @@
                 </Col>
                 </Col>
               </p>
-  
+
             </Row>
           </div>
           <div class="sidebar-item school sidebar-userinfo-container">
@@ -119,7 +119,12 @@
             </Row>
           </div>
           <div class="sidebar-item sidebar-fastto-container">
-            侧边栏快捷入口
+              <ul class="fastto">
+                <li><p><Icon type="checkmark-circled"></Icon>已通过</p></li>
+                <li><p><Icon type="hammer"></Icon>正在解决</p></li>
+                <li><p><Icon type="pricetags"></Icon>关注的标签</p></li>
+                <li><p><Icon type="university"></Icon>关注的学校</p></li>
+              </ul>
           </div>
           <div class="sidebar-info-container">
             <p>侵权举报网上有害信息举报专区</p>
@@ -136,179 +141,192 @@
 </template>
 
 <script>
-  let echarts = require("echarts/lib/echarts");
-  // 引入柱状图组件
-  require("echarts/lib/chart/pie");
-  // 引入提示框和title组件
-  require("echarts/lib/component/tooltip");
-  require("echarts/lib/component/title");
+let echarts = require("echarts/lib/echarts");
+// 引入柱状图组件
+require("echarts/lib/chart/pie");
+// 引入提示框和title组件
+require("echarts/lib/component/tooltip");
+require("echarts/lib/component/title");
 
-  import questionCard from "./question-card.vue"
-  
-  export default {
-    data() {
-      return {
-        tagColors: ["blue", "red", "yellow", "green"],
-        filterType: 0,
-        filterMajor: "",
-        filterLevel: 0,
-        majorData: [],
-        userInfo: {},
-        questions: {},
-      }
-    },
-    methods: {
-      drawAnswerPie() {
-        // 绘制个人擅长图表
-        let myChart = echarts.init(document.getElementById("answerPie"));
-        myChart.setOption({
-          series: {
-            type: "pie",
-            center: ["50%", "53%"],
-            radius: ["45%", "68%"],
-            avoidLabelOverlap: false,
-            labelLine: {
-              normal: {
-                show: false
-              }
+import questionCard from "./question-card.vue";
+
+export default {
+  data() {
+    return {
+      tagColors: ["blue", "red", "yellow", "green"],
+      filterType: 0,
+      filterMajor: "",
+      filterLevel: 0,
+      majorData: [],
+      userInfo: {},
+      questions: {}
+    };
+  },
+  methods: {
+    drawAnswerPie() {
+      // 绘制个人擅长图表
+      let myChart = echarts.init(document.getElementById("answerPie"));
+      myChart.setOption({
+        series: {
+          type: "pie",
+          center: ["50%", "53%"],
+          radius: ["45%", "68%"],
+          avoidLabelOverlap: false,
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          label: {
+            normal: {
+              show: false,
+              position: "center",
+              formatter: "{b} : {d}%"
             },
-            label: {
-              normal: {
-                show: false,
-                position: "center",
-                formatter: "{b} : {d}%"
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: "17",
-                  textBorderColor: "#fff",
-                  textBorderWidth: "3",
-                  textShadowOffsetY: "0",
-                  textShadowOffsetX: "0",
-                  textShadowBlur: "5",
-                  textShadowColor: "#ccc"
-                }
-              }
-            },
-            data: [{
-                name: "计算机科学与技术",
-                value: 1000,
-                selected: true
-              },
-              {
-                name: "网络工程",
-                value: 900
-              },
-              {
-                name: "自动化",
-                value: 851
-              },
-              {
-                name: "金融",
-                value: 851
-              },
-              {
-                name: "软件工程",
-                value: 851
-              }
-            ],
-            itemStyle: {
-              //阴影
-              normal: {
-                shadowBlur: 10,
-                shadowColor: "rgba(0, 0, 0, 0.5)",
-                color: function(o) {
-                  let color = ["#2db7f5", "#19be6b", "#f90", "#2d8cf0", "#ed3f14"]
-                  return color[o.dataIndex]
-                }
+            emphasis: {
+              show: true,
+              textStyle: {
+                fontSize: "17",
+                textBorderColor: "#fff",
+                textBorderWidth: "3",
+                textShadowOffsetY: "0",
+                textShadowOffsetX: "0",
+                textShadowBlur: "5",
+                textShadowColor: "#ccc"
               }
             }
           },
-          title: {
-            text: "擅长领域",
-            x: "center",
-            textStyle: {
-              fontSize: 14,
-              fontWeight: 'normal',
-              color: "#000",
-              fontFamily: "'Microsoft YaHei','serif' , 'monospace', 'Arial', 'Courier New'",
+          data: [
+            {
+              name: "计算机科学与技术",
+              value: 1000,
+              selected: true
+            },
+            {
+              name: "网络工程",
+              value: 900
+            },
+            {
+              name: "自动化",
+              value: 851
+            },
+            {
+              name: "金融",
+              value: 851
+            },
+            {
+              name: "软件工程",
+              value: 851
             }
-          }
-        });
-      },
-      getUserInfo() {
-        let uid = localStorage.getItem("uid")
-        let url = this.$API.getService("User", "getById")
-        let that = this
-  
-        this.$API.post(url, {
-            id: uid
-          })
-          .then((res) => {
-            let Uinfo = res.data.data
-            that.userInfo = Uinfo
-            localStorage.setItem("userinfo", JSON.stringify(Uinfo))
-            for (let i in Uinfo) {
-              if (!Uinfo[i]) {
-                that.jumpToSettings()
-                break
+          ],
+          itemStyle: {
+            //阴影
+            normal: {
+              shadowBlur: 10,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+              color: function(o) {
+                let color = [
+                  "#2db7f5",
+                  "#19be6b",
+                  "#f90",
+                  "#2d8cf0",
+                  "#ed3f14"
+                ];
+                return color[o.dataIndex];
               }
             }
+          }
+        },
+        title: {
+          text: "擅长领域",
+          x: "center",
+          textStyle: {
+            fontSize: 14,
+            fontWeight: "normal",
+            color: "#000",
+            fontFamily:
+              "'Microsoft YaHei','serif' , 'monospace', 'Arial', 'Courier New'"
+          }
+        }
+      });
+    },
+    getUserInfo() {
+      let uid = localStorage.getItem("uid");
+      let url = this.$API.getService("User", "getById");
+      let that = this;
 
-            that.getAllMajor()
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
-      jumpToSettings() { //跳转到设置页面
-        this.$Notice.info({
-          title: '个人信息不全',
-          desc: "请先补全信息，便于筛选你的题目..."
-        });
-  
-        this.$router.push("./settings")
-      },
-      getAllMajor() {
-        let that = this
-        let url = this.$API.getService("Major", "getAll")
-
-        this.$API.post(url)
-        .then((res) => {
-          that.majorData = res.data.data
+      this.$API
+        .post(url, {
+          id: uid
         })
-        .catch((err) => {
-          console.log(err)
+        .then(res => {
+          let Uinfo = res.data.data;
+          that.userInfo = Uinfo;
+          localStorage.setItem("userinfo", JSON.stringify(Uinfo));
+          for (let i in Uinfo) {
+            if (!Uinfo[i]) {
+              that.jumpToSettings();
+              break;
+            }
+          }
+
+          that.getAllMajor();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    jumpToSettings() {
+      //跳转到设置页面
+      this.$Notice.info({
+        title: "个人信息不全",
+        desc: "请先补全信息，便于筛选你的题目..."
+      });
+
+      this.$router.push("./settings");
+    },
+    getAllMajor() {
+      let that = this;
+      let url = this.$API.getService("Major", "getAll");
+
+      this.$API
+        .post(url)
+        .then(res => {
+          that.majorData = res.data.data;
+        })
+        .catch(err => {
+          console.log(err);
           this.$Notice.error({
             title: "专业数据获取失败",
             desc: "请检查网络，或联系管理员提交BUG"
-          })
-        })
-      },
-      getQuestionPage() {
-        const that = this
-        const url  = this.$API.getService("Question", "GetPageInformation")
+          });
+        });
+    },
+    getQuestionPage() {
+      const that = this;
+      const url = this.$API.getService("Question", "GetPageInformation");
 
-        this.$API.post(url, {
+      this.$API
+        .post(url, {
           page: 1,
           num: 20
-        }).then((res) => {
-          console.log(res.data.data)
-          that.questions = res.data.data
         })
-      }
+        .then(res => {
+          console.log(res.data.data);
+          that.questions = res.data.data;
+        });
     },
-    mounted() {
-      this.drawAnswerPie()
-      //获取用户信息
-      this.getUserInfo()
-      this.getQuestionPage()
-    },
-    components: {
-      questionCard,
-    }
-  };
+  },
+  mounted() {
+    this.drawAnswerPie();
+    //获取用户信息
+    this.getUserInfo();
+    this.getQuestionPage();
+  },
+  components: {
+    questionCard
+  },
+};
 </script>
 
 <style lang="sass">

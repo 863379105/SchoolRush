@@ -13,7 +13,7 @@
               <div class="nav-title">
                 <ul>
                   <li>
-                    <router-link to="/index">首页</router-link>
+                    <router-link to="/index" @click.native="loading">首页</router-link>
                   </li>
                   <li>
                     <router-link to="/rank">排行榜</router-link>
@@ -38,10 +38,9 @@
                 <li>
                   <Button type="ghost" @click="setQuestion">出题</Button>
                 </li>
-                <Modal v-model="setupModel" title="" :closable="false" @on-ok="setupSubmit">
-                  <v-setup></v-setup>
-                  <div class="Modal-footer" slot="footer">
-                  </div>
+                <Modal v-model="setupModel" :closable="false" @on-ok="setupSubmit">
+                  <v-setup @onAddLabel="setupModel = false" @onSueccess="setupSuccess" @onError="setupFail"></v-setup>
+                  <div class="Modal-footer" slot="footer"></div>
                 </Modal>
                 <li>
                   <Icon size="18px" type="chatbubbles"></Icon>
@@ -93,7 +92,7 @@ export default {
     toIndex() {
       this.$router.push("/index")
     },
-    getUserInfo() {
+    getUserInfo(cb) {
       let uid = localStorage.getItem("uid")
       const that = this
 
@@ -101,6 +100,20 @@ export default {
         let Uinfo = res.data.data
         localStorage.setItem("userinfo", JSON.stringify(Uinfo))
         that.userInfo = Uinfo
+        if(cb) cb()
+      })
+    },
+    setupSuccess() {
+      this.setupModel = false
+      this.$Message.success('发布成功！')
+    },
+    setupFail() {
+      this.$Message.error('发布失败！')
+    },
+    loading() {
+      this.$Spin.show();
+      this.getUserInfo(() => {
+        this.$Spin.hide()
       })
     }
   },
@@ -109,7 +122,7 @@ export default {
   },
   mounted() {
     this.getUserInfo()
-  }
+  },
 };
 </script>
 <style lang="sass">
@@ -223,11 +236,13 @@ export default {
   .ivu-modal
     .ivu-modal-content
       .ivu-modal-footer
-        height: 0
-        padding: 0
+        padding-bottom: 1rem
+        border: none
   .ivu-modal-body
     padding: 1rem 1.6rem
     padding-bottom: 0
+    
+  
   .dropdown-link
     color: #495060
   @media (max-width: 992px)
@@ -246,5 +261,11 @@ export default {
       .right-icon
         display: none
 </style>
+<style>
+.demo-spin-icon-load{
+  animation: ani-demo-spin 1s linear infinite;
+}
+</style>
+
 
 

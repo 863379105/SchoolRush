@@ -1,11 +1,29 @@
 <template>
-  <div>
+  <div id="select">
     <!-- 提问表单开始 -->
     <Form ref="Question" :model="Question" :rules="ruleValidate" :label-width="80">
-      <FormItem label="专业分类" prop="major">
-        <Select v-model="Question.major" filterable>
-          <Option v-for="item in majorData['哲学']" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      <FormItem label="专业分类" prop="majorID">
+        <Select v-model="Question.majorID" placeholder="可搜索分类哦" filterable>
+          <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
+      </FormItem>
+      <FormItem label="标签" prop="labels">
+        <Select class="q-title" placeholder="可搜索标签哦" v-model="Question.labels" filterable multiple>
+          <Option v-for="item in labelData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+        </Select>
+        <!-- TODO: 添加标签 <Button class="addLabel" type="primary" @click="handelAddLabel">添加标签</Button>
+        <template>
+          <Modal
+            class="newLabel"
+            v-model="isAddLabel"
+            :closable="false"
+            @on-ok="addLabel">
+            <Input v-model="newLabelName" placeholder="标签名">
+            <Button type="info" slot="append">添加</Button>
+            </Input>
+            <div class="Modal-footer" slot="footer"></div>
+          </Modal>
+        </template> -->
       </FormItem>
       <FormItem label="问题" prop="q">
         <Input v-model="Question.q" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
@@ -44,23 +62,23 @@
   </div>
 </template>
 <script>
-import major from "../../static/data/Major.js" //所有专业
 export default {
   data() {
     return {
-      value: "566",
+      isAddLabel: false,
+      newLabelName: "",
       Question: {
         type: 1, //选择1 判断2 填空3
-        major: "",
+        majorID: "",
         q: "",
         A: "",
         B: "",
         C: "",
         D: "",
         correct: "",
-        toAnswer: ""
+        toAnswer: "",
+        labels: [],
       },
-      majorData: major.data,
       QuestionBackup: {},
       ruleValidate: {
         q: [
@@ -70,7 +88,7 @@ export default {
             trigger: "blur"
           }
         ],
-        major: [
+        majorID: [
           {
             required: true,
             message: "专业不能为空",
@@ -119,7 +137,7 @@ export default {
             trigger: "blur"
           }
         ]
-      }
+      },
     };
   },
    methods: {
@@ -129,6 +147,9 @@ export default {
               this.$Message.error('题目信息不全!');
               return;
             }
+            let question = 
+            this.$emit("submitQ", this.Question)
+            return true
         })
      },
      handleReset() {
@@ -136,18 +157,47 @@ export default {
         this.$set(this.Question, i, this.QuestionBackup[i])
       }
      },
+     getAllMajor() {
+      let that = this
+      let url = this.$API.getService("Major", "getAll")
+
+      this.$API.post(url)
+      .then((res) => {
+        that.majorData = res.data.data
+      })
+      .catch((err) => {
+        console.log(err)
+        this.$Notice.error({
+          title: "专业数据获取失败",
+          desc: "请检查网络，或联系管理员提交BUG"
+        })
+      })
+    },
    },
    mounted() {
      this.QuestionBackup = {
         type: 1, //选择1 判断2 填空3
-        major: "",
+        majorID: "",
         q: "",
         A: "",
         B: "",
         C: "",
         D: [],
-        correct: ""
+        correct: "",
+        labels: [],
       }
    },
+   props: ["major-data", "label-data"],
 };
 </script>
+<style lang="sass">
+  #select
+    .q-title
+      width: 80%
+    .addLabel
+      width: 19%
+    .newLabel
+      .ivu-modal-content
+        padding: 2rem
+</style>
+

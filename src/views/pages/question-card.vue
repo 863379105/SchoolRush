@@ -1,4 +1,5 @@
 <template>
+  <!-- 问题展示卡片组件 -->
   <div class="question-card">
     <div class="row content-container col-lg-9 col-md-9">
       <div class="card-container">

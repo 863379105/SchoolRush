@@ -1,4 +1,5 @@
 <template>
+  <!-- 高校通用页面 -->
   <div class="app campus">
     <div class="container grid-container">
       <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">

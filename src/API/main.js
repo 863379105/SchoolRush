@@ -35,12 +35,17 @@ var API = {
         GetPageInformation: "GetPageInformation",
         getTypeById: "getTypeById",
         getById: "getById",
+        add: "add",
     },
     Usertoq: {
         root: "Usertoq",
         Add: "Add",
         PassedQuestion: "PassedQuestion",
         SolveQuestion: "SolveQuestion",
+    },
+    Label: {
+        root: "Label",
+        getAll: "getAll",
     }
 }
 

@@ -1,4 +1,5 @@
 <template>
+  <!-- 题目通用页面 -->
   <div class="app question">
     <!-- 导航条下面内容与侧边栏部分开始 -->
     <div class="container grid-container">

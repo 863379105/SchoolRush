@@ -1,4 +1,5 @@
 <template>
+  <!-- 小专业排行榜页面 -->
   <div class="app">
     <div class="dewrap container grid-container">
       <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">

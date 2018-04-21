@@ -1,4 +1,5 @@
 <template>
+  <!-- 标签通用页面 -->
   <div class="app">
     <!-- 导航条下面内容与侧边栏部分开始 -->
     <div class="container grid-container">

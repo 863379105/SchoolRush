@@ -23,17 +23,17 @@
               </FormItem>
               <FormItem label="学校" prop="campusID">
                 <Select size="large" v-model="userInfo.campusID" filterable>
-                  <Option v-for="item in campusData" :value="item.value" :key="item.label">{{ item.label }}</Option>
+                  <Option v-for="item in campusData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
               </FormItem>
               <FormItem label="专业" prop="majorID">
                 <Select size="large" v-model="userInfo.majorID" filterable>
-                  <Option v-for="item in majorData" :value="item.value" :key="item.label">{{ item.label }}</Option>
+                  <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
               </FormItem>
               <FormItem label="兴趣专业" prop="vice">
                 <Select v-model="userInfo.vice" filterable multiple>
-                  <Option v-for="item in majorData" :value="item.value" :key="item.label">{{ item.label }}</Option>
+                  <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
               </FormItem>
               <FormItem label="一句话介绍" prop="describe">
@@ -270,7 +270,7 @@ export default {
   .submitBtn
     margin-top: 1rem
   .settings-avatar
-    z-index: 9999
+    z-index: 99
     img.avatar
       height: 8rem
       margin-top: -1rem
