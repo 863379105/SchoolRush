@@ -75,7 +75,7 @@ const routers = [
                 meta: {
                     title: '问题页面'
                 },
-                component: (resolve) => require(['./views/pages/question.vue'], resolve)
+                component: (resolve) => require(['./views/pages/question.vue'], resolve),
             },
             {
                 path: '/label',
@@ -84,6 +84,14 @@ const routers = [
                 },
                 component: (resolve) => require(['./views/pages/label.vue'], resolve)
             },
+            {
+                path: '/404',
+                meta: {
+                    title: '404'
+                },
+                component: (resolve) => require(['./views/pages/404.vue'], resolve),
+            },
+           
         ]
     },
     {
