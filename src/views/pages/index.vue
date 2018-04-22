@@ -107,65 +107,11 @@ export default {
 </script>
 
 <style lang="sass">
-.index
-  .sidebar-container
-    .sidebar-userinfo-container
-      .user-info-followed,.user-info-follower
-        padding: 1rem 0
-        border-bottom: .1rem solid #eee
-        p.title
-          font-size: 1.6rem
-        p.num
-          font-size: 2.3rem
-          font-weight: bold
-      .userinfo-avatar
-        .ivu-avatar-large
-          width: 7rem
-          height: 7rem
-          margin-top: 2rem
-    .user-info-school-badge
-        .ivu-avatar-large
-          width: 7rem
-          height: 7rem
-          margin-bottom: 1rem
 
 $bright-blue: #0084ff
 .container
   margin: 0 auto
-.sidebar-userinfo-container
-  .userinfo-username
-    padding: .5rem 0
-    padding-top: 1rem
-    font-size: 2rem
-    font-weight: bold
-.card-left-container
-  .flex-container
-    flex-direction: column
-    .label-container
-      flex-wrap: wrap
-      justify-content: center
-      $tag-height: 2.3rem
-      .Tag
-        border-radius: .1rem
-        height: $tag-height
-        line-height: $tag-height
-        padding: 0 1rem
-        font-size: 1.4rem
-    .breadcrumb-container
-      padding-top: 1rem
-      font-size: 1.6rem
-      justify-content: center
-      *
-        font-size: 1.6rem
-      .ivu-breadcrumb-item-separator
-        color: #888
-.answerPie-container
-  padding-top: .5rem
-  #answerPie
-    margin: 0 auto
 @media (max-width: 992px)
-  .sidebar-container
-    display: none
   .content-container
     float: none
     padding: 0

@@ -81,7 +81,9 @@ require("echarts/lib/component/title")
 export default {
   data() {
     return {
-      user: {}
+      user: {
+        id: "",
+      }
     }
   },
   methods: {

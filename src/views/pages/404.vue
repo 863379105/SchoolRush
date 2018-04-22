@@ -4,16 +4,22 @@
       <div class="error-panel">
         
         <div id="nofound-panel">
-          <div id="error-text">
-            <h1>问题不见了?!</h1>
-          </div>
-          <div id="rollback-btn">
-          <router-link to="/index">
-            <Button type="primary" size="large" id="btn">返回首页</Button>
-          </router-link>     
-          </div>
+          <Row>
+            <Col span="14">
+            <div id="error-text">
+              <h1>问题不见了?!</h1>
+            </div>
+            </Col>
+            <Col span="6">
+            <div id="rollback-btn">
+            <router-link to="/index">
+              <Button type="primary" size="large" id="btn">返回首页</Button>
+            </router-link>     
+            </div>
+            </Col>
+          </Row>
         </div>
-
+        
         <div class="img_nofound">
           <img src="../../static/img/formula.jpg" alt="" id="blackman">
         </div>
@@ -28,20 +34,16 @@ export default {
 </script>
 <style>
   .error-container{
-    margin-top:8rem;
-    background: rgb(250,250,250);
     overflow: hidden;
   }
   .nofound{
-    width: 77%;
     background-color: rgb(246,246,246);
     margin:  0 auto;
     border-radius: 10px;
     overflow: hidden;
   }
-  .error-panel{
-    overflow: hidden;
-    
+  .error-panel {
+    position: relative;
   }
   .img_nofound{
     overflow: hidden;
@@ -52,25 +54,31 @@ export default {
     border-radius: 15px;
   }
   #nofound-panel{
-    padding-left: 3rem;
-    overflow: hidden;
-    background-color: rgb(246,246,246);
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(246,246,246, .6);
     border-radius:15px; 
     overflow: hidden;
   }
-  #error-text{
-    width: 60%;
-    height: 100px;
-    float: left;
-    font-weight: bolder;
-    line-height: 1000x;
-    overflow: hidden;
+  #nofound-panel .ivu-row {
+    margin: 0 -2rem;
+    margin-top: 25rem;
+    background: rgba(255,255,255, .9);
+    border: .3rem solid #e4e4e4;
   }
-  h1{
-    position: relative;
-    top: 50%;
-    left: 60%;
-    transform: translateY(-50%);
+  #error-text{
+    height: 100px;
+    font-weight: bolder;
+  }
+  #error-text h1{
+    width: 100%;
+    line-height: 10rem;
+    text-align: right;
+    padding-right: 2rem;
   }
   #rollback-btn{
     height: 100px;

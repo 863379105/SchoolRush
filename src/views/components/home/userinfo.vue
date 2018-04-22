@@ -235,9 +235,10 @@ export default {
             that.$set(that.userInfo, i, Uinfo[i])
           }
           //画饼图
+          localStorage.setItem("userinfo", JSON.stringify(Uinfo))
           that.drawAnswerPie()
           that.drawPie()
-          localStorage.setItem("userinfo", JSON.stringify(Uinfo))
+          that.judgeAdmin()
         })
         .catch(err => {
           console.log(err);
@@ -253,9 +254,8 @@ export default {
   },
   mounted() {
     this.getUserInfo()
-    this.judgeAdmin()
   },
-  props: ["uid"]
+  props: ["uid"],
 }
 </script>
 <style lang="sass">

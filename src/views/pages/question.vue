@@ -6,91 +6,24 @@
       <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
         <!-- 内容部分开始 -->
         <div class="row content-container col-lg-9 col-md-9">
-          <div class="card-container">
+          <div v-if="found" class="card-container">
             <a-select :question="question" @onAnswer="handelAnswer" :handeling="handeling" @ v-if="question.type==1"></a-select>
             <a-judge :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-else-if="question.type==2"></a-judge>
             <a-blank :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-else-if="question.type==3"></a-blank>
           </div>
-          <div class="card-container">
-            <comment :qid="$route.params.id" v-if="found"></comment>
-            <p v-else>没有找到题目</p>
+          <div v-if="found" class="card-container">
+            <comment :qid="$route.params.id"></comment>
           </div>
+          <not-found v-if="!found"></not-found>
         </div>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <div class="sidebar-item sidebar-userinfo-container">
-            <Row type="flex" justify="center" align="middle" class="code-row-bg">
-              <Col span="24"><p class="title">出题人</p></Col>
-              <Col span="24">
-                <p class="userinfo-avatar">
-                  <Avatar shape="square" size="large" :src="question.user.avatar" />
-                </p>
-                <p class="userinfo-username">{{ question.user.name }}</p>
-              </Col>
-              <Col span="24">
-                <p class="share-q">分享了 <span>655</span> 个问题</p>
-              </Col>
-              <Col class="user-info-followed" span="12">
-                <p class="num">67</p>
-                <p class="title">关注了</p>
-              </Col>
-              <Col class="user-info-follower" span="12">
-                <p class="num">34</p>
-                <p class="title">关注者</p>
-              </Col>
-              <Col span="24">
-                <p class="userinfo-locate-school">
-                  <Tag type="border" color="green">浙江</Tag>
-                  <Tag type="border" color="blue">绍兴文理学院</Tag>
-                </p>
-              </Col>
-              <p class="userinfo-qinfo">
-                <Col span="8">
-                  <Col class="userinfo-data-num" span="24"> 568
-                  </Col>
-                  <Col span="24"> 解决问题
-                  </Col>
-                </Col>
-                <Col span="8">
-                  <Col class="userinfo-data-num" span="24"> 68.5%
-                  </Col>
-                  <Col span="24"> 通过率
-                  </Col>
-                </Col>
-                <Col span="8">
-                  <Col class="userinfo-data-num" span="24"> 8
-                  </Col>
-                  <Col span="24"> 待解决
-                  </Col>
-                </Col>
-              </p>
-            </Row>
-          </div>
-          <div class="sidebar-item latest-passed sidebar-userinfo-container">
-            <Row type="flex" justify="center" align="middle" class="code-row-bg">
-              <Col span="24"><p class="title">最新通过</p></Col>
-              <p class="latest-passed-user" v-for="n in 6" :key="n">
-                <Col span="8">
-                  <img class="square-img" src="../../static/img/avatar.png">
-                </Col>
-                <Col span="16"> 用户名
-                  <Tag type="border" color="red">绍兴文理学院</Tag>
-                </Col>
-              </p>
-            </Row>
-          </div>
-          <div class="sidebar-info-container">
-            <p>侵权举报网上有害信息举报专区</p>
-            <p>违法和不良信息举报：010-82716601</p>
-            <p>儿童色情信息举报专区</p>
-            <p>联系我们 © 2018 SchoolRush</p>
-          </div>
+          <sidebar></sidebar>
         </div>
         <!-- 右侧边栏结束 -->
       </div>
     </div>
-    <!-- 导航条下面内容与侧边栏部分结束 -->
   </div>
 </template>
 <script>
@@ -99,6 +32,8 @@ import answerSelect from "../questions/answerSelect"
 import answerJudge from "../questions/answerJudge"
 import answerBlank from "../questions/answerBlank"
 import comment from "../questions/comments"
+import sidebar from "../common/sidebar"
+import notFound from "./404"
 
 export default {
   data() {
@@ -158,25 +93,12 @@ export default {
     aJudge: answerJudge,
     aBlank: answerBlank,
     Comment: comment,
+    sidebar,
+    notFound,
   }
 };
 </script>
 <style lang="sass">
-.question
-  .sidebar-container
-    .sidebar-userinfo-container
-      .user-info-followed,.user-info-follower
-        padding: 1rem 0
-        p.title
-          font-size: 1.6rem
-        p.num
-          font-size: 2.3rem
-          font-weight: bold
-      .userinfo-avatar
-        .ivu-avatar-large
-          width: 7rem
-          height: 7rem
-          margin-top: 2rem
 $bright-blue: #0084ff
 .container
   margin: 0 auto
@@ -186,61 +108,6 @@ $bright-blue: #0084ff
   margin: 0
   padding-right: .5rem
   margin-bottom: 1rem
-.sidebar-container
-  float: right
-  margin-left: 0
-  padding: 0
-  margin: 0
-  padding-left: .5rem
-  position: absolute
-  right: 0
-  .sidebar-item
-    border-radius: .3rem
-    box-shadow: 0 0 .3rem 0 #ccc
-    background: #fff
-.latest-passed
-  margin-top: 1rem
-  .latest-passed-user
-    margin: .5rem
-    img
-      height: 5rem
-.sidebar-userinfo-container
-  p
-    text-align: center
-    img.avatar
-      height: 7rem
-      margin-bottom: -2.5rem
-      margin-top: 1rem
-  p.title
-    padding: .4rem 0
-    border-bottom: .1rem solid #e7e7e7
-  p.share-q
-    margin: 1rem 0
-    margin-top: -.5rem
-    span
-      font-size: 2.3rem
-      font-weight: bold
-  .userinfo-data-num
-    font-size: 2.3rem
-    font-weight: bold
-  .userinfo-username
-    padding: .5rem 0
-    padding-top: 2rem
-    font-size: 2rem
-    font-weight: bold
-  .userinfo-locate-school,.userinfo-qinfo,.userinfo-school,.userinfo-user-school
-    padding: .5rem 0
-  .userinfo-school
-    padding-top: 1rem
-.sidebar-fastto-container
-  margin-top: 1rem
-  height: 20rem
-.sidebar-info-container
-  height: 15rem
-  border-radius: .3rem
-  margin-top: 1rem
-  color: #8590a6
-  font-size: 1.4rem
 .card-container
   pdding-bottom: 1rem
   border-radius: .3rem
