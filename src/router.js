@@ -29,7 +29,7 @@ const routers = [
                 component: (resolve) => require(['./views/pages/group.vue'], resolve)
             },
             {
-                path: '/home',
+                path: '/home/:id',
                 meta: {
                     title: '个人主页'
                 },
@@ -78,7 +78,7 @@ const routers = [
                 component: (resolve) => require(['./views/pages/question.vue'], resolve),
             },
             {
-                path: '/label',
+                path: '/label/:id',
                 meta: {
                     title: '标签'
                 },

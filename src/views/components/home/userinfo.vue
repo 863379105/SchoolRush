@@ -1,7 +1,10 @@
 <template>
   <div id="com-app">
     <Col span="24">
-      <p class="userinfo-avatar"><img class="circle-img" src="../../../static/img/avatar.jpg" alt="iimT"></p>
+      <p class="userinfo-avatar">
+        <img class="circle-img" src="../../../static/img/avatar.jpg" alt="iimT">
+        <Icon v-if="isAdmin" @click.native="toSettings" class="settings" type="gear-a"></Icon>
+      </p>
       <p class="userinfo-username">iimT</p>
     </Col>
     <Col span="24">
@@ -11,11 +14,11 @@
       </p>
     </Col>
     <Col class="user-info-followed" span="12">
-      <p class="num">67</p>
+      <p class="num">0</p>
       <p class="title">关注了</p>
     </Col>
     <Col class="user-info-follower" span="12">
-      <p class="num">34</p>
+      <p class="num">0</p>
       <p class="title">关注者</p>
     </Col>
     <Col class="answerPie-container" span="12">
@@ -29,7 +32,7 @@
     <p class="userinfo-qinfo">
       <Col span="8">
         <Col class="userhome-data-num" span="24">
-          568
+          {{ userInfo.solveInfo.passedNum }}
         </Col>
         <Col class="userhome-data-text" span="24">
           解决问题
@@ -37,7 +40,7 @@
       </Col>
       <Col span="8">
         <Col class="userhome-data-num" span="24">
-          68.5%
+          {{ getUserPassRate() }}
         </Col>
         <Col class="userhome-data-text" span="24">
           通过率
@@ -45,7 +48,7 @@
       </Col>
       <Col span="8">
           <Col class="userhome-data-num" span="24">
-            8
+            {{ userInfo.solveInfo.tobeSolvedNum }}
           </Col>
           <Col class="userhome-data-text" span="24">
             待解决
@@ -63,6 +66,27 @@ require("echarts/lib/component/tooltip")
 require("echarts/lib/component/title")
 
 export default {
+  data() {
+    return {
+      isAdmin: false,
+      userInfo: {
+        avatar: "",
+        campusID: "",
+        campusInfo: {},
+        describe: "",
+        email: "",
+        gender: "",
+        id: "",
+        identify: "",
+        majorID: "",
+        majorInfo: {},
+        name: "",
+        tel: "",
+        vice: "",
+        solveInfo: {},
+      },
+    }
+  },
   methods: {
     drawAnswerPie() {
       // 绘制个人擅长图表
@@ -187,13 +211,51 @@ export default {
           }
         }
       })
-    }
+    },
+    toSettings() {
+      this.$router.push("/settings")
+    },
+    judgeAdmin() {
+      let user = JSON.parse(localStorage.getItem("userinfo"))
+      if(user.id == this.uid)
+        this.isAdmin = true
+    },
+    getUserInfo() {
+      let uid = localStorage.getItem("uid");
+      let url = this.$API.getService("User", "getById");
+      let that = this;
+
+      this.$API
+        .post(url, {
+          id: uid
+        })
+        .then((res) => {
+          let Uinfo = res.data.data
+          for(var i in Uinfo) {
+            that.$set(that.userInfo, i, Uinfo[i])
+          }
+          //画饼图
+          that.drawAnswerPie()
+          that.drawPie()
+          localStorage.setItem("userinfo", JSON.stringify(Uinfo))
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getUserPassRate() {
+      let solved = this.userInfo.solveInfo
+      if(solved.tobeSolvedNum + solved.passedNum == 0) return "0%"
+      let hund = solved.passedNum/(solved.tobeSolvedNum + solved.passedNum) * 10000
+      let intNum = parseInt(hund)
+      return intNum/100 + "%"
+    },
   },
   mounted() {
-    this.drawAnswerPie()
-    this.drawPie()
-  }
-  
+    this.getUserInfo()
+    this.judgeAdmin()
+  },
+  props: ["uid"]
 }
 </script>
 <style lang="sass">
@@ -213,8 +275,19 @@ export default {
   border-radius: 50%
 .userinfo-avatar
   height: 10rem
+  position: relative
   img
     box-shadow: 0 0 1rem 0 #ccc
+  .settings
+    position: absolute
+    padding: 1rem 1.5rem
+    right: .5rem
+    top: 0
+    font-size: 2rem
+    cursor: pointer
+    border-radius: .5rem
+  .settings:hover
+    background: #e6e6e6
 .answerPie-container
   margin-top: 1rem
 .userinfo-username

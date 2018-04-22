@@ -78,7 +78,7 @@ export default {
       this.btnDisable   = false
     },
     back() {
-      this.$router.push("./index")
+      this.$router.push("/index")
     }
   },
   props: ["question", "handeling"],

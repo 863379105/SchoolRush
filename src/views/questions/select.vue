@@ -92,7 +92,7 @@ export default {
           {
             required: true,
             message: "专业不能为空",
-            trigger: "blur"
+            trigger: "change"
           }
         ],
         A: [
@@ -133,7 +133,8 @@ export default {
         toAnswer: [
           {
             required: true,
-            message: "给答题者的话不能为空",
+            min: 10,
+            message: "不能少于10个字",
             trigger: "blur"
           }
         ]

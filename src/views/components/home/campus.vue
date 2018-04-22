@@ -2,10 +2,10 @@
   <div id="com-app">
     <p class="userinfo-school">
       <Col span="24">
-        <img class="campus-badge" src="../../../static/img/shufe.jpg" alt="shufe">
+        <img class="campus-badge" :src="campus.badge" alt="shufe">
         <Col span="24">
           <Col span="24">
-            <p class="campus-name">上海财经大学</p>
+            <p class="campus-name">{{ campus.name }}</p>
           </Col>
           <Col span="24">
             计算机专业 <Tag type="border" color="green">No.5</Tag>
@@ -51,7 +51,7 @@
         </Col>
         <Col span="8">
           <Col class="userhome-data-num" span="24">
-            5.6K
+            {{ campus.members }}
           </Col>
           <Col class="userhome-data-text" span="24">
             成员
@@ -63,7 +63,32 @@
 </template>
 <script>
 export default {
-  
+  data() {
+    return {
+      campus: {
+        id: "",
+        name: "",
+        badge: "",
+        members: "",
+        locate: "",
+      },
+    }
+  },
+  methods: {
+    getCampusInfo() {
+      let that = this
+      const url = this.$API.getService("Campus", "getById")
+
+      this.$API.post(url, {id: this.cid})
+      .then((res) => {
+        that.campus = res.data.data
+      })
+    }
+  },
+  mounted() {
+    this.getCampusInfo()
+  },
+  props: ["cid"]
 }
 </script>
 <style lang="sass">

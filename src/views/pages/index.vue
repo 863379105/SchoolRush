@@ -30,108 +30,7 @@
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <div class="sidebar-item sidebar-userinfo-container">
-            <Row type="flex" justify="center" align="middle" class="code-row-bg">
-              <Col span="24">
-              <p class="userinfo-avatar">
-                <Avatar shape="square" size="large" :src="userInfo.avatar" />
-              </p>
-              <p class="userinfo-username">{{ userInfo.name}}</p>
-              </Col>
-              <Col span="24">
-              <p class="userinfo-locate-school">
-                <Tag color="green">浙江</Tag>
-                <Tag color="blue">{{ userInfo.campusName}}</Tag>
-              </p>
-              </Col>
-              <Col class="user-info-followed" span="12">
-              <p class="num">67</p>
-              <p class="title">关注了</p>
-              </Col>
-              <Col class="user-info-follower" span="12">
-              <p class="num">34</p>
-              <p class="title">关注者</p>
-              </Col>
-              <Col class="answerPie-container" span="24">
-              <!-- 擅长领域的饼图 -->
-              <div id="answerPie" :style="{width: '230px', height: '200px'}"></div>
-              </Col>
-              <p class="userinfo-qinfo">
-                <Col span="8">
-                <Col class="userinfo-data-num" span="24"> 568
-                </Col>
-                <Col span="24"> 解决问题
-                </Col>
-                </Col>
-                <Col span="8">
-                <Col class="userinfo-data-num" span="24"> 68.5%
-                </Col>
-                <Col span="24"> 通过率
-                </Col>
-                </Col>
-                <Col span="8">
-                <Col class="userinfo-data-num" span="24"> 8
-                </Col>
-                <Col span="24"> 待解决
-                </Col>
-                </Col>
-              </p>
-
-            </Row>
-          </div>
-          <div class="sidebar-item school sidebar-userinfo-container">
-            <Row>
-              <p class="userinfo-school">
-                <Col span="24">
-                <img class="school-badge" src="../../static/img/shufe.jpg" alt="shufe">
-                <Col span="24">
-                <Col span="24">
-                <p class="campus-name">上海财经大学</p>
-                </Col>
-                <Col span="24"> 计算机专业
-                <Tag color="green">No.5</Tag>
-                </Col>
-                </Col>
-                </Col>
-              </p>
-              <p class="userinfo-user-school">
-                <Col span="24">
-                <Col span="8">
-                <Col class="userinfo-data-num" span="24"> 6%
-                </Col>
-                <Col span="24"> 贡献
-                </Col>
-                </Col>
-                <Col span="8">
-                <Col class="userinfo-data-num" span="24"> 99+
-                </Col>
-                <Col span="24"> 校园排行
-                </Col>
-                </Col>
-                <Col span="8">
-                <Col class="userinfo-data-num" span="24"> 5.6K
-                </Col>
-                <Col span="24"> 成员
-                </Col>
-                </Col>
-                </Col>
-              </p>
-            </Row>
-          </div>
-          <div class="sidebar-item sidebar-fastto-container">
-              <ul class="fastto">
-                <li><p><Icon type="checkmark-circled"></Icon>已通过</p></li>
-                <li><p><Icon type="hammer"></Icon>正在解决</p></li>
-                <li><p><Icon type="pricetags"></Icon>关注的标签</p></li>
-                <li><p><Icon type="university"></Icon>关注的学校</p></li>
-              </ul>
-          </div>
-          <div class="sidebar-info-container">
-            <p>侵权举报网上有害信息举报专区</p>
-            <p>违法和不良信息举报：010-82716601</p>
-            <p>儿童色情信息举报专区</p>
-            <p>联系我们 © 2018 SchoolRush</p>
-          </div>
+          <sidebar></sidebar>
         </div>
         <!-- 右侧边栏结束 -->
       </div>
@@ -141,14 +40,8 @@
 </template>
 
 <script>
-let echarts = require("echarts/lib/echarts");
-// 引入柱状图组件
-require("echarts/lib/chart/pie");
-// 引入提示框和title组件
-require("echarts/lib/component/tooltip");
-require("echarts/lib/component/title");
-
 import questionCard from "./question-card.vue";
+import sidebar from "../common/sidebar"
 
 export default {
   data() {
@@ -158,124 +51,10 @@ export default {
       filterMajor: "",
       filterLevel: 0,
       majorData: [],
-      userInfo: {},
       questions: {}
     };
   },
   methods: {
-    drawAnswerPie() {
-      // 绘制个人擅长图表
-      let myChart = echarts.init(document.getElementById("answerPie"));
-      myChart.setOption({
-        series: {
-          type: "pie",
-          center: ["50%", "53%"],
-          radius: ["45%", "68%"],
-          avoidLabelOverlap: false,
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          label: {
-            normal: {
-              show: false,
-              position: "center",
-              formatter: "{b} : {d}%"
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: "17",
-                textBorderColor: "#fff",
-                textBorderWidth: "3",
-                textShadowOffsetY: "0",
-                textShadowOffsetX: "0",
-                textShadowBlur: "5",
-                textShadowColor: "#ccc"
-              }
-            }
-          },
-          data: [
-            {
-              name: "计算机科学与技术",
-              value: 1000,
-              selected: true
-            },
-            {
-              name: "网络工程",
-              value: 900
-            },
-            {
-              name: "自动化",
-              value: 851
-            },
-            {
-              name: "金融",
-              value: 851
-            },
-            {
-              name: "软件工程",
-              value: 851
-            }
-          ],
-          itemStyle: {
-            //阴影
-            normal: {
-              shadowBlur: 10,
-              shadowColor: "rgba(0, 0, 0, 0.5)",
-              color: function(o) {
-                let color = [
-                  "#2db7f5",
-                  "#19be6b",
-                  "#f90",
-                  "#2d8cf0",
-                  "#ed3f14"
-                ];
-                return color[o.dataIndex];
-              }
-            }
-          }
-        },
-        title: {
-          text: "擅长领域",
-          x: "center",
-          textStyle: {
-            fontSize: 14,
-            fontWeight: "normal",
-            color: "#000",
-            fontFamily:
-              "'Microsoft YaHei','serif' , 'monospace', 'Arial', 'Courier New'"
-          }
-        }
-      });
-    },
-    getUserInfo() {
-      let uid = localStorage.getItem("uid");
-      let url = this.$API.getService("User", "getById");
-      let that = this;
-
-      this.$API
-        .post(url, {
-          id: uid
-        })
-        .then(res => {
-          let Uinfo = res.data.data;
-          that.userInfo = Uinfo;
-          localStorage.setItem("userinfo", JSON.stringify(Uinfo));
-          for (let i in Uinfo) {
-            if (!Uinfo[i]) {
-              that.jumpToSettings();
-              break;
-            }
-          }
-
-          that.getAllMajor();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     jumpToSettings() {
       //跳转到设置页面
       this.$Notice.info({
@@ -304,12 +83,11 @@ export default {
     },
     getQuestionPage() {
       const that = this;
-      const url = this.$API.getService("Question", "GetPageInformation");
-
+      const url = this.$API.getService("Question", "getUserQuestion") //"GetPageInformation"
+      let user = JSON.parse(localStorage.getItem("userinfo"))
       this.$API
         .post(url, {
-          page: 1,
-          num: 20
+          uid: user.id
         })
         .then(res => {
           console.log(res.data.data);
@@ -318,13 +96,12 @@ export default {
     },
   },
   mounted() {
-    this.drawAnswerPie();
     //获取用户信息
-    this.getUserInfo();
     this.getQuestionPage();
   },
   components: {
-    questionCard
+    questionCard,
+    sidebar
   },
 };
 </script>
@@ -346,6 +123,11 @@ export default {
           width: 7rem
           height: 7rem
           margin-top: 2rem
+    .user-info-school-badge
+        .ivu-avatar-large
+          width: 7rem
+          height: 7rem
+          margin-bottom: 1rem
 
 $bright-blue: #0084ff
 .container

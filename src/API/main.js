@@ -25,6 +25,7 @@ var API = {
     Campus: {
         root: "Campus",
         getAll: "getAll",
+        getById: "getById",
     },
     Major: {
         root: "Major",
@@ -36,6 +37,7 @@ var API = {
         getTypeById: "getTypeById",
         getById: "getById",
         add: "add",
+        getUserQuestion: "getUserQuestion",
     },
     Usertoq: {
         root: "Usertoq",

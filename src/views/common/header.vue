@@ -53,7 +53,7 @@
               </a>
               <DropdownMenu slot="list">
                 <DropdownItem>
-                  <router-link class="dropdown-link" to="/home">我的主页</router-link>
+                  <router-link class="dropdown-link" :to="'/home/' + userInfo.id">我的主页</router-link>
                 </DropdownItem>
                 <DropdownItem>
                   <router-link class="dropdown-link" to="/settings">设置</router-link>
@@ -76,7 +76,10 @@ export default {
   data() {
     return {
       setupModel: false,
-      userInfo: {}
+      userInfo: {
+        avatar: "",
+        id: "",
+      }
     };
   },
   methods: {
@@ -110,8 +113,8 @@ export default {
     setupFail() {
       this.$Message.error('发布失败！')
     },
-    loading() {
-      this.$Spin.show();
+    loading() { 
+      this.$Spin.show()
       this.getUserInfo(() => {
         this.$Spin.hide()
       })

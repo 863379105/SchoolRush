@@ -7,10 +7,10 @@
           <div class="user-card card" style="background-image: '../../static/img/user-home-bg.jpg'">
             <Row type="flex" justify="center">
               <Col class="userinfo-panel" type="flex" justify="center" :lg="12" :md="12" :sm="12" :xs="24">
-                <v-userinfo-com></v-userinfo-com>
+                <v-userinfo-com :uid="user.id"></v-userinfo-com>
               </Col>
               <Col type="flex" justify="center" :lg="12" :md="12" :sm="12" :xs="24">
-                <v-campusinfo-com></v-campusinfo-com>
+                <v-campusinfo-com :cid="getCampusInfo()"></v-campusinfo-com>
               </Col>
             </Row>
           </div>
@@ -80,7 +80,9 @@ require("echarts/lib/component/title")
 
 export default {
   data() {
-    return {}
+    return {
+      user: {}
+    }
   },
   methods: {
     getVirtulData(year) {
@@ -152,10 +154,18 @@ export default {
         }]
       }
       myChart.setOption(option)
+    },
+    getUser() {
+      this.user = JSON.parse(localStorage.getItem("userinfo"))
+    },
+    getCampusInfo() {
+      let user = JSON.parse(localStorage.getItem("userinfo"))
+      return user.campusInfo.id
     }
   },
   mounted() {
     this.drawCalendarHeatMap()
+    this.getUser()
   },
   components: {
     vUserinfoCom,

@@ -8,7 +8,7 @@
             <div class="label-container flex">
               <!-- 不用理会下面的报错 -->
               <Tag class="Tag" v-for="item in questionInfo.labelsInfo" :color="getColor(item.id)" :key="item.id"> 
-                <router-link to="/label">{{ item.name }}</router-link>
+                <router-link :to="'/label/' + item.id">{{ item.name }}</router-link>
               </Tag>
             </div>
             <div class="breadcrumb-container flex">
