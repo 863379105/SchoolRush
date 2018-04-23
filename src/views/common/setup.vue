@@ -2,12 +2,12 @@
   <div class="app" id="setup">
 
     <div class="container grid-container">
-      <div class="grid-no-padding col-lg-11 col-md-12 col-sm-12 col-xs-12">
+      <div class="grid-no-padding col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <!-- 内容部分开始 -->
-        <div class="row content-container col-lg-9 col-md-9">
+        <div class="row content-container col-lg-12 col-md-12">
           <div class="card-container">
             <Tabs value="select">
-              <TabPane label="选择题" name="select">
+              <!-- <TabPane label="选择题" name="select">
                 <v-select @onAddLabel="handelAddLabel" @submitQ="handelSubmit" :major-data="majorData" :label-data="labelData"></v-select>
               </TabPane>
               <TabPane label="判断题" name="judge">
@@ -15,15 +15,18 @@
               </TabPane>
               <TabPane label="填空题" name="blank">
                 <v-blank @onAddLabel="handelAddLabel" @submitQ="handelSubmit" :major-data="majorData" :label-data="labelData"></v-blank>
+              </TabPane> -->
+              <TabPane label="编辑题目" name="edit">
+                <edit-q @onAddLabel="handelAddLabel" @submitQ="handelSubmit" :major-data="majorData" :label-data="labelData"></edit-q>
               </TabPane>
             </Tabs>
           </div>
         </div>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
-        <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <!-- <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
           <sidebar></sidebar>
-        </div>
+        </div> -->
         <!-- 右侧边栏结束 -->
       </div>
     </div>
@@ -33,6 +36,7 @@
 import vSelect from "../questions/select"
 import vJudge from "../questions/judge"
 import vBlank from "../questions/blank"
+import editQ from "../questions/editQuestion"
 import utils from "../components/tools/utils"
 import sidebar from "../common/sidebar"
 export default {
@@ -46,7 +50,8 @@ export default {
     vSelect,
     vJudge,
     vBlank,
-    sidebar
+    sidebar,
+    editQ,
   },
   methods: {
     getAllMajor() {

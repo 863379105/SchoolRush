@@ -86,7 +86,7 @@ export default {
     setQuestion() {
       //弹出出题框
       //this.setupModel = true;
-      this.$router.push("./setup")
+      this.$router.push("/setup")
     },
     setupSubmit() {
       this.$Notice.success({

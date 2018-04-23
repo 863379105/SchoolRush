@@ -188,7 +188,7 @@ export default {
         labels: [],
       }
    },
-   props: ["major-data", "label-data"],
+   
 };
 </script>
 <style lang="sass">

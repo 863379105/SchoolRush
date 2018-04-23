@@ -1,23 +1,24 @@
 <template>
   <div id="select">
-    <p class="title">填空题<span>直接输入你的答案，检测到答案正确后，输入框会变为绿色</span></p>
-      <p class="question">
-        {{ question.q.pre }}
-        <input type="text" v-model="answer" :disabled="isRight || btnDisable" class="answer" :class="{'answer-right': isRight && !loading}" placeholder="请输入你的答案">
-        {{ question.q.suf }}
-      </p>
+    <p class="title">{{ question.title }}
+    </p>
+    <p class="q-content">
+      <markdown-html :markdown="question.q"></markdown-html>
+    </p>
+    <p class="question">
+      {{ question.q.pre }}
+      <input type="text" v-model="answer" :disabled="isRight || btnDisable" class="answer" :class="{'answer-right': isRight && !loading}" placeholder="请输入你的答案"> {{ question.q.suf }}
+    </p>
     <p class="btn-wrap">
-     <Button :disabled="btnDisable" class="btn" size="large" shape="circle" :type="btnType" @click="submit">
+      <Button :disabled="btnDisable" class="btn" size="large" shape="circle" :type="btnType" @click="submit">
         <Spin size="large" v-if="loading"></Spin>
         <span v-if="!loading">{{ btnText }}</span>
       </Button>
     </p>
-    <p class="toAnswer">
-      <span>出题人: {{ question.toAnswer }}</span>
-    </p>
   </div>
 </template>
 <script>
+import markdownHtml from "../common/markdown-html"
 export default {
   data() {
     return {
@@ -28,99 +29,102 @@ export default {
       loading: false,
       btnType: "info",
       btnText: "提交",
-      btnDisable: false,
-    }
+      btnDisable: false
+    };
   },
   methods: {
     submit() {
-      this.answer = this.answer.trim()
-      if(this.isRight) {
-        this.back()
-        return
+      this.answer = this.answer.trim();
+      if (this.isRight) {
+        this.back();
+        return;
       }
-      if(this.answer == "") {
-        this.btnText = "请填写答案后提交(3)"
-        let num = 2
-        this.btnDisable = true
+      if (this.answer == "") {
+        this.btnText = "请填写答案后提交(3)";
+        let num = 2;
+        this.btnDisable = true;
         let timer = setInterval(() => {
-          if(num == 0) {
-            this.resetBtn()
-            clearInterval(timer)
-            return
+          if (num == 0) {
+            this.resetBtn();
+            clearInterval(timer);
+            return;
           }
-          this.btnText = "请填写答案后提交" + "(" + num + ")"
-          num--
-        }, 1000)
-        return
+          this.btnText = "请填写答案后提交" + "(" + num + ")";
+          num--;
+        }, 1000);
+        return;
       }
       let data = {
         uid: this.question.user.id,
-        qid: this.question.id,
-      }
-      if(this.answer == this.question.correct) {
+        qid: this.question.id
+      };
+      if (this.answer == this.question.correct) {
         //用户答题正确
-        data.result = true
-        this.isRight = true
+        data.result = true;
+        this.isRight = true;
       } else {
         //用户答题错误
-        data.result = false
-        this.isFalse = true
+        data.result = false;
+        this.isFalse = true;
       }
-      console.log(data)
-      this.$emit("onAnswer", data)
+      console.log(data);
+      this.$emit("onAnswer", data);
     },
     resetBtn() {
-      this.isSubmit     = false
-      this.isRight      = false
-      this.isFalse      = false
-      this.btnType      = "info",
-      this.btnText      = "提交",
-      this.btnDisable   = false
+      this.isSubmit = false;
+      this.isRight = false;
+      this.isFalse = false;
+      (this.btnType = "info"),
+        (this.btnText = "提交"),
+        (this.btnDisable = false);
     },
     back() {
-      this.$router.push("/index")
+      this.$router.push("/index");
     }
   },
   props: ["question", "handeling"],
   watch: {
     handeling(now, old) {
-      if(old == false && now == true) {
-        console.log("加载。。。")
+      if (old == false && now == true) {
+        console.log("加载。。。");
         //由false变为true
-        this.loading = true
-        return
+        this.loading = true;
+        return;
       }
-      this.loading = false
+      this.loading = false;
     },
     loading(now, old) {
-      if(!now && this.isRight) {
-        this.btnType = "success"
-        this.btnText = "回答正确，返回首页"
+      if (!now && this.isRight) {
+        this.btnType = "success";
+        this.btnText = "回答正确，返回首页";
       }
-      if(!now && this.isFalse) {
-        this.btnType = "error"
+      if (!now && this.isFalse) {
+        this.btnType = "error";
       }
     },
     isFalse(now, old) {
       //选择错误之后要等待5才能继续
-      if(now) {
-        this.btnText = "回答错误，请重新作答(5)"
-        let num = 5
-        this.btnDisable = true
+      if (now) {
+        this.btnText = "回答错误，请重新作答(5)";
+        let num = 5;
+        this.btnDisable = true;
         let timer = setInterval(() => {
-          if(num == 0) {
-            this.resetBtn()
-            this.answer = ""
-            clearInterval(timer)
-            return
+          if (num == 0) {
+            this.resetBtn();
+            this.answer = "";
+            clearInterval(timer);
+            return;
           }
-          this.btnText = "回答错误，请重新作答" + "(" + num + ")"
-          num--
-        }, 1000)
+          this.btnText = "回答错误，请重新作答" + "(" + num + ")";
+          num--;
+        }, 1000);
       }
     }
   },
-}
+  components: {
+    markdownHtml
+  },
+};
 </script>
 <style lang="sass">
 #select

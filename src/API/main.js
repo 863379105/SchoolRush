@@ -48,6 +48,11 @@ var API = {
     Label: {
         root: "Label",
         getAll: "getAll",
+    },
+    Upload: {
+        root: "Upload",
+        UploadImg: "UploadImg",
+        base64UploadQNY: "base64UploadQNY",
     }
 }
 
@@ -55,6 +60,11 @@ var API = {
 function getService(cls, action) {
     let root = "http://localhost/SchoolRushServer/public/?s="
     return root + API[cls].root + "." + API[cls][action];
+}
+//返回axios对象
+
+function getAxios() {
+    return axios
 }
 
 //get方法
@@ -82,4 +92,5 @@ export default {
     get, 
     post,
     getUserInfo,
+    getAxios,
 }
