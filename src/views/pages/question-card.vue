@@ -21,7 +21,7 @@
         </div>
         <div class="card-right-container right">
           <p class="title">
-            <router-link :to="'/question/'+questionInfo.id">{{ formatQ(questionInfo.q) }}</router-link>
+            <router-link :to="'/question/'+questionInfo.id">{{ formatQ(questionInfo.title) }}</router-link>
           </p>
           <p class="q-set-info">
             <span>{{ questionInfo.challenges }}人挑战过</span>
@@ -35,7 +35,6 @@
           <p class="q-author-say">
             <router-link to="/home"><Avatar size="small" shape="square" :src="questionInfo.useravatar" />
             <span class="author-name">{{ questionInfo.username }}</span></router-link>
-            <span class="author-say">{{ questionInfo.toAnswer }}</span>
           </p>
         </div>
       </div>

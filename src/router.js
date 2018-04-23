@@ -98,6 +98,13 @@ const routers = [
                 },
                 component: (resolve) => require(['./views/common/setup.vue'], resolve)
             },
+            {
+                path: '/editQ',
+                meta: {
+                    title: '分享题目'
+                },
+                component: (resolve) => require(['./views/questions/editQuestion.vue'], resolve)
+            },
         ]
     },
     {

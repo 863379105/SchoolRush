@@ -1,6 +1,9 @@
 <template>
   <div id="select">
-    <p class="title">{{ question.q }}</p>
+    <p class="title">{{ question.title }}</p>
+     <p class="q-content">
+      <markdown-html :markdown="question.q"></markdown-html>
+    </p>
     <ul>
       <li class="A" :class="{wrong: wrongs.A,checked:selected=='A'}" @click="checked('A')">{{ question.options.A }}</li>
       <li class="B" :class="{wrong: wrongs.B,checked:selected=='B'}" @click="checked('B')">{{ question.options.B }}</li>
@@ -13,12 +16,11 @@
         <span v-if="!loading">{{ btnText }}</span>
       </Button>
     </p>
-    <p class="toAnswer">
-      <span>出题人:{{ question.toAnswer }}</span>
-    </p>
+   
   </div>
 </template>
 <script>
+import markdownHtml from "../common/markdown-html"
 export default {
   data() {
     return {
@@ -140,7 +142,10 @@ export default {
         }, 1000)
       }
     }
-  }
+  },
+  components: {
+    markdownHtml
+  },
 }
 </script>
 <style lang="sass">

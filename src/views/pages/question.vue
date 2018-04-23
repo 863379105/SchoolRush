@@ -99,6 +99,12 @@ export default {
 };
 </script>
 <style lang="sass">
+.question
+  .q-content
+    background: #e6e6e6
+    padding: 2rem
+    margin-top: 1rem
+    border-radius: .5rem
 $bright-blue: #0084ff
 .container
   margin: 0 auto
