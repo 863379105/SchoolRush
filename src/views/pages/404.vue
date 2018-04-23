@@ -18,10 +18,10 @@
             </div>
             </Col>
           </Row>
-        </div>
+        </div>  
         
         <div class="img_nofound">
-          <img src="../../static/img/formula.jpg" alt="" id="blackman">
+          <img src="../../static/img/formula.jpg" alt="" id="formula">
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default {
   .img_nofound{
     overflow: hidden;
   }
-  #blackman{ 
+  #formula{ 
     width: 100%;
     height: 100%;
     border-radius: 15px;
