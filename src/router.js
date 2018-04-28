@@ -99,6 +99,13 @@ const routers = [
                 component: (resolve) => require(['./views/common/setup.vue'], resolve)
             },
             {
+                path: '/submit',
+                meta: {
+                    title: 'submit'
+                },
+                component: (resolve) => require(['./views/questions/submitQuestion.vue'], resolve)
+            },
+            {
                 path: '/editQ',
                 meta: {
                     title: '分享题目'
