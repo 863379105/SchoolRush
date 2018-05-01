@@ -112,6 +112,13 @@ const routers = [
                 },
                 component: (resolve) => require(['./views/questions/editQuestion.vue'], resolve)
             },
+            {
+                path: '/submitSuccess',
+                meta: {
+                    title: '分享成功~'
+                },
+                component: (resolve) => require(['./views/questions/submitQuestion.vue'], resolve)
+            },
         ]
     },
     {

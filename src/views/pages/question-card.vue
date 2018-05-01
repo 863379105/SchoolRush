@@ -6,7 +6,6 @@
         <div class="card-left-container flex left">
           <div class="flex-container flex">
             <div class="label-container flex">
-              <!-- 不用理会下面的报错 -->
               <Tag class="Tag" v-for="item in questionInfo.labelsInfo" :color="getColor(item.id)" :key="item.id"> 
                 <router-link :to="'/label/' + item.id">{{ item.name }}</router-link>
               </Tag>
@@ -23,18 +22,18 @@
           <p class="title">
             <router-link :to="'/question/'+questionInfo.id">{{ formatQ(questionInfo.title) }}</router-link>
           </p>
-          <p class="q-set-info">
-            <span>{{ questionInfo.challenges }}人挑战过</span>
-            <span>{{ questionInfo.passed }}人已通过</span>
-            <span>通过率：{{ questionInfo.passedrate }}</span>
+          <p class="q-author-say">
+            <!-- <router-link to="/home"><Avatar size="small" shape="square" :src="questionInfo.useravatar" /></router-link> -->
+            <span class="author-name">{{ questionInfo.q }}</span>
           </p>
           <p class="q-difficulty">
             <span>难度：</span>
             <Rate disabled allow-half v-model="questionInfo.levels"></Rate>
           </p>
-          <p class="q-author-say">
-            <router-link to="/home"><Avatar size="small" shape="square" :src="questionInfo.useravatar" />
-            <span class="author-name">{{ questionInfo.username }}</span></router-link>
+          <p class="q-set-info">
+            <span>{{ questionInfo.challenges }}人挑战过</span>
+            <span>{{ questionInfo.passed }}人已通过</span>
+            <span>通过率：{{ questionInfo.passedrate }}</span>
           </p>
         </div>
       </div>

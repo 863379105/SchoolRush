@@ -6,7 +6,6 @@
       <markdown-html :markdown="question.q"></markdown-html>
     </p>
     <p class="question">
-      {{ question.q.pre }}
       <input type="text" v-model="answer" :disabled="isRight || btnDisable" class="answer" :class="{'answer-right': isRight && !loading}" placeholder="请输入你的答案"> {{ question.q.suf }}
     </p>
     <p class="btn-wrap">
@@ -145,13 +144,13 @@ export default {
     border: .2rem solid #fff
     padding: 1.5rem 3rem
     cursor: pointer
+    text-align: center
   input
-    width: auto
+    width: 100%
     text-align: center
     border: none
-    margin-left: 1rem
     background: #2d8cf0
-    padding: .5rem 2rem
+    padding: 1rem 2rem
     border-radius: .4rem
     color: #fff
   input:focus

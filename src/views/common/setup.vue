@@ -117,12 +117,12 @@ export default {
       this.$API
         .post(url, Question)
         .then(res => {
-          console.log(res);
-          that.$emit("onSueccess");
+          let result = res.data.data
+          console.log(result)
+          that.$router.replace({path:'/submitSuccess',query:{id:result.id, title:result.title}})
         })
         .catch(err => {
           console.log(err);
-          that.$emit("onError");
         });
     }
   },

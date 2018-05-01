@@ -225,7 +225,6 @@ export default {
           this.$Message.error("题目信息不全!");
           return;
         }
-        console.log(this.Question)
         let question = this.$emit("submitQ", this.Question);
         return true;
       });

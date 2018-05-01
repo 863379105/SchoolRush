@@ -264,10 +264,13 @@ export default {
 }
 </script>
 <style lang="sass">
+.ivu-col
+  margin: 0
 .sidebar-container
   .sidebar-userinfo-container
     .user-info-followed,.user-info-follower
       padding: 1rem 0
+      padding-bottom: 0
       border-bottom: .1rem solid #eee
       p.title
         font-size: 1.6rem
@@ -323,11 +326,13 @@ export default {
     font-weight: bold
   .userinfo-username
     padding: .5rem 0
-    padding-top: 2rem
+    padding-top: 1rem
     font-size: 2rem
     font-weight: bold
   .userinfo-locate-school,.userinfo-qinfo,.userinfo-school,.userinfo-user-school
     padding: .5rem 0
+  .userinfo-qinfo
+    width: 100%
   .userinfo-school
     padding-top: 1rem
 .sidebar-fastto-container
@@ -387,15 +392,11 @@ export default {
       margin-right: .5rem
   .q-difficulty
   .q-author-say
-    .author-name
-      padding-left: .5rem
     .author-say
       font-size: 1.3rem
       background: #ececec
       border-radius: .3rem
-      padding: .3rem .5rem
-    .author-name:after
-      content: '：'
+      padding: .3rem 0
 .answerPie-container
   #answerPie
     margin: 0 auto
