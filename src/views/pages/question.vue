@@ -7,7 +7,7 @@
         <!-- 内容部分开始 -->
         <div class="row content-container col-lg-9 col-md-9">
           <div v-if="found" class="card-container">
-            <a-select :question="question" @onAnswer="handelAnswer" :handeling="handeling" @ v-if="question.type==1"></a-select>
+            <a-select :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-if="question.type==1"></a-select>
             <a-judge :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-else-if="question.type==2"></a-judge>
             <a-blank :question="question" @onAnswer="handelAnswer" :handeling="handeling" v-else-if="question.type==3"></a-blank>
           </div>
@@ -37,7 +37,6 @@ import notFound from "./404"
 
 export default {
   data() {
-    //this.$route.params.id 就是浏览器中传过来的参数
     return {
       question: {},
       found: true,
@@ -48,7 +47,7 @@ export default {
     getLatestPassed() {
 
     },
-    handelAnswer(data){
+    handelAnswer(data) {
       //当子组件传过来用户提交题目时
       let action = "PassedQuestion"
       if(!data.result) {

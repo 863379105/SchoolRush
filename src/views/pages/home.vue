@@ -39,25 +39,11 @@
             <Col span="24" class="timeline-title">最新动态</Col>
             <Col span="24" class="timeline-content">
               <Timeline pending>
-                <TimelineItem>
-                    <p class="user-action">12.03 分享了问题</p>
-                    <p class="action-title">Apple I 问世</p>
-                </TimelineItem>
-                <TimelineItem>
-                    <p class="user-action">12.03 解决了问题</p>
-                    <p class="action-title">发布 Macintosh</p>
-                </TimelineItem>
-                <TimelineItem>
-                    <p class="user-action">12.03 解决了问题</p>
-                    <p class="action-title">发布 iPhone</p>
-                </TimelineItem>
-                <TimelineItem>
-                    <p class="user-action">12.03 分享了问题</p>
-                    <p class="action-title">发布 iPad</p>
-                </TimelineItem>
-                <TimelineItem>
-                    <p class="user-action">12.03 解决了问题</p>
-                    <p class="action-title">史蒂夫·乔布斯去世</p>
+                <TimelineItem v-for="item in liveNess" :key="item.id">
+                    <p class="user-action">{{formatTime(item.time)}} {{ item.describe }}</p>
+                    <p class="action-title">
+                      <router-link :to="getRouterLink(item.action, item.targetID)">{{ item.actionInfo.view_title }}</router-link>
+                    </p>
                 </TimelineItem>
               </Timeline>
             </Col>
@@ -83,7 +69,8 @@ export default {
     return {
       user: {
         id: "",
-      }
+      },
+      liveNess: [],
     }
   },
   methods: {
@@ -159,10 +146,31 @@ export default {
     },
     getUser() {
       this.user = JSON.parse(localStorage.getItem("userinfo"))
+      this.getUserLiveness()
     },
     getCampusInfo() {
       let user = JSON.parse(localStorage.getItem("userinfo"))
       return user.campusInfo.id
+    },
+    getUserLiveness(uid){
+      let data = {
+        id: this.$route.params.id,
+        num: 20,
+        page: 1
+      }
+      let url = this.$API.getService("Userliveness","getLivenessById")
+
+      this.$API.post(url, data).then(res => {
+        console.log(res)
+        this.liveNess = res.data.data
+      })
+    },
+    formatTime(time) {
+      return time
+    },
+    getRouterLink(action, id) {
+      //TODO: switch 将不同的action对应的id送到不同的链接下
+      return "/question/" + id 
     }
   },
   mounted() {

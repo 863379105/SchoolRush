@@ -4,7 +4,7 @@
     <div class="container grid-container">
       <div class="grid-no-padding col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <!-- 内容部分开始 -->
-        <div class="row content-container col-lg-12 col-md-12">
+        <div class="row content-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card-container">
             <Tabs value="select">
               <!-- <TabPane label="选择题" name="select">

@@ -53,6 +53,15 @@ var API = {
         root: "Upload",
         UploadImg: "UploadImg",
         base64UploadQNY: "base64UploadQNY",
+    },
+    Comment: {
+        root: "Comments",
+        add: "add",
+
+    },
+    Userliveness: {
+        root: "Userliveness",
+        getLivenessById: "getLivenessById",
     }
 }
 

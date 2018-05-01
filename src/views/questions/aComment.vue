@@ -1,18 +1,21 @@
 <template>
   <div id="a-comment">
     <Row class="a-comment">
-      <Col span="10">
+      <Col span="15">
         <router-link to="/home">
           <Avatar shape="square" :src="user.avatar" />
           <span class="name">{{ user.name }}</span>
         </router-link>
       </Col>
-      <Col offset="8" span="6">
+      <Col span="8">
         <p class="time">{{ time }}</p>
       </Col>
       <Col class="content" span="24">
         <div class="mask" v-if="collapse"></div>
-        <p :class="{'collapse': collapse}">{{ comment.content }}</p>
+        
+        <p :class="{'collapse': collapse}">
+          <markdown-html :markdown="comment.content"></markdown-html>
+        </p>
         <p v-if="collapse" class="collapse-container">
           <Button type="text" @click="changeCollapse" icon="chevron-down">展开</Button>
         </p>
@@ -32,6 +35,7 @@
 </template>
 <script>
 import formatTime from "../components/tools/formatTime.js"
+import markdownHtml from "../common/markdown-html"
 export default {
   data() {
     console.log(this.comment.time)
@@ -49,6 +53,9 @@ export default {
     }
   },
   props: ["user", "comment"],
+  components: {
+    markdownHtml,
+  }
 }
 </script>
 
@@ -76,6 +83,8 @@ export default {
   .methods
     .collapse
       float: right
+  .time
+    font-size: 1.3rem
 </style>
 
 

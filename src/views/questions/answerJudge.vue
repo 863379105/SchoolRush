@@ -5,8 +5,8 @@
       <markdown-html :markdown="question.q"></markdown-html>
     </p>
     <ul>
-      <li class="T" :class="{wrong: wrongs.T,checked:selected=='T'}" @click="checked('T')">正确</li>
-      <li class="F" :class="{wrong: wrongs.F,checked:selected=='F'}" @click="checked('F')">错误</li>
+      <li class="T" :class="{wrong: wrongs.T,checked:selected=='T'}" @click="checked('T')"><Icon type="checkmark-round"></Icon>正确</li>
+      <li class="F" :class="{wrong: wrongs.F,checked:selected=='F'}" @click="checked('F')"><Icon type="close-round"></Icon>错误</li>
     </ul>
     <p class="btn-wrap">
       <Button :disabled="btnDisable" class="btn" size="large" shape="circle" :type="btnType" @click="submit">
@@ -171,16 +171,11 @@ export default {
       background: #ed3f14
     li.wrong:hover
       background: #ed3f14
-    li.T:before
-      content: "√"
-      padding-right: 1rem
-      margin-right: 1rem
-      height: 100%
-    li.F:before
-      content: "×"
-      padding-right: 1rem
-      margin-right: 1rem
-      height: 100%
+    li
+      i
+        margin-top: .3rem
+        padding-right: .5rem
+        margin-right: .5rem
   p.btn-wrap
     text-align: center
     button.btn

@@ -2,6 +2,10 @@
   <div id="comment">
     <!-- 问题页面的评论组件 -->
     <p class="total"><span>{{ 89 }}</span> 条经验</p>
+    <div class="container editor">
+      <Button class="submit-btn" type="primary" shape="circle" size="large" @click="submitComment" icon="paper-airplane">发表</Button>
+      <mavon-editor class="editor" :class="{'close': isEditorClose}" placeholder="发表自己的经验与见解，20-1W字..." :toolbars="toolbars" ref=md @imgAdd="$imgAdd" @change="updateMD"></mavon-editor>
+    </div>
     <div class="container">
       <a-comment :user="user" :comment="comment"></a-comment>
     </div>
@@ -9,25 +13,110 @@
 </template>
 <script>
 import aComment from "./aComment"
+import { mavonEditor } from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
 export default {
   data() {
     return {
+      newComment: "",
       user: {
         avatar: "https://i.loli.net/2017/08/21/599a521472424.jpg",
         name: "iimT"
       },
       comment: {
         id: "1",
-        content: "设置属性 options 对象中的 shortcuts 可以设置快捷选项，详见示例代码。其中 value 为函数，必须返回一个日期，如果是 daterange 类型，需要返回一个数组。value 接收任何正确的日期格式，比如 2016-12-24 或 12/24/16 都是正确的。设置属性 options 对象中的 shortcuts 可以设置快捷选项，详见示例代码。其中 value 为函数，必须返回一个日期，如果是 daterange 类型，需要返回一个数组。value 接收任何正确的日期格式，比如 2016-12-24 或 12/24/16 都是正确的。",
+        content: "![5aafbbaaa15657001baf1821.png](http://p6a87gauo.bkt.clouddn.com/user_5a5f315d6a107efd3fa838b0909c1fc8.png)图中的字母是什么？【大小写敏感】",
         time: "2018-04-16 19:36:32",
         agree: 45,
         disagree: 3,
+      },
+      toolbars: {
+        bold: false, // 粗体
+        italic: false, // 斜体
+        header: false, // 标题
+        underline: false, // 下划线
+        mark: true, // 标记
+        strikethrough: true, // 中划线
+        superscript: true, // 上角标
+        subscript: true, // 下角标
+        quote: false, // 引用
+        ol: false, // 有序列表
+        ul: false, // 无序列表
+        link: false, // 链接
+        imagelink: true, // 图片链接
+        code: true, // code
+        table: true, // 表格
+        fullscreen: false, // 全屏编辑
+        readmodel: true, // 沉浸式阅读
+        htmlcode: false, // 展示html源码
+        help: true, // 帮助
+        /* 1.3.5 */
+        undo: false, // 上一步
+        redo: false, // 下一步
+        trash: false, // 清空
+        save: true, //TODO: 保存（触发events中的save事件）
+        /* 1.4.2 */
+        navigation: true, // 导航目录
+        /* 2.1.8 */
+        alignleft: true, // 左对齐
+        aligncenter: true, // 居中
+        alignright: true, // 右对齐
+        /* 2.2.1 */
+        subfield: true, // 单双栏模式
+        preview: true // 预览
+      },
+      isEditorClose: false,
+    }
+  },
+  methods: {
+    $imgAdd(pos, $file) {
+      // 将图片上传到服务器.
+      const url = this.$API.getService("Upload", "base64UploadQNY");
+      this.$API
+        .post(url, { img: $file.miniurl, name: $file.name })
+        .then(url => {
+          let res = url.data.data;
+          if (res.code == 0) {
+            console.log("上传失败！");
+            return;
+          }
+          this.$refs.md.$img2Url(pos, res);
+        });
+    },
+    updateMD(value, render) {
+      this.newComment = value;
+    },
+    submitComment() {
+      if(this.newComment.trim().length < 20) {
+        this.$Message.warning("字数太少，至少20字")
       }
+      let uid = parseInt(localStorage.getItem("uid"))
+      let data = {
+        uid: uid,
+        qid: this.qid,
+        content: this.newComment.trim()
+      }
+      let url = this.$API.getService("Comment", "add")
+
+      this.$API.post(url, data).then( res => {
+        console.log(res)
+        if(res.data.data.id != undefined) {
+          this.$Message.success("发表成功！")
+          this.newComment = ""
+        }else{
+          this.$Message.error("发表失败，请检查网络与最大字数")
+        }
+      }).catch(err => {
+        this.$Message.error("发表失败，请检查网络与最大字数")
+        console.log(err)
+      })
     }
   },
   components: {
-    aComment
-  }
+    aComment,
+    mavonEditor
+  },
+  props: ["qid"]
 }
 </script>
 
@@ -56,5 +145,18 @@ export default {
     p.coolapse
       font-size: 1.7rem
       background: #fff
+  .editor
+    width: 100%
+    height: 100%
+    margin-bottom: 2.4rem
+  .close
+    height: 20rem
+  .editor
+    position: relative
+    .submit-btn
+      position: absolute
+      bottom: 3rem
+      right: .5rem
+      z-index: 1501
 </style>
 
