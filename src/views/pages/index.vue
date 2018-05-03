@@ -27,6 +27,7 @@
           </div
         </div>  -->
         <question-card v-for="item in questions" :question-info="item" :key="item.id"></question-card>
+        <lazy-card></lazy-card>
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -41,8 +42,8 @@
 
 <script>
 import questionCard from "./question-card.vue";
-import sidebar from "../common/sidebar"
-
+import sidebar from "../common/sidebar";
+import lazyCard from "../components/tools/lazy-question-card"
 export default {
   data() {
     return {
@@ -51,7 +52,7 @@ export default {
       filterMajor: "",
       filterLevel: 0,
       majorData: [],
-      questions: {}
+      questions: []
     };
   },
   methods: {
@@ -83,8 +84,8 @@ export default {
     },
     getQuestionPage() {
       const that = this;
-      const url = this.$API.getService("Question", "getUserQuestion") //"GetPageInformation"
-      let user = JSON.parse(localStorage.getItem("userinfo"))
+      const url = this.$API.getService("Question", "getUserQuestion"); //"GetPageInformation"
+      let user = JSON.parse(localStorage.getItem("userinfo"));
       this.$API
         .post(url, {
           uid: user.id
@@ -94,6 +95,26 @@ export default {
           that.questions = res.data.data;
         });
     },
+    handleReachBottom() {
+      return new Promise(resolve => {
+        const that = this;
+        const url = this.$API.getService("Question", "getUserQuestion"); //"GetPageInformation"
+        let user = JSON.parse(localStorage.getItem("userinfo"));
+        this.$API
+          .post(url, {
+            uid: user.id
+          })
+          .then(res => {
+            console.log(res.data.data);
+            let newData = res.data.data
+            for(var i=0;i<newData.length;i++){
+            　that.questions.push(newData[i]);
+            }
+            newData = null;
+            resolve();
+          });
+      });
+    }
   },
   mounted() {
     //获取用户信息
@@ -101,8 +122,9 @@ export default {
   },
   components: {
     questionCard,
-    sidebar
-  },
+    sidebar,
+    lazyCard
+  }
 };
 </script>
 
