@@ -1,53 +1,53 @@
 <template>
-  <div class="app">
+  <div class="app" id="settings">
     <div class="container grid-container">
       <div class="grid-no-padding card userinfo-settings-wrap col-lg-11 col-md-12 col-sm-12 col-xs-12">
-          <Col class="userinfo-settings-title" span="24">个人设置</Col>
-          <Col class="userinfo-settings-content-wrap" offset="4" span="16">
-            <Form ref="userInfo" :model="userInfo" :rules="validInfo" :label-width="100">
-              <Col class="settings-avatar" offset="11" span="13">
-                  <img class="avatar" :src="userInfo.avatar">
-                  <corp-image @imgData="imgDataChanged"></corp-image>
-              </Col>
-              <FormItem label="用户名" prop="name">
-                <Input size="large" disabled v-model="userInfo.name" placeholder="请输入用户名"></Input>
-              </FormItem>
-              <FormItem label="性别" prop="gender">
-                <RadioGroup size="large" v-model="userInfo.gender">
-                    <Radio label="1">男</Radio>
-                    <Radio label="0">女</Radio>
-                </RadioGroup>
-              </FormItem>
-              <FormItem label="邮箱" prop="email">
-                <Input size="large" v-model="userInfo.email" placeholder="输入你的邮箱"></Input>
-              </FormItem>
-              <FormItem label="学校" prop="campusID">
-                <Select size="large" v-model="userInfo.campusID" filterable>
-                  <Option v-for="item in campusData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="专业" prop="majorID">
-                <Select size="large" v-model="userInfo.majorID" filterable>
-                  <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="兴趣专业" prop="vice">
-                <Select v-model="userInfo.vice" filterable multiple>
-                  <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="一句话介绍" prop="describe">
-                <Input v-model="userInfo.describe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="一句话介绍自己吧"></Input>
-              </FormItem>
-              <FormItem label="电话" prop="tel">
-                <Input size="large" v-model="userInfo.tel" placeholder="输入你的电话"></Input>
-              </FormItem>
-              <!-- 提交按钮 -->
-              <FormItem>
-                <Button class="submitBtn" type="primary" size="large" @click="handleSubmit('userInfo')">修改</Button>
-              </FormItem>
-            </Form>
-          </Col>
+        <Col class="userinfo-settings-title" span="24">个人设置</Col>
+        <Col class="userinfo-settings-content-wrap" offset="4" span="16">
+          <Form ref="userInfo" :model="userInfo" :rules="validInfo" :label-width="100">
+            <Col class="settings-avatar" offset="11" span="13">
+                <img class="avatar" :src="userInfo.avatar">
+                <corp-image @imgData="imgDataChanged"></corp-image>
+            </Col>
+            <FormItem label="用户名" prop="name">
+              <Input size="large" disabled v-model="userInfo.name" placeholder="请输入用户名"></Input>
+            </FormItem>
+            <FormItem label="性别" prop="gender">
+              <RadioGroup size="large" v-model="userInfo.gender">
+                  <Radio label="1">男</Radio>
+                  <Radio label="0">女</Radio>
+              </RadioGroup>
+            </FormItem>
+            <FormItem label="邮箱" prop="email">
+              <Input size="large" v-model="userInfo.email" placeholder="输入你的邮箱"></Input>
+            </FormItem>
+            <FormItem label="学校" prop="campusID">
+              <Select size="large" v-model="userInfo.campusID" filterable>
+                <Option v-for="item in campusData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="专业" prop="majorID">
+              <Select size="large" v-model="userInfo.majorID" filterable>
+                <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="兴趣专业" prop="vice">
+              <Select v-model="userInfo.vice" filterable multiple>
+                <Option v-for="item in majorData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="一句话介绍" prop="describe">
+              <Input v-model="userInfo.describe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="一句话介绍自己吧"></Input>
+            </FormItem>
+            <FormItem label="电话" prop="tel">
+              <Input size="large" v-model="userInfo.tel" placeholder="输入你的电话"></Input>
+            </FormItem>
+            <!-- 提交按钮 -->
+            <FormItem>
+              <Button class="submitBtn" type="primary" size="large" @click="handleSubmit('userInfo')">修改</Button>
+            </FormItem>
+          </Form>
+        </Col>
       </div>
     </div>
   </div>
@@ -253,31 +253,32 @@ export default {
 }
 </script>
 <style lang="sass">
-.card
-  padding: 1rem 0
-  background: #fff
-.userinfo-settings-wrap
-  margin-bottom: 6rem
-.userinfo-settings-title
-  border-bottom: .1rem solid #e9e9e9
-  padding-left: 2rem
-  padding-bottom: 1rem 
-.userinfo-settings-content-wrap
-  padding-top: 2rem
+#settings
+  .card
+    padding: 1rem 0
+    background: #fff
+  .userinfo-settings-wrap
+    margin-bottom: 6rem
+  .userinfo-settings-title
+    border-bottom: .1rem solid #e9e9e9
+    padding-left: 2rem
+    padding-bottom: 1rem 
+  .userinfo-settings-content-wrap
+    padding-top: 2rem
+    .ivu-form-item
+      .ivu-form-item-label
+        font-size: 1.4rem
+    .submitBtn
+      margin-top: 1rem
+    .settings-avatar
+      z-index: 99
+      img.avatar
+        height: 8rem
+        margin-top: -1rem
+        border-radius: .5rem
+        box-shadow: 0 0 .2rem 0 #999
   .ivu-form-item
-    .ivu-form-item-label
-      font-size: 1.4rem
-  .submitBtn
-    margin-top: 1rem
-  .settings-avatar
-    z-index: 99
-    img.avatar
-      height: 8rem
-      margin-top: -1rem
-      border-radius: .5rem
-      box-shadow: 0 0 .2rem 0 #999
-.ivu-form-item
-  margin-bottom: 1.7rem
-.ivu-form-item-error-tip
-  padding-top: .1rem
+    margin-bottom: 1.7rem
+  .ivu-form-item-error-tip
+    padding-top: .1rem
 </style>
