@@ -27,7 +27,15 @@
           </div
         </div>  -->
         <question-card v-for="item in questions" :question-info="item" :key="item.id"></question-card>
-        <lazy-card></lazy-card>
+        <div v-if="nomore" class="question-card">
+          <div ref="lazy" class="row content-container col-lg-9 col-md-9">
+            <div class="card-container">
+              <p class="nomore-data">没有数据了噢</p>
+            </div>
+          </div>
+        </div>
+        <lazy-card v-if="!nomore" @onLoading="handleReachBottom" :loaded="isLoading"></lazy-card>
+        
         <!-- 内容部分结束 -->
         <!-- 右侧边栏开始 -->
         <div class="row sidebar-container col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -52,7 +60,11 @@ export default {
       filterMajor: "",
       filterLevel: 0,
       majorData: [],
-      questions: []
+      questions: [],
+      page: 1,
+      pageNum: 3,
+      isLoading: false,
+      nomore: false,
     };
   },
   methods: {
@@ -88,7 +100,9 @@ export default {
       let user = JSON.parse(localStorage.getItem("userinfo"));
       this.$API
         .post(url, {
-          uid: user.id
+          uid: user.id,
+          page: that.page++,
+          num: that.pageNum,
         })
         .then(res => {
           console.log(res.data.data);
@@ -102,15 +116,21 @@ export default {
         let user = JSON.parse(localStorage.getItem("userinfo"));
         this.$API
           .post(url, {
-            uid: user.id
+            uid: user.id,
+            page: that.page++,
+            num: that.pageNum,
           })
           .then(res => {
             console.log(res.data.data);
             let newData = res.data.data
+            if(newData.length == 0) {
+              that.nomore = true
+            }
             for(var i=0;i<newData.length;i++){
             　that.questions.push(newData[i]);
             }
             newData = null;
+            this.isLoading = true            
             resolve();
           });
       });
@@ -133,6 +153,9 @@ export default {
 $bright-blue: #0084ff
 .container
   margin: 0 auto
+.nomore-data
+  padding: 2rem
+  text-align: center
 @media (max-width: 992px)
   .content-container
     float: none

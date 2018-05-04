@@ -1,7 +1,7 @@
 <template>
   <!-- 问题展示卡片组件 -->
   <div class="question-card">
-    <div class="row content-container col-lg-9 col-md-9">
+    <div ref="lazy" class="row content-container col-lg-9 col-md-9">
       <div class="card-container">
         <div class="card-left-container flex left">
           <div class="flex-container flex">
@@ -27,7 +27,8 @@
           </div>
           <div class="q-difficulty">
             <p class="animate item" :class="{'long':short, 'short':long}"></p>
-          </div>                                 <!--   这里是故意打乱的    -->
+          </div>
+          <!--   这里是故意打乱的    -->
           <div class="q-set-info">
             <p class="animate item" :class="{'long':short, 'short':long}"></p>
           </div>
@@ -41,22 +42,60 @@ export default {
   data() {
     return {
       short: false,
-      long: true
-    }
+      long: true,
+      timer: {},
+      isVisiable: false
+    };
   },
   methods: {
+    handelScroll(e) {
+      console.log(e);
+    },
     startAnimate() {
-      let that = this
-      setInterval(() => {
-        that.short = !that.short
-        that.long  = !that.long
-      }, 500)
+      let that = this;
+      let lazy = this.$refs.lazy;
+      window.addEventListener(
+        "scroll",
+        function() {
+          if (
+            window.screen.availHeight + window.pageYOffset >
+            lazy.offsetTop + 1.5 * lazy.offsetHeight
+          ) {
+            console.log("到达底部");
+            that.isVisiable = true;
+          }
+        },
+        true
+      );
     }
   },
   mounted() {
-    this.startAnimate()
-  }
-}
+    this.startAnimate();
+  },
+  watch: {
+    isVisiable(now, old) {
+      if (!old && now) {
+        clearInterval(this.timer)
+        this.timer = setInterval(() => {
+          this.short = !this.short
+          this.long  = !this.long
+        }, 500);
+        setTimeout(() => {
+          this.$emit("onLoading")
+          this.isVisiable = false
+        }, 1500)
+      }
+    },
+    loaded(now, old){
+      if(!now) return
+      if (!old && now) {
+        clearInterval(this.timer)
+        //this.loaded = false
+      }
+    }
+  },
+  props: ["loaded"]
+};
 </script>
 <style lang="sass">
 .question-card
