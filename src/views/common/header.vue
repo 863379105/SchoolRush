@@ -18,12 +18,13 @@
                   <li>
                     <router-link to="/rank">排行榜</router-link>
                   </li>
-                  <!-- 暂时弃用群组模块 <li>
-                    <router-link to="/group">群组</router-link>
-                  </li> -->
+                  <li>
+                    <router-link to="/group">小组</router-link>
+                  </li>
                   <li>
                     <router-link to="/campus">高校</router-link>
                   </li>
+                  
                 </ul>
               </div>
               <div class="search-container">

@@ -62,7 +62,7 @@ export default {
       majorData: [],
       questions: [],
       page: 1,
-      pageNum: 3,
+      pageNum: 8,
       isLoading: false,
       nomore: false,
     };

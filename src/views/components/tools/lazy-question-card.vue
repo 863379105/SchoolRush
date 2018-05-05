@@ -61,7 +61,6 @@ export default {
             window.screen.availHeight + window.pageYOffset >
             lazy.offsetTop + 1.5 * lazy.offsetHeight
           ) {
-            console.log("到达底部");
             that.isVisiable = true;
           }
         },
@@ -82,13 +81,13 @@ export default {
         }, 500);
         setTimeout(() => {
           this.$emit("onLoading")
-          this.isVisiable = false
         }, 1500)
       }
     },
     loaded(now, old){
       if(!now) return
       if (!old && now) {
+        this.isVisiable = false
         clearInterval(this.timer)
         //this.loaded = false
       }

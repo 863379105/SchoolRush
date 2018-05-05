@@ -24,9 +24,23 @@ const routers = [
             {
                 path: '/group',
                 meta: {
-                    title: '群组'
+                    title: '小组'
                 },
                 component: (resolve) => require(['./views/pages/group.vue'], resolve)
+            },
+            {
+                path: '/agroup/:id',
+                meta: {
+                    title: '小组'
+                },
+                component: (resolve) => require(['./views/pages/group/a-group.vue'], resolve)
+            },
+            {
+                path: '/challenge',
+                meta: {
+                    title: '挑战'
+                },
+                component: (resolve) => require(['./views/pages/challenge.vue'], resolve)
             },
             {
                 path: '/home/:id',
