@@ -21,6 +21,7 @@ var API = {
         getAll: "getAll",
         login: "login",
         getById: "getById",
+        GetGoodAtRankTop: "GetGoodAtRankTop",
     },
     Campus: {
         root: "Campus",

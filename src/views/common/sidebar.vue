@@ -166,29 +166,7 @@ export default {
               }
             }
           },
-          data: [
-            {
-              name: "计算机科学与技术",
-              value: 1000,
-              selected: true
-            },
-            {
-              name: "网络工程",
-              value: 900
-            },
-            {
-              name: "自动化",
-              value: 851
-            },
-            {
-              name: "金融",
-              value: 851
-            },
-            {
-              name: "软件工程",
-              value: 851
-            }
-          ],
+          data: this.userFileds,
           itemStyle: {
             //阴影
             normal: {
@@ -234,8 +212,7 @@ export default {
           for(var i in Uinfo) {
             that.$set(that.userInfo, i, Uinfo[i])
           }
-          //画饼图
-          that.drawAnswerPie()
+          that.getUserGoodFileds()
           localStorage.setItem("userinfo", JSON.stringify(Uinfo));
           for (let i in Uinfo) {
             if (!Uinfo[i]) {
@@ -249,6 +226,28 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getUserGoodFileds() {
+      let that = this
+      let url = this.$API.getService("User", "GetGoodAtRankTop")
+
+      this.$API.post(url, {
+        id: this.userInfo.id
+      }).then((res) => {
+        console.log(res)
+        let data = res.data.data
+        let maxIndex = 0
+        for(var d in data) {
+          if(data[d].value > data[maxIndex].value) {
+            maxIndex = d
+          }
+        }
+        data[maxIndex].selected = true
+        console.log(data)
+        that.userFileds = data
+        //画饼图
+        that.drawAnswerPie()
+      })
     },
     getUserPassRate() {
       let solved = this.userInfo.solveInfo
