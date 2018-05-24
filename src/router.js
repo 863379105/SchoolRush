@@ -106,6 +106,13 @@ const routers = [
                 component: (resolve) => require(['./views/pages/404.vue'], resolve),
             },
             {
+                path: '/msgCart',
+                meta: {
+                    title: 'msgCart'
+                },
+                component: (resolve) => require(['./views/components/msgCart.vue'], resolve),
+            },
+            {
                 path: '/setup',
                 meta: {
                     title: '分享题目'
