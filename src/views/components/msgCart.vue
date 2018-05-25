@@ -1,5 +1,6 @@
 <template>
-      <div id="msgPanel">
+      <div id="msgCart">
+        <div id="msgPanel">
         <div id="title">
             <img src="../../static/img/avatar.jpg" alt="">
             <div id="titleText">
@@ -40,6 +41,8 @@
             <Button size="large">私信他{{sendMSG()}}</Button>
         </div>
     </div>
+
+      </div>
 </template>
 <script>
 export default {
@@ -59,7 +62,7 @@ export default {
 
 
 <style>
-    #msgPanel{
+    #msgCart #msgPanel{
         margin-top: 10rem;
         width: 31rem;
         height: 21rem;
@@ -100,11 +103,11 @@ export default {
         height:1px ;
         background: rgb(230, 229, 229);
     }
-    ul{
+    #cartItem ul{
         text-align: center;
         margin-top: 1rem;
     }
-    ul li{
+    #cartItem ul li{
         margin: 0 2rem;
         display: inline-block;
     }
