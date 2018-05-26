@@ -91,8 +91,8 @@
           <div class="sidebar-item sidebar-fastto-container">
               <ul class="fastto">
                 <li><p><Icon type="disc"></Icon><router-link to="/challenge">挑战</router-link></p></li>
-                <li><p><Icon type="checkmark-circled"></Icon>已通过</p></li>
-                <li><p><Icon type="hammer"></Icon>正在解决</p></li>
+                <li><p><Icon type="checkmark-circled"></Icon><router-link to="/solvedQuestion">已通过</router-link></p></li>
+                <li><p><Icon type="hammer"></Icon><router-link to="/solvingQuestion">正在解决</router-link></p></li>
                 <li><p><Icon type="pricetags"></Icon>关注的标签</p></li>
                 <li><p><Icon type="university"></Icon>关注的学校</p></li>
               </ul>

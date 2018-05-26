@@ -96,7 +96,7 @@ export default {
     },
     getQuestionPage() {
       const that = this;
-      const url = this.$API.getService("Question", "getUserQuestion"); //"GetPageInformation"
+      const url = this.$API.getService("Question", "GetTobeSolved"); //"GetPageInformation"
       let user = JSON.parse(localStorage.getItem("userinfo"));
       this.$API
         .post(url, {
@@ -112,7 +112,7 @@ export default {
     handleReachBottom() {
       return new Promise(resolve => {
         const that = this;
-        const url = this.$API.getService("Question", "GetPassed"); //"GetPageInformation"
+        const url = this.$API.getService("Question", "getUserQuestion"); //"GetPageInformation"
         let user = JSON.parse(localStorage.getItem("userinfo"));
         this.$API
           .post(url, {
